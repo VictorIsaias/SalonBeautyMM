@@ -19,8 +19,8 @@ const servicios =[
 
 <template>
   <div>
-    <div class="flex-barra elevation-3">
-       <div class="item1"><RouterLink to="home"><img class="iconos logo" src="src/assets/img/logo.png" alt=""></RouterLink></div>
+    <div class="flex-barra elevation-3" >
+      <div class="item1"><img class="iconos logo" src="src/assets/img/logo.png" alt=""></div>
       <div class="item2">
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -34,7 +34,7 @@ const servicios =[
         </v-menu>
       </div>
       <div class="item3">
-        <RouterLink class="rutas" to="citas_cliente"><button class="button">VER CITAS</button></RouterLink>
+        <button class="button"><RouterLink class="rutas" to="/citas_cliente">VER CITAS</RouterLink></button>
       </div>
       <div class="item4"><button class="button">INICIAR SESION</button></div>
       <div class="item5"><img class="iconos noti" src="src/assets/img/noti.png" alt=""></div>
@@ -54,7 +54,6 @@ const servicios =[
     <div class="container">
       <RouterView></RouterView>
     </div>
-    hola
   </div>
 </template>
 
