@@ -20,7 +20,7 @@ const servicios =[
 <template>
   <div>
     <div class="flex-barra elevation-3">
-       <div class="item1"><RouterLink to="home"><img class="iconos logo" src="src/assets/img/logo.png" alt=""></RouterLink></div>
+       <div class="item1"><RouterLink to="inicio"><img class="iconos logo" src="src/assets/img/logo.png" alt=""></RouterLink></div>
       <div class="item2">
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -54,7 +54,6 @@ const servicios =[
     <div class="container">
       <RouterView></RouterView>
     </div>
-    hola
   </div>
 </template>
 
