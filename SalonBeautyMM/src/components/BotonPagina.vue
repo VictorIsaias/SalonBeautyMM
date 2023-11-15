@@ -2,17 +2,35 @@
 
     <div >
         
-        <div v-if='tipo=="enviar"' >
+        <div  v-if='tipo=="enviar"' >
             <div ref="boton">
-            <v-btn   color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
+            <v-btn @click='btnClick'  color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
                 <div   div class='texto'><strong>{{texto}}</strong></div>
              </v-btn>
+            </div>
         </div>
+
+        <div  v-if='tipo=="dual"' >
+            <div ref="boton">
+            <v-btn @click='btn2Click'  color='#ffdcd5'  ref='boton-pry'   elevation='3' rounded="lg" variant="flat"  :size="tamaño">
+                <div div class='texto'><strong>CANCELAR</strong></div>
+             </v-btn>
+             <v-btn  @click='btnClick'   color='#ffdcd5' ref='boton-pry'   elevation='3' rounded="lg" variant="flat"  :size="tamaño">
+                <div div class='texto'><strong>{{texto}}</strong></div>
+             </v-btn>
+            </div>
+        </div>
+        <div  v-if='tipo=="servicio"' >
+            <div ref="boton">
+            <v-btn @click='btnClick' height='3rem' class=' pa-4 color d-flex justify-start' ref='boton-pry' block  elevation='1'    :size="tamaño">
+                <v-icon class='pr-3' color='#169873' size='large' icon="mdi-plus"></v-icon><div class='text-body-2' style='font-size:100%;text-transform: capitalize;'>{{texto}}</div>
+             </v-btn>
+            </div>
         </div>
         
 
-    <router-link :to='{name:link}'>
-        <v-btn v-if='tipo=="minus"' class='text-none'  variant='plain' density="compact" size='small'>
+    <router-link v-if='tipo=="minus"' :to='{name:link}'>
+        <v-btn  class='text-none'  variant='plain' density="compact" size='small'>
         <div class='texto2'>{{texto}}</div>
         </v-btn>
         
@@ -42,13 +60,20 @@ const props = defineProps({
 const boton = ref(null)
 const boton_pry = ref(null)
 
+
+const emit = defineEmits(['botonClick','boton2Click'])
+
+const btnClick = ()=> emit('botonClick')
+const btn2Click = ()=> emit('boton2Click')
+
+
 onMounted(()=>
 {
     const btn = boton.value
     const btn_pry = boton.value
 
     if(props.posicion){
-        
+       
     btn.classList.add('d-flex')
     switch(props.posicion)
     {
@@ -93,4 +118,10 @@ onMounted(()=>
     width: 75%;
 }
 
+.color{
+    background: #fff5fa;
+  background-blend-mode: normal;
+  backdrop-filter: blur(29px);
+
+}
 </style>

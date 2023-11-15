@@ -2,10 +2,10 @@
     <div class="fondo" align='center'>
       <v-container class="pt-16">
   
-  <FormularioPrincipal link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
+  <FormularioPrincipal tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
   
-    <v-text-field :rules="[rules.correo]" v-model="correo" label="Correo electronico" variant="underlined"></v-text-field>
-    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"  :type="show1 ? 'text' : 'password'" :rules="[rules.requerido]"  v-model="contra" label="Contraseña" variant="underlined"></v-text-field>
+    <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="correo" label="Correo electronico" variant="underlined"></v-text-field>
+    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="contra" label="Contraseña" variant="underlined"></v-text-field>
   
   </FormularioPrincipal>
   
@@ -23,12 +23,16 @@
   
   var correo = ref('')
   var contra = ref('')
+  var show1 = ref('')
+  var show2 = ref('')
   const rules = {
       requerido: value => !!value || 'Campo requerido',
       correo: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-    }}
+          return pattern.test(value) || 'Invalid e-mail.'},
+      min: v => v.length >= 8 || 'Minimo de 8 caracteres'
+
+    }
   </script>
   
   <style scoped>

@@ -8,9 +8,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Principal',
-      component: iniciarview  // Cambiar a componente de pagina principal
-    },
+      name: 'inicio',
+      component: ()=>import('../views/Inicio.vue')},
     {
       path: '/iniciar',
       name: 'iniciar',
@@ -25,6 +24,11 @@ const router = createRouter({
       path: '/Administrar',
       name: 'Administrar',
       component: administrarview
+    },
+    {
+      path: '/citas_cliente',
+      name: 'citas_cliente',
+      component: () => import('../views/citas_cliente.vue')
     }
   ]
 })

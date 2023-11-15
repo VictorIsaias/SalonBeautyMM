@@ -1,13 +1,16 @@
-<template>
-  <div>
-
-  </div>
-</template>
-
 <script setup>
-import {ref,computed} from 'vue'
+import Barra from './components/Barra.vue'
 
 </script>
+
+<template>
+  <div>
+    <barra></barra>
+    <div class="container">
+      <RouterView></RouterView>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 
