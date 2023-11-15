@@ -1,5 +1,5 @@
 {
-  "name": "salonbeautymm",
+  "name": "copiar",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,11 +10,12 @@
   "dependencies": {
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4",
-    "vuetify": "^3.4.0"
+    "vue-cal": "^4.8.1",
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.4.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.3.4",
-    "vite": "^4.4.9"
+    "@vitejs/plugin-vue": "^4.4.1",
+    "vite": "^4.4.11"
   }
 }
