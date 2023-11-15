@@ -6,7 +6,7 @@
 <template>
     <vue-cal
         locale="es"
-        :disable-views="['years', 'year', 'month']"
+        :disable-views="['years', 'year', 'month', 'day']"
         :time-from="12 * 60"
         :time-to="18 * 60"
         :time-step="30"
