@@ -15,7 +15,7 @@ const items = ref([
       <v-col cols="6">
         <v-carousel style="max-height: 100%vh; width: 100%;" cycle interval="3000">
           <v-carousel-item v-for="(item, index) in items" :key="index">
-            <v-img :src="item.src" aspect-ratio="1" style="width: 100%;"></v-img>
+            <v-img :src="item.src" aspect-ratio="1" width="600"></v-img>
           </v-carousel-item>
         </v-carousel>
       </v-col>
