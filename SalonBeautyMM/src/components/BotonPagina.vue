@@ -1,6 +1,6 @@
 <template>
 
-    <div >
+    <div v-show='tipo!="ninguno"'>
         
         <div  v-if='tipo=="enviar"' >
             <div ref="boton">
@@ -9,6 +9,16 @@
              </v-btn>
             </div>
         </div>
+
+        <div  v-if='tipo=="solo"' >
+           
+            <v-btn @click='btnClick'   ref='boton-pry'   variant="text"  :size="tamaño">
+                <slot></slot>
+            </v-btn>
+            
+        </div>
+
+        
 
         <div  v-if='tipo=="dual"' >
             <div ref="boton">

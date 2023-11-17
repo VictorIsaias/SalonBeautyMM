@@ -1,8 +1,9 @@
 <script setup>
-import Footer from '../components/Footer.vue';
+import BotonPagina from "../components/BotonPagina.vue"
+import Footer from '../components/PiePagina.vue';
 import {ref} from 'vue';
 const items =ref([
-    {id:1, image: '../src/assets/img/logo.png'},
+    {id:1, image: '../src/assets/img/3_objects.png'},
     {id:2, imgae: '../src/assets/img/logo.png'},
 ]);
 const servicios=ref([
@@ -10,16 +11,16 @@ const servicios=ref([
 ]);
 </script>
 <template>
-    <div class="inicio">
+    <div class="inicio ">
         <div class="header">
-            <img src="../assets/img/logo2.png" alt="">
-            <h3>Relajate, renuevate y resplandece</h3><br>
+            <div class='logo'><img src="../assets/img/logo2.png" alt=""></div>
+            <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
             <div class="item">
-                <button><h2>Catalogos disponibles</h2></button>
+                <botonPagina link='Catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
             </div><br>
         </div>
         <div class="carrusel">
-            <v-carousel>
+            <v-carousel class='h-50'>
                 <v-carousel-item v-for="item in items" :key="item.id" >
                     <v-img :src="item.image"></v-img>
                 </v-carousel-item>
@@ -29,7 +30,7 @@ const servicios=ref([
             <h1>PIDE UNA CITA</h1>
             <H3>ADQUIERE UN NUEVO ESTILO</H3>
             <h4>INICIA SESION Y PIDE UNA CITA PUEDE SELECCIONAR EL SERVICIO QUE GUSTE A LA HORA QUE TU QUIERAS</h4>
-            <v-carousel style="height: 400px;">
+            <v-carousel >
                 <v-carousel-item class="carousel" v-for="item in servicios" :key="item.id">
                     <v-img :src="item.image"></v-img>
                 </v-carousel-item>
@@ -65,21 +66,38 @@ const servicios=ref([
     </div>
 </template>
 <style scoped>
-.inicio{
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Oswald:wght@200;300;400;500;600;700&family=Rubik:wght@300&display=swap');
+  .inicio{
     background: linear-gradient(213deg, #ffffff 0%, #ffd2e8 38.3%, #cd67a9 100%);
-    width: 100%;
-    height: 100%;
+    
 }
+.texto{
+    font-family: 'Merriweather', sans-serif;
+}
+.slogan{
+    font-family: 'Lobster', sans-serif;
+    color: #FD7E94
+}
+
+.morado{
+    color:#9F3E6D
+}
+
 .header{
     display:flex;
-    background-color:rgb(252, 220, 226);
     justify-content:center;
     align-items: center;
     flex-direction: column;
 }
-.header img{
-  height: 17%;
-  width: 17%;
+.logo{
+
+    width: 13%;
+    background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 80%);
+    position:relative;
+}
+.logo img{
+    width: 100%;
 }
 .item{
     display: flex;
