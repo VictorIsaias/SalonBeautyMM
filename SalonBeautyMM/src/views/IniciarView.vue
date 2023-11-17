@@ -2,7 +2,7 @@
     <div class="fondo" align='center'>
       <v-container class="pt-16">
   
-  <FormularioPrincipal tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
+  <FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
   
     <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="correo" label="Correo electronico" variant="underlined"></v-text-field>
     <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="contra" label="Contraseña" variant="underlined"></v-text-field>

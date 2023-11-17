@@ -6,9 +6,9 @@ import Barra from './components/Barra.vue'
 <template>
   <div>
     <barra></barra>
-    <div class="container">
+    
       <RouterView></RouterView>
-    </div>
+  
   </div>
 </template>
 

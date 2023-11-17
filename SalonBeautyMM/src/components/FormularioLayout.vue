@@ -1,6 +1,27 @@
 <template >
+    <div >
+        <v-card class='w-100 h-100  '  v-show='tipo=="info"' elevation='4'   width='45%'  >
+        <v-card-title  class='d-flex justify-start'>{{titulo}}
+           
+        </v-card-title>
+        <v-card-text class='d-flex justify-start'>
+            
+        </v-card-text>
+          
+                        
+        <div class=" pb-3 interior h-100">
+           <v-container class="pl-10 pr-10">
+                
+                        <slot></slot>
     
-    <v-card elevation='4'   width='45%'  align='center'>
+            </v-container>
+            </div>
+        </v-card>
+
+
+
+
+    <v-card class='w-100 h-100' v-show='tipo!="info"'  elevation='4'   width='45%'  align='center'>
         <v-card-title>{{titulo}}
             <v-dialog width="700" v-if='basura=="true"'> 
                 <template v-slot:activator="{ props }">
@@ -25,16 +46,16 @@
           
                         
         <div class="interior pb-3">
-            <v-divider class="border-opacity-50"></v-divider>
+            <v-divider v-show='titulo' class="border-opacity-50"></v-divider>
             <v-container class="pl-10 pr-10">
                 
                         <slot></slot>
     
             </v-container>
            
-            <v-card-actions>
-            <div class='w-100'>
-                <BotonPagina @botonClick='btn' @boton2Click='btn2' :tipo='boton' propiedad='w-75' :tamaño='tamañobtn' :posicion='posicion' :texto='enviar' @click="click"></BotonPagina>
+            <v-card-actions  v-show='tipo!="sinboton"'>
+            <div class='w-100' >
+                <BotonPagina  @botonClick='btn' @boton2Click='btn2' :tipo='boton' propiedad='w-75' :tamaño='tamañobtn' :posicion='posicion' :texto='enviar' @click="click"></BotonPagina>
                 
             </div>
            
@@ -49,7 +70,7 @@
 
 </v-card>
 
-
+    </div>
 </template>
 
 <script setup>
@@ -67,7 +88,8 @@ posicion:String, //Posicion del boton principal: end y start
 link:String, //nombre de ruta (de routerlink) para boton tipo link
 boton:String,
 tamañobtn:String,
-basura:String
+basura:String,
+tipo:String
 })
 
 

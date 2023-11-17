@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import iniciarview from '../views/IniciarView.vue'
 import registrarview from '../views/Registrarview.vue'
 import administrarview from '../views/Administrarview.vue'
+import CalendarioCliente from '../views/CalendarioCliente.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/registrar',
       name: 'registrar',
       component: registrarview
+    },
+    {
+      path:'/crear_cita',
+      name: 'calendario',
+      component: CalendarioCliente
     },
     {
       path: '/Administrar',
