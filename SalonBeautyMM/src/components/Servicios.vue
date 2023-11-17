@@ -1,5 +1,5 @@
 <script setup>
-import boton from '@/components/boton.vue'
+import boton from '@/components/BotonNav.vue';
 import { ref } from 'vue';
 const services = ref([
   { id: 1, name: 'Corte de cabello para Dama', description: 'Un corte de cabello describe el acortamiento o la modificación del tipo de peinado del cabello. La actividad de la peluquería o salón de belleza supone arreglar los cabellos y modificar con ello el aspecto exterior de la persona.', image: 'service1.jpg', precio: '$75', hora: 'Aprox. 30 min' },
