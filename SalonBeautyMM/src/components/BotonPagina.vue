@@ -11,11 +11,11 @@
         </div>
 
         <div  v-if='tipo=="solo"' >
-           
+           <router-link :to='{name:link}'>
             <v-btn @click='btnClick'   ref='boton-pry'   variant="text"  :size="tamaño">
                 <slot></slot>
             </v-btn>
-            
+        </router-link>
         </div>
 
         
@@ -65,7 +65,7 @@ const props = defineProps({
         tamaño: {type:String}, //tamaño: x-small, small, large, x-large
         propiedad: {type:String}, //propiedad extra de vuetify btn
         link: {type:String} //nombre de ruta (de routerlink) para boton minus
-
+        
 })
 const boton = ref(null)
 const boton_pry = ref(null)

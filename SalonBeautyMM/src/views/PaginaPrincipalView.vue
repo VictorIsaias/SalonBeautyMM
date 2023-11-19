@@ -11,12 +11,12 @@ const servicios=ref([
 ]);
 </script>
 <template>
-    <div class="inicio ">
+    <div class='fondop'>
         <div class="header">
             <div class='logo'><img src="../assets/img/logo2.png" alt=""></div>
             <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
             <div class="item">
-                <botonPagina link='Catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
+                <botonPagina link='catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
             </div><br>
         </div>
         <div class="carrusel">
@@ -68,10 +68,10 @@ const servicios=ref([
 <style scoped>
 
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Oswald:wght@200;300;400;500;600;700&family=Rubik:wght@300&display=swap');
-  .inicio{
+.fondop{
     background: linear-gradient(213deg, #ffffff 0%, #ffd2e8 38.3%, #cd67a9 100%);
     
-}
+  }
 .texto{
     font-family: 'Merriweather', sans-serif;
 }

@@ -2,31 +2,37 @@
   <div class="fondo" align='center'>
     <v-container class="pt-16">
 
-<FormularioPrincipal class='w-50 h-100' tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' @datos='verificar' titulo='Registro para clientes' enviar='Registrar'>
+<FormularioPrincipal class='w-50 h-100' tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' :param='correo' @datos='verificar' titulo='Registro para clientes' enviar='Registrar'>
 
-
-      <v-text-field :rules="[rules.requerido]" v-model="nombres" label="Nombre/s*" variant="underlined"></v-text-field>
+  <v-form ref="form">
+      <v-text-field :rules="[rules.requerido]" v-model="input.input1" label="Nombre/s*" variant="underlined"></v-text-field>
 
    
   <v-row>
     <v-col>
-      <v-text-field  v-model="apPaterno" label="Apellido Paterno" variant="underlined"></v-text-field>
+      <v-text-field  v-model="input.input2" label="Apellido Paterno" variant="underlined"></v-text-field>
      
     </v-col>
     <v-col>
-      <v-text-field v-model="apMaterno" label="Apellido Materno" variant="underlined"></v-text-field>
+      <v-text-field v-model="input.input3" label="Apellido Materno" variant="underlined"></v-text-field>
      
     </v-col>
   </v-row>
  
-  <v-text-field v-model="numero" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-model="input.input4" label="Numero de telefono" variant="underlined"></v-text-field>
       
-  <v-text-field :rules="[rules.correo]" v-model="correo" label="Correo electronico*" variant="underlined"></v-text-field>
+  <v-text-field :rules="[rules.correo,rules.correoval(input.input5,usuarios)]" v-model="input.input5" label="Correo electronico*" variant="underlined"></v-text-field>
      
-     <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="contra" label="Contraseña*" variant="underlined"></v-text-field>
-      <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="contraConfirmar" label="Confirmar contraseña*" variant="underlined"></v-text-field>
+     <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="input.input6" label="Contraseña*" variant="underlined"></v-text-field>
+      <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="input.input7" label="Confirmar contraseña*" variant="underlined"></v-text-field>
 
-
+  </v-form>
+  <v-alert
+    type="error"
+    variant='tonal'
+    text="Las contraseñas no coinciden"
+    v-model='error'
+  ></v-alert>
 </FormularioPrincipal>
 
 </v-container>  
@@ -38,27 +44,58 @@
 <script setup>
 import {ref,computed} from 'vue'
 import FormularioPrincipal from '../components/FormularioLayout.vue'
+import router from '../router/index'
+import {PaginaStore} from '../stores/PaginaStore.js'
+import { storeToRefs } from 'pinia'
+import rules from '../validations/rules.js'
 
-function verificar(correo,contra){
-    alert("tu correo es "+correo+" y tu contraseña es "+contra)
+const pagina = PaginaStore()
+const {usuarios,id} = storeToRefs(pagina)
+
+var error=ref(false)
+
+const form = ref()
+async function verificar(){
+  const { valid } = await form.value.validate()
+  
+  if (valid){
+    
+    
+
+if (input.value.input6!=input.value.input7){
+  error.value=true
+    return
+  }
+
+id.value= usuarios.value.length + 1
+usuarios.value.push({
+    id: id,
+    nombre: input.value.input1,
+    apellidoP: input.value.input2,
+    apellidoM: input.value.input3,
+    telefono: input.value.input4,
+    correo: input.value.input5,
+    contrasena: input.value.input6
+})
+router.replace({ name: 'iniciar'})
+  }
+  
 }
 
-var correo = ref('')
-var contra = ref('')
-var apMaterno = ref('')
-var apPaterno = ref('')
-var contraConfirmar = ref('')
-var nombres = ref('')
+var input = ref({
+  input1:'',
+  input2:'',
+  input3:'',
+  input4:'',
+  input5:'',
+  input6:'',
+  input7:'',
+})
+
+
 var show1 = ref('')
 var show2 = ref('')
-const rules = {
- 
-    requerido: value => !!value || 'Campo requerido',
-    correo: value => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(value) || 'Invalid e-mail.'},
-    min: v => v.length >= 8 || 'Minimo de 8 caracteres'
-}
+
 </script>
 
 <style scoped>

@@ -59,7 +59,7 @@
                         <formulario basura='false' @basura='eliminar' @boton='actualizar(0,"param")' @boton2='cancelar' v-if='modo==5'  boton='dual' posicion='end' enviar='Actualizar' class='w-100'  titulo='Editar catalogo'>
                             <v-text-field :rules="[rules.requerido]" v-model="servicio.nombre" label="Nombre" variant="underlined"></v-text-field>
                             <v-textarea :rules="[rules.requerido]" variant="underlined" label="Descripcion" auto-grow v-model='servicio.descripcion'></v-textarea>
-                            <v-file-input :rules="[rules.requerido]" label="Imagen" variant="underlined" accept="image/*"></v-file-input>
+                            <v-file-input :rules="[rules.requerido]"  label="Imagen" variant="underlined" accept="image/*"></v-file-input>
                            
                             <v-checkbox v-model="servicio.activo"  label="Activo en la pagina" color="#169873" hide-details></v-checkbox>            
                         </formulario>                                                
@@ -110,8 +110,8 @@ import { storeToRefs } from 'pinia'
 
 const admins = AdministrarStore()
 
-const {servicio,id,modo} = storeToRefs(admins)
-const { cServicios,servicios,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir} = admins
+const {servicio,id,modo,cServicios,servicios} = storeToRefs(admins)
+const { abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir} = admins
 
 
 const rules = {

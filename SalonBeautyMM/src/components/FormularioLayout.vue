@@ -47,6 +47,7 @@
                         
         <div class="interior pb-3">
             <v-divider v-show='titulo' class="border-opacity-50"></v-divider>
+            
             <v-container class="pl-10 pr-10">
                 
                         <slot></slot>
@@ -55,7 +56,7 @@
            
             <v-card-actions  v-show='tipo!="sinboton"'>
             <div class='w-100' >
-                <BotonPagina  @botonClick='btn' @boton2Click='btn2' :tipo='boton' propiedad='w-75' :tamaño='tamañobtn' :posicion='posicion' :texto='enviar' @click="click"></BotonPagina>
+                <BotonPagina   @botonClick='btn' @boton2Click='btn2' :tipo='boton' propiedad='w-75' :tamaño='tamañobtn' :posicion='posicion' :texto='enviar' @click="click"></BotonPagina>
                 
             </div>
            
@@ -96,7 +97,7 @@ tipo:String
 
 const emit = defineEmits(['datos','boton','boton2','basura'])
 const click = () =>{
-emit('datos',correo.value,contra.value)
+emit('datos')
 }
 
 const btn = ()=> emit('boton')

@@ -1,6 +1,7 @@
 <template>
   <div >
-        <div>
+    <div >
+      <v-container>
           
           
           <vue-cal  
@@ -9,9 +10,9 @@
            :max-date="maxDate"
            hideViewSelector
            small
+           v-model:selected-date="semanaact"
           :hide-weekdays='array'
            twelveHour
-           watchRealTime
           :time-step="30"  locale="es"  
           id="calendario" 
           :time-cell-height="50"
@@ -19,7 +20,7 @@
           :disable-views="['years', 'year', 'month','day']"
           :week-start='1'
           >
-          <template v-slot:no-event>-</template>
+          <template v-slot:no-event>{{}}</template>
           <template v-slot:arrow-prev>   <boton hidden id='previo' tipo='solo' @botonClick='anterior' texto='aNTERIOR'>
             <v-icon icon="mdi-chevron-left"></v-icon></boton>
             </template>
@@ -29,10 +30,12 @@
           <template v-slot:title></template>
           
           </vue-cal>
-        </div>
+        </v-container>
 
         <ventana ></ventana>
 
+    </div>
+        
 
   </div>
 
@@ -44,10 +47,10 @@
 
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
-import {computed, ref} from "vue"
+import {computed, ref,onMounted} from "vue"
 import boton from '../components/BotonPagina.vue'
 import ventana from '../components/FlotanteCalendario.vue'
-import {CalendarioStore} from '../stores/CalendariosStore.js'
+import {CalendarioStore} from '../stores/CalendariosStore'
 import { storeToRefs } from 'pinia'
 
 const cal = CalendarioStore()
@@ -59,24 +62,23 @@ const {flotante} = storeToRefs(cal)
 var tiempoTranscurrido = Date.now();
 var hoy = new Date(tiempoTranscurrido);
 
-
+onMounted(()=>  esc())
 
 
 var semana = hoy.getWeek()
 var segunda = false
-
-
+var semanaact=ref(hoy)
 
 
 
 
 
 const minDate = computed (() => {
-    return new Date().subtractDays(0)
+    return new Date().subtractDays(1)
   });
 
   const maxDate = computed (() => {
-    return new Date().subtractDays(-7)
+    return new Date().subtractDays(-8)
   });
 
   function anterior (){
@@ -101,35 +103,39 @@ const minDate = computed (() => {
 
   var esconder =''
   var array = ref([])  
-  esc()
 
 
+ 
   function esc() {
     array.value=[]
-    var fecha = minDate.value.getDay()
     
+    var fecha = minDate.value.getDay() +2
+   
+   
   if(segunda==true){
 
-  
-  
-
-  
-   
     while(fecha<=7){
       array.value.push(fecha+1)
       fecha+=1}
       segunda=false
-      
- 
-  
-    
+
 }else{
+  if(fecha==8){
+    semanaact.value = semanaact.value.setDate(semanaact.value.getDate() + 7)
     
+    document.getElementById("siguiente").setAttribute('hidden',true)
+    
+    
+  }
+  else{
     while(fecha>=1){
       array.value.push(fecha-1)
-      fecha-=1
+      fecha-=1}
       segunda=true
   }
+    
+      
+  
 
 
 }
@@ -140,10 +146,7 @@ const minDate = computed (() => {
 // Flotante
 
 
-var hora_inicio = ''
-var hora_fin = ''
-var duracion = ''
-var servicios = []
+
 
 function mostrar(celda){
   flotante.value = !flotante.value
@@ -156,7 +159,9 @@ function mostrar(celda){
 </script>
 
 <style scoped>
-
+.fondo{
+  background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
+}
 
   .container{
     display: flex;
@@ -165,6 +170,8 @@ function mostrar(celda){
     height: 100vh;
     
   }
+
+
 
   .container div{
    

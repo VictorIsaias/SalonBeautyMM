@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-overlay
-          v-model="flotante"
-          contained
+    v-model="flotante"
           class="align-center justify-center "
         >
         <formulario  tipo='info' class='w-100 h-100' >
@@ -43,6 +42,7 @@
 </template>
 
 <script setup>
+
 import {ref,computed} from 'vue'
 import {CalendarioStore} from '../stores/CalendariosStore.js'
 import { storeToRefs } from 'pinia'
