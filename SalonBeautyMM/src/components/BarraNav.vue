@@ -89,7 +89,7 @@ const servicios =[
         <RouterLink class="rutas" :to="{name:'citas_cliente'}"><button class="button">VER CITAS</button></RouterLink>
       </div>
       <div class="item4">
-        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0}}"><button class="button">NUEVA CITA</button></RouterLink>
+        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">NUEVA CITA</button></RouterLink>
         </div>
       <div class="item6 d-flex">
         <div class="item5 pr-5"><img class="iconos noti" src="/src/assets/img/noti.png" alt=""></div>
@@ -131,7 +131,7 @@ const servicios =[
         <RouterLink class="rutas" :to="{name:'citas_cliente'}"><button class="button">VER CITAS</button></RouterLink>
       </div>
       <div class="item4">
-        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0}}"><button class="button">CALENDARIO</button></RouterLink>
+        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">CALENDARIO</button></RouterLink>
         </div>
       <div class="item6 d-flex">
         <div class="item5 pr-5"><img class="iconos noti" src="/src/assets/img/noti.png" alt=""></div>

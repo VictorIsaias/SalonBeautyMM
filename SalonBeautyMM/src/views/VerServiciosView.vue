@@ -29,7 +29,7 @@ const {servicios} = storeToRefs(serv)
           <p style="font-family: Oswald;">{{ service.descripcion }}</p>
           <v-row class="fill-height d-flex align-center justify-end">
             <v-col cols="6"><router-link :to='{name:"detalles",params:{idserv:service.id,serv:service.nombre}}'><boton texto="Mas informacion"></boton></router-link></v-col>
-            <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
+            <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id,serv:service.nombre}}'><boton texto="Crear cita"></boton></router-link></v-col>
           </v-row>
         </v-col>
       </v-row>

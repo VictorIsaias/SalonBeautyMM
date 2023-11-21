@@ -3,6 +3,10 @@ import { defineStore } from 'pinia'
 
 export const ServiciosStore = defineStore('id', () => {
   
+
+// informacion de catalogos que se va a leer desde backend READ
+// Consulta para ver todos los catalogos: id, nombre, descripcion, imagen (que esten activos)
+
     const cServicios = ref([
         {
         id: 1,
@@ -43,6 +47,10 @@ export const ServiciosStore = defineStore('id', () => {
         
         ])
 
+
+// informacion de servicios que se va a leer desde backend READ
+// Consulta para ver todos los servicios: id,nombre,descripcion,duracion,precio,catalogo,imagen (que esten activos)
+
   
   var servicios = ref([
     {
@@ -52,7 +60,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 30,
         precio: 70,
         catalogo: 1,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -62,7 +69,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 30,
         precio: 70,
         catalogo: 1,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -72,7 +78,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 120,
         precio: 200,
         catalogo: 2,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -82,7 +87,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 180,
         precio: 500,
         catalogo: 2,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -92,7 +96,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 30,
         precio: 200,
         catalogo: 3,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -102,7 +105,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 30,
         precio: 70,
         catalogo: 3,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -112,7 +114,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 0,
         precio: 450,
         catalogo: 4,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -122,7 +123,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 0,
         precio: 0,
         catalogo: 5,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -132,7 +132,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 0,
         precio: 0,
         catalogo: 5,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -142,7 +141,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 60,
         precio: 180,
         catalogo: 6,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     },
     {
@@ -152,7 +150,6 @@ export const ServiciosStore = defineStore('id', () => {
         duracion: 120,
         precio: 250,
         catalogo: 6,
-        activo:true,
         imagen:'https://i.pinimg.com/564x/4c/8c/99/4c8c9925fc0a982c16925294f276f94a.jpg'
     }
   ])

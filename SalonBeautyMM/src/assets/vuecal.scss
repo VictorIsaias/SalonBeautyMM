@@ -1,0 +1,28 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Oswald:wght@200;300;400;500;600;700&family=Rubik:wght@300&display=swap');
+
+.vuecal__special-hours {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+  
+    em {font-size: 0.9em;color: #999;}
+  }
+  
+  
+  .bloqueado {
+    background: linear-gradient(180deg, #fd9b90 0%, #e54f3e 100%);
+    color: #f9e6e6;
+    font-family: Oswald;
+    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+  }
+  .bloqueado2{
+    background: linear-gradient(180deg, #9ffae5 0%, #2fbdb3 100%);
+    color: #f9e6e6;
+    font-family: Oswald;
+    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+ 
+  }
+  
+  

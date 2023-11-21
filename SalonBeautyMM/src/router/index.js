@@ -36,19 +36,15 @@ const router = createRouter({
     },
     
     
+   
     {
-      path: '/Administrar',
-      name: 'Administrar',
-      component: administrarview
-    },
-    {
-      path: '/citas_cliente',
+      path: '/dates',
       name: 'citas_cliente',
       component: () => import('../views/CitasClienteView.vue')
     },
    
     {
-      path: '/crear_cita/:idserv',
+      path: '/create_appmnt/:idserv/:serv',
       name: 'crear_cita',
       component: () => import('../views/CalendarioClienteView.vue')
     },
@@ -72,13 +68,19 @@ const router = createRouter({
                   name: 'detalles',
                   component: detalleview,
                 }
-              
-            
-          
-        
-        
-       
+
       ]
+    },
+    // Administrador
+    {
+      path: '/Administrar',
+      name: 'Administrar',
+      component: administrarview
+    },
+    {
+      path: '/Calendar',
+      name: 'Calendario-admin',
+      component: () => import('../views/CalendarioAdminView.vue')
     }
   ]
 })

@@ -41,7 +41,7 @@ const items = ref([
                 <v-card-text class="font-weight-bold">{{servicio.duracion}}min Aprox.</v-card-text>
             </v-col>
             <v-col cols="9">
-              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton texto="Pedir cita" >Crear cita</boton></router-link>
+              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton texto="Pedir cita" >Crear cita</boton></router-link>
             </v-col>
         </v-row>
       </v-col>
