@@ -6,7 +6,10 @@ const items =ref([
     {id:2, imgae: '../src/assets/img/logo.png'},
 ]);
 const servicios=ref([
-    {id:2,image:'../src/assets/img/logo.png'},
+    {id:1,image:'../src/assets/img/logo.png'},
+]);
+const servicios2=ref([
+    {id:1,image:'../src/assets/img/logo.png'},
 ]);
 </script>
 <template>
@@ -35,7 +38,7 @@ const servicios=ref([
                 </v-carousel-item>
             </v-carousel>
             <v-carousel style="height: 400px;">
-                <v-carousel-item class="carousel" v-for="item in service" :key="item.id">
+                <v-carousel-item class="carousel" v-for="item in servicios2" :key="item.id">
                     <v-img :src="time.image"></v-img>
                 </v-carousel-item>
             </v-carousel>
