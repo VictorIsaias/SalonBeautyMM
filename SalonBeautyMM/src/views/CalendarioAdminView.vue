@@ -26,7 +26,7 @@
           :time-step="30"  locale="es"  
           id="calendario" 
           :time-cell-height="50"
-          :disable-views="['years', 'year', 'month','day']"
+          :disable-views="views"
           :week-start='1'
           >
           <template v-slot:no-event>{{}}</template>
@@ -86,11 +86,11 @@
                         <v-row class=' d-flex align-center justify-space-between' style="width:16rem">
 
                        <v-col>
-                        <v-radio color='#169873' label="Dia" value="day"></v-radio>
+                        <v-radio @click='view=true'  color='#169873' label="Dia" value="day"></v-radio>
                        </v-col>
                           
                        <v-col>
-                        <v-radio color='#169873' label="Semana" value="week"></v-radio>
+                        <v-radio @click='view=false'  color='#169873' label="Semana" value="week"></v-radio>
                      
                        </v-col>
                       </v-row>   
@@ -142,6 +142,14 @@ import {useRoute} from 'vue-router'
  
   var view =ref(false)
 
+  var views=ref(computed(()=>{
+    if (view){
+      return ['years', 'year', 'month']
+    }else{
+      return ['years', 'year', 'month','day']
+    }
+
+  }))
 
  var preServicio =0
  
