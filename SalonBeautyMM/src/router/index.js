@@ -73,16 +73,16 @@ const router = createRouter({
     },
     // Administrador
     {
-      path: '/Administrar',
+      path: '/administrar',
       name: 'Administrar',
       component: administrarview
     },
     {
-      path: '/Calendar',
+      path: '/calendar',
       name: 'Calendario-admin',
       component: () => import('../views/CalendarioAdminView.vue')
     }
   ]
 })
 
-export default router
+export default router   

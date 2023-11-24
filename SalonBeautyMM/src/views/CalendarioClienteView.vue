@@ -31,7 +31,7 @@
             <v-icon icon="mdi-chevron-right"></v-icon></boton>
            </template>
           <template v-slot:title>
-            <div class='text-h6' >
+            <v-container class='text-h5' >
               <v-row>
               Selecciona una fecha y hora
             
@@ -40,7 +40,7 @@
               {{hoy.toLocaleString('es-ES',{ month: 'long' }).charAt(0).toUpperCase() + hoy.toLocaleString('es-ES',{ month: 'long' }).slice(1)}} {{hoy.getFullYear()}}
          
             </v-row>
-            </div>
+            </v-container>
            
           </template>
           
