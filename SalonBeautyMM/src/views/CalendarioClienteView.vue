@@ -47,7 +47,7 @@
           </vue-cal>
         </v-container>
 
-        <ventana ></ventana>
+        <ventana  :modocita='modocita'></ventana>
 
     </div>
         
@@ -71,7 +71,7 @@ import { storeToRefs } from 'pinia'
 
 const cal = CalendarioStore()
 
-const {preService,minimo,maximo,bloqueos,modo, servs,flotante ,cita,servCita,servicios,citas} = storeToRefs(cal)
+const {modocita,preService,minimo,maximo,bloqueos,modo, servs,flotante ,cita,servCita,servicios,citas} = storeToRefs(cal)
 const {actualizarCita,leerBloqueos,abrirCrearcita,enviarCita}= cal
 
 import {useRoute} from 'vue-router'
@@ -164,8 +164,6 @@ if (preServicio>0){
 var semana = hoy.getWeek()
 var segunda = false
 var semanaact=ref(hoy)
-
-leerBloqueos()
 
 
 

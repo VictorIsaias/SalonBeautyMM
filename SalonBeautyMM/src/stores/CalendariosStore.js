@@ -556,6 +556,7 @@ var bloqueRespaldo = ''
         }
       }
     }
+    console.log( cita.value.duracionTotal )
     cita.value.fechaFin=bloqueRespaldo.addMinutes(cita.value.duracionTotal).format('YYYY-MM-DD HH:mm')
   }
 
@@ -601,8 +602,13 @@ var bloqueRespaldo = ''
       
       return espac
     }
+    else if(bloqueos.value[dia.value].length==1){
+      for(let i =actual;i<1200;i+=30)    {
+        espac+=30
 
-
+      }
+    return espac
+    }
     for(let i=0;i<=bloqueos.value[dia.value].length-1;i++){
       
      if((bloqueos.value[dia.value][i].from>=actual&&bloqueos.value[dia.value][i].class=='bloqueado')||(bloqueos.value[dia.value][i].to<=actual&&bloqueos.value[dia.value][i].class=='bloqueado')){
@@ -625,8 +631,10 @@ var bloqueRespaldo = ''
           
           return espac
         }
+      
         
       }
+      
     }
 
     
@@ -634,6 +642,96 @@ var bloqueRespaldo = ''
     }
   }))
 
+
+  var espacio2 = ref(computed(()=>{
+    if(bloque!='a'){
+      let subBloque=bloque
+      for(let o = 0;o<servicios.value.length;o++){
+      for(let i=0;i<=servs.value.length;i++)
+      {
+
+          if(servicios.value[o].id==servs.value[i]){
+            subBloque = bloque.addMinutes(servicios.value[o].duracion)
+        }
+      }
+      }
+      bloque=subBloque
+
+
+
+    let dia = subBloque.getDate()
+     let espac=0
+     let actual = (subBloque.getHours()*60)+subBloque.getMinutes()
+    
+     let locEventos = ['']
+     let s=''
+     for(let i = 0;i<=eventos.value.length-1;i++){
+      s=new Date(eventos.value[i].start)
+       if(s.getDate()==dia){
+        
+         locEventos.push(eventos.value[i])
+       }
+ 
+     }
+
+
+     if(locEventos.length==1){
+      for(let i =actual;i<1200;i+=30)    {
+        espac+=30
+
+      }
+    return espac
+    }
+
+
+
+
+
+    let start=null
+    let end=null
+
+    let save=[]
+    let menor=0
+
+     
+    for(let i=1;i<locEventos.length;i++){
+      start=new Date(locEventos[i].start)
+      start=(start.getHours()*60)+(start.getMinutes())
+      if(start>=actual){
+        save.push(start-actual)
+
+
+      }
+      
+     menor=Math.min(...save)
+    }
+    menor+=actual
+
+        
+    if(menor>actual){
+      for(let o =actual;o<menor;o+=30)    {
+        espac+=30
+      }
+
+      
+      return espac
+    }
+    else {
+     for(let o =actual;o<1200;o+=30)    {
+        espac+=30
+      }
+      
+      return espac
+    }
+  
+      
+      
+    }
+
+    
+
+    }
+  ))
 
 
   function editarCita(citaBloq){
@@ -691,19 +789,7 @@ var bloqueRespaldo = ''
 
    if (modocita.value=='cita'){
 
-    if(bloqueos.value[dia.value].from<=actual&&bloqueos.value[dia.value].to>actual){
-
-      return
-
-  }
-
-  for(let i=0;i<=bloqueos.value[dia.value].length-1;i++){
-
-    if(bloqueos.value[dia.value][i].from<=actual&&bloqueos.value[dia.value][i].to>actual){
-
-      return
-    }
-  }
+    
 
 
     while(bloque.getMinutes()%30!=0){
@@ -735,11 +821,6 @@ var bloqueRespaldo = ''
   ]
   
   bloqueRespaldo = bloque
-  if (preService.value>0){
-
-    
-    servs.value.push(preService.value)
-  }
   
   actualizarCita()
    }
@@ -764,7 +845,6 @@ var bloqueRespaldo = ''
 
    else
   {
-
     if(bloqueos.value[dia.value].from<=actual&&bloqueos.value[dia.value].to>actual){
 
       return
@@ -813,6 +893,7 @@ var bloqueRespaldo = ''
 
     
     servs.value.push(preService.value)
+   
   }
   actualizarCita()
 
@@ -857,5 +938,5 @@ var bloqueRespaldo = ''
   }
 
 
-  return {desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
+  return {espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
 })

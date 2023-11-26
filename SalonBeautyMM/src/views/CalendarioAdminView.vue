@@ -1,8 +1,6 @@
 <template>
   <div >
     <div >
-   
-          
       
       
           <vue-cal  
@@ -26,7 +24,8 @@
           :time-step="30"  locale="es"  
           id="calendario" 
           :time-cell-height="50"
-          :disable-views="views"
+          v-model:active-view='activeView'
+          v-model:disable-views="views"
           :week-start='1'
           >
           <template v-slot:no-event>{{}}</template>
@@ -44,7 +43,7 @@
             <v-btn @click='desactivarBloqueo(event)' v-if='event.title=="Bloqueado"' class='  ' icon='mdi-trash-can' size='x-small' height='25'  variant='text'></v-btn>
             
            </div>
-               {{event.start.format('HH:MM')}} - {{event.end.format('HH:MM')}}
+               {{event.start.format('HH:mm')}} - {{event.end.format('HH:mm')}}
        
        
             </v-container>
@@ -86,11 +85,11 @@
                         <v-row class=' d-flex align-center justify-space-between' style="width:16rem">
 
                        <v-col>
-                        <v-radio @click='view=true'  color='#169873' label="Dia" value="day"></v-radio>
+                        <v-radio @click="view1"  color='#169873' label="Día" value="day"></v-radio>
                        </v-col>
                           
                        <v-col>
-                        <v-radio @click='view=false'  color='#169873' label="Semana" value="week"></v-radio>
+                        <v-radio @click="view2"  color='#169873' label="Semana" value="week"></v-radio>
                      
                        </v-col>
                       </v-row>   
@@ -140,22 +139,23 @@ import {useRoute} from 'vue-router'
 
   const route = useRoute()
  
-  var view =ref(false)
+  var activeView=ref('week')
 
-  var views=ref(computed(()=>{
-    if (view){
-      return ['years', 'year', 'month']
-    }else{
-      return ['years', 'year', 'month','day']
-    }
 
-  }))
+  var views=ref(['years', 'year', 'month','day'])
+
+  function view1 (){
+    views.value=['years', 'year', 'month','week']
+  }
+   function view2  (){
+    views.value=['years', 'year', 'month','day']
+  }
+
 
  var preServicio =0
  
  modocita.value='bloq'
 
-var activeView=ref('week')
 
 
 
@@ -170,6 +170,7 @@ var hoy = new Date(tiempoTranscurrido);
 onMounted(()=>  {
   eventos.value= [ ]
   leerCitas()
+  modocita.value='cita'
   
   esc()})
 

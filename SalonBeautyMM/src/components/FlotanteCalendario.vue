@@ -123,7 +123,7 @@
          <v-container class='pa-0 ' style="height:34rem; width:33rem">
           <v-row>
             <v-col>
-              <formulario class='h-100 w-100 flotante' titulo='Crear cita' tipo='sinboton'>
+              <formulario class='h-100 w-100 flotante' titulo='Crear citaa' tipo='sinboton'>
                 <v-dialog width="550" persistent>
                   <template v-slot:activator="{ props }">
                     
@@ -138,7 +138,7 @@
                   <template v-slot:default="{ isActive }">
                     <v-card title="Servicios" >
                       <v-card-text  v-for='serv in servicios' :key='serv.id'>
-                        <div v-if='espacio>=serv.duracion'>
+                        <div v-if='espacio2>=serv.duracion'>
                         <div  class='d-flex justify-space-between align-center'>
                           {{serv.nombre}}
                           <div class='text-medium-emphasis d-flex align-center '>
@@ -150,11 +150,11 @@
                         <v-divider class='mt-2'></v-divider>
                         </div>
 
-                        <div v-else-if='espacio<=serv.duracion'>
+                        <div v-else-if='espacio2<=serv.duracion'>
                         <div  class='text-disabled d-flex justify-space-between align-center'>
                           {{serv.nombre}}
                           <div class='text-disabled d-flex align-center '>
-                            ${{serv.precio}}.00
+                              ${{serv.precio}}.00
                              - {{serv.duracion}}min.
                              <v-checkbox  disabled v-model='servs' :value='serv.id' color='#169873' class='d-flex'></v-checkbox>
                           </div>
@@ -172,7 +172,7 @@
                         ></boton>
                         <boton
                           texto="Listo" tamaño='small' class='w-25 mr-2'
-                          @click="isActive.value = false" @botonClick='actualizarCita'
+                          @click="isActive.value= false" @botonClick='actualizarCita'
                         ></boton>
                       </v-card-actions>
                     </v-card>
@@ -350,7 +350,7 @@ import formulario from './FormularioLayout.vue'
 
 const cal = CalendarioStore()
 
-const {activo,espacio,servs, flotante,modo,servicios,cita,servCita} = storeToRefs(cal)
+const {espacio2,activo,espacio,servs, flotante,modo,servicios,cita,servCita} = storeToRefs(cal)
 const {cancelar,actualizarCita,crearSC,enviarCita} = cal
 
 const props=defineProps({

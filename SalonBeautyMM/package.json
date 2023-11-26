@@ -12,8 +12,8 @@
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
     "vue-cal": "^4.8.1",
-    "vue-router": "^4.2.4",
-    "vuetify": "^3.4.2"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.4.3"
   },
   "devDependencies": {
     "@mdi/font": "^7.3.67",
