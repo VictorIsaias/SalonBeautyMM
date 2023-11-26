@@ -1,6 +1,5 @@
 <script setup>
 import {ref,onMounted} from 'vue';
-import axios from 'axios';
 const estado =[
   {tittle:'completo'},
   {tittle:'pendiente'},
@@ -8,21 +7,16 @@ const estado =[
 
 const citas_cliente =ref([]);
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get('http://localhost/citas');
-    citas_cliente.value = response.data.data;
-    
-  } catch (error) {
-    console.log(error);
+const respuesta = async () =>{
+  try{
+    const response = await fetch('http://localhost/servicio_cita');
+    const data = await response.json();
+    citas_cliente.value=data.data;
+  }catch{
+
   }
-};
-
-function estados(){
-  alert('funciono NYEEHEHEHJHEJ')
 }
-
-onMounted(fetchData);
+onMounted(respuesta);
 </script>
 <template>
   <div class="citas">
@@ -31,23 +25,23 @@ onMounted(fetchData);
       <thead>
         <br>
         <tr>
-          <th>Id</th>
-          <th>Servicios</th>
+          <th>Servicio</th>
+          <th>Cliente</th>
           <th>Costo</th>
-          <th>Fecha</th>
+          <th>Duracion_min</th>
           <th>Fecha de creacion</th>
           <th>Estado</th>
           <th>Editar</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="citas_cliente in citas_cliente" :key="citas_cliente.id">
-          <td>{{ citas_cliente.id }}</td>
-          <td>{{ citas_cliente.servicios }}</td>
-          <td>{{ citas_cliente.costo }}</td>
-          <td>{{ citas_cliente.fecha }}</td>
-          <td>{{ citas_cliente.fecha_de_creacion }}</td>
-          <td>{{ citas_cliente.estado }}</td>
+        <tr v-for="cita in citas_cliente" :key="cita.id">
+          <td>{{ cita.Servicio }}</td>
+          <td>{{ cita.Cliente }}</td>
+          <td>{{ cita.precio }}</td>
+          <td>{{ cita.duracion_min }}</td>
+          <td>{{ cita.fecha_hora }}</td>
+          <td>{{ cita.estado }}</td>
           <td> 
             <button style="border:1px solid black; width: 110px; height: 30px; border-radius:5px; background-color:white;">Modificar cita</button>
           </td>

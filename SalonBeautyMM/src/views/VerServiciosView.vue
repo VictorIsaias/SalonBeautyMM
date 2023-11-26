@@ -16,7 +16,7 @@ const {servicios} = storeToRefs(serv)
 <template>
   <v-container class="bg-red-lighten-4 elevation-5">
     <v-card v-for="service in servicios" :key="service.id" class="pink lighten-4" style="margin-bottom: 20px;">
-        <v-container v-if='$route.params.idcat==service.catalogo' style="background-color: #fee0e0;">
+        <v-container v-if='$route.params.id==service.catalogo' style="background-color: #fee0e0;">
             <v-row>
         <v-col cols="3">
           <v-img :src="service.imagen" cover class='h-100' width="300" :aspect-ratio="1">
