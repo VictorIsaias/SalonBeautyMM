@@ -9,10 +9,11 @@ export const CalendarioStore = defineStore('cal', () => {
   var minimo=ref(8)
   var maximo=ref(20)
   var activo=ref([''])
-  var bloque = 'a'
+  var bloque = ref('a')
   var modo = ref(1)
   var flotante = ref(false)
   var servs=ref([''])
+  var contador=ref(0)
 
 // informacion de Citas que se va a leer desde backend READ
 // Consulta para saber todos los bloqueos que tienen que mostrarse. id, fecha de inicio, duracion total (citas en una semana)
@@ -183,11 +184,68 @@ var cita = ref(
     tipo:'',
   }
 )
+//Registros de Servicio-cita que se van a enviar
+var SCita = ref([
+
+])
+
+function agregarSCita (){
+
+  let fecha =new Date(cita.value.fechaInicio)
+  for(let i=1;i<=servs.value.length-1;i++){
+    for(let o=0;o<=servicios.value.length-1;o++){
+if(servs.value[i]==servicios.value[o].id){
+
+  fecha=fecha.format('YYYY-MM-DD HH:mm')
+
+  SCita.value.push({
+    idCita: 0,
+    idServicio: servs.value[i],
+    precio: servicios.value[o].precio,
+    duracion: servicios.value[o].duracion,
+    fechaServicio:fecha,
+    tipo: 0
+  })
+  fecha=new Date(fecha)
+  fecha=fecha.addMinutes(servicios.value[o].duracion)
 
 
-function enviarCita(id,idcliente){
+}
+}}
+}
+
+function crearEnviarCita(){
+  agregarSCita()
+
+  let catalogo=0
+  let id=0
+  for(let o = 0;o<=SCita.value.length-1;o++){
+    id=servCita.value.length+o
+    
+    for(let i = 0;i<=servicios.value.length-1;i++){
+      if(servicios.value[i].id==SCita.value[o].idServicio){
+        catalogo=servicios.value[i].catalogo
+      }
+    }
+    agregarCita(SCita.value[o].fechaServicio,SCita.value[o].duracion,SCita.value[o].tipo,SCita.value[o].idServicio,catalogo,id)
+    
+  }
+
+
+  cita.value.idCliente = null
+  cita.value.tipo = 'cita'
+  
+
+  crearSC(servs.value)
+  alert('Su cita ha sido creada')
+  cancelar('cerrar')
+  console.log(SCita.value)
+  console.log(eventos.value)
+}
+
+
+function enviarCita(idcliente){
   if(servs.value.length>1){
-    cita.value.id = id
     cita.value.idCliente = idcliente
     cita.value.tipo = 'cita'
   
@@ -556,37 +614,35 @@ var bloqueRespaldo = ''
         }
       }
     }
-    console.log( cita.value.duracionTotal )
     cita.value.fechaFin=bloqueRespaldo.addMinutes(cita.value.duracionTotal).format('YYYY-MM-DD HH:mm')
   }
 
-
+ 
+var largo=0
+var espac=0
+var duracionAct=ref(0)
 
   var espacio = ref(computed(()=>{
-    if(bloque!='a'){
-      
+    if(bloque.value!='a'&&largo<servs.value.length){
       for(let o = 0;o<servicios.value.length;o++){
   
 
           if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
-       
-            bloque = bloque.addMinutes(servicios.value[o].duracion)
-        }
+          
+            bloque.value = bloque.value.addMinutes(servicios.value[o].duracion)
+            largo=servs.value.length
+            
+       }
       
       }
-   
 
-    let dia = computed(()=>{if(bloque.getDay()==0){
+    let dia = computed(()=>{if(bloque.value.getDay()==0){
       return 7
-     }else {return bloque.getDay()}})
+     }else {return bloque.value.getDay()}})
 
-     let espac=0
-     let actual = (bloque.getHours()*60)+bloque.getMinutes()
+     
+     let actual = (bloque.value.getHours()*60)+bloque.value.getMinutes()
     
-
-   
-
-
 
     let start=null
 
@@ -608,17 +664,15 @@ var bloqueRespaldo = ''
     menor+=actual
     
     if(menor>1200){
+      espac=0
       for(let o =actual;o<1200;o+=30)    {
         espac+=30
       }
       return espac
     }
-
-
-  
-
-        
+   
     if(menor>=actual){
+      espac=0
       for(let o =actual;o<menor;o+=30)    {
         espac+=30
       }
@@ -627,42 +681,37 @@ var bloqueRespaldo = ''
       return espac
     }
    
+    }
+    else{
+      largo=servs.value.length
+      espac=espac+duracionAct.value
+        return espac
       
-
-
-
-
-
-
-
-
-
+        
       
-
-    
-
-    
-
+      
     }
   }))
 
 
   var espacio2 = ref(computed(()=>{
-    if(bloque!='a'){
-    for(let o = 0;o<servicios.value.length;o++){
+    if(bloque.value!='a'&&largo<servs.value.length){
+      
+        for(let o = 0;o<servicios.value.length;o++){
+    
   
-
-          if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
-       
-            bloque = bloque.addMinutes(servicios.value[o].duracion)
+            if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
+             
+              bloque.value = bloque.value.addMinutes(servicios.value[o].duracion)
+              largo=servs.value.length
+            
+         }
+        
         }
-      
-      }
-      
 
-    let dia = bloque.getDate()
-     let espac=0
-     let actual = (bloque.getHours()*60)+bloque.getMinutes()
+    let dia = bloque.value.getDate()
+    
+     let actual = (bloque.value.getHours()*60)+bloque.value.getMinutes()
     
      let locEventos = ['']
      let s=''
@@ -677,7 +726,9 @@ var bloqueRespaldo = ''
 
 
      if(locEventos.length==1){
+      espac=0
       for(let i =actual;i<1200;i+=30)    {
+        
         espac+=30
 
       }
@@ -686,27 +737,44 @@ var bloqueRespaldo = ''
 
 
 
-
-
     let start=null
-
     let save=[]
     let menor=0
 
-     
-    for(let i=1;i<locEventos.length;i++){
-      start=new Date(locEventos[i].start)
-      start=(start.getHours()*60)+(start.getMinutes())
-      if(start>=actual){
-        save.push(start-actual)
-
-
-      }
-      
-     menor=Math.min(...save)
+    if(modocita.value=='editar'&&servs.value.length==1){
+      locEventos=locEventos.filter(item => item.start !== bloque.value.format('YYYY-MM-DD HH:mm'))
     }
-    menor+=actual
+      for(let i=1;i<locEventos.length;i++){
+        start=new Date(locEventos[i].start)
+        start=(start.getHours()*60)+(start.getMinutes())
+        if(start>=actual){
+          save.push(start-actual)
+  
+  
+        }
+        
+       menor=Math.min(...save)
+      }
+      menor+=actual
+    
+    
+      for(let i=1;i<locEventos.length;i++){
+        start=new Date(locEventos[i].start)
+        start=(start.getHours()*60)+(start.getMinutes())
+        if(start>=actual){
+          save.push(start-actual)
+  
+  
+        }
+        
+       menor=Math.min(...save)
+      }
+      menor+=actual
+    
+
+    
     if(menor>1200){
+      espac=0
       for(let o =actual;o<1200;o+=30)    {
         espac+=30
       }
@@ -717,6 +785,7 @@ var bloqueRespaldo = ''
 
         
     if(menor>=actual){
+      espac=0
       for(let o =actual;o<menor;o+=30)    {
         espac+=30
       }
@@ -728,20 +797,36 @@ var bloqueRespaldo = ''
       
       
     }
-
+    else{
+      largo=servs.value.length
+      espac=espac+duracionAct.value
+        return espac
+      
+        
+      
+      
+    }
     
 
-    }
+  }
   ))
 
 
   function editarCita(citaBloq){
+    bloque.value=citaBloq
     modocita.value='editar'
-
     flotante.value = !flotante.value
-    cita.value={
 
-    }
+    let dia = computed(()=>{if(citaBloq.getDay()==0){
+      return 7
+    }else {return citaBloq.getDay()}})
+
+    let actual = (citaBloq.getHours()*60)+citaBloq.getMinutes()
+      
+
+
+    bloqueRespaldo = bloque.value
+    actualizarCita()
 
     //update de cita instantaneamente
 
@@ -771,10 +856,10 @@ var bloqueRespaldo = ''
 
   
   function abrirCrearcita(bloq){
-   
+  
     //Asignacion de valores globales de la funcion (dia, actual, bloque)
 
-        bloque = bloq
+        bloque.value = bloq
         let dia = computed(()=>{if(bloq.getDay()==0){
         return 7
       }else {return bloq.getDay()}})
@@ -793,8 +878,8 @@ var bloqueRespaldo = ''
     
 
 
-    while(bloque.getMinutes()%30!=0){
-    bloque = bloque.subtractMinutes(1)
+    while(bloque.value.getMinutes()%30!=0){
+    bloque.value = bloque.value.subtractMinutes(1)
   }
 
 
@@ -804,7 +889,7 @@ var bloqueRespaldo = ''
   flotante.value = !flotante.value
   cita.value={
     costo: 0,
-    fechaInicio:bloque.format('YYYY-MM-DD HH:mm'),
+    fechaInicio:bloque.value.format('YYYY-MM-DD HH:mm'),
     fechaFin: '',
     idCliente:0,
     duracionTotal:0,
@@ -821,7 +906,7 @@ var bloqueRespaldo = ''
     }
   ]
   
-  bloqueRespaldo = bloque
+  bloqueRespaldo = bloque.value
   
   actualizarCita()
    }
@@ -830,10 +915,10 @@ var bloqueRespaldo = ''
 
    else if (modocita.value=='bloq'){
 
-    while(bloque.getMinutes()%30!=0){
-      bloque = bloque.subtractMinutes(1)
+    while(bloque.value.getMinutes()%30!=0){
+      bloque.value = bloque.value.subtractMinutes(1)
     }
-    agregarCita(bloque.format('YYYY-MM-DD HH:mm'),30,1,0,0,0)
+    agregarCita(bloque.value.format('YYYY-MM-DD HH:mm'),30,1,0,0,0)
     
 
 
@@ -861,8 +946,8 @@ var bloqueRespaldo = ''
   }
 
 
-    while(bloque.getMinutes()%30!=0){
-    bloque = bloque.subtractMinutes(1)
+    while(bloque.value.getMinutes()%30!=0){
+    bloque.value = bloque.value.subtractMinutes(1)
   }
 
 
@@ -872,7 +957,7 @@ var bloqueRespaldo = ''
   flotante.value = !flotante.value
   cita.value={
     costo: 0,
-    fechaInicio:bloque.format('YYYY-MM-DD HH:mm'),
+    fechaInicio:bloque.value.format('YYYY-MM-DD HH:mm'),
     fechaFin: '',
     idCliente:0,
     duracionTotal:0,
@@ -889,13 +974,14 @@ var bloqueRespaldo = ''
     }
   ]
   
-  bloqueRespaldo = bloque
+ 
   if (preService.value>0){
 
     
     servs.value.push(preService.value)
    
   }
+  bloqueRespaldo = bloque.value
   actualizarCita()
 
     
@@ -915,6 +1001,7 @@ var bloqueRespaldo = ''
   function cancelar(cerrar){
     if(cerrar=='cerrar'){
       flotante.value = !flotante.value
+      modocita.value='editar'
     }
 
     activo.value=['']
@@ -923,7 +1010,7 @@ var bloqueRespaldo = ''
       activo.value.push(true)
     }
   
-
+    contador.value=0
     servs.value=[""]
     cita.value={
       id:0,
@@ -934,10 +1021,10 @@ var bloqueRespaldo = ''
       duracionTotal:0,
       tipo:'',
     }
-    bloque=bloqueRespaldo
-    cita.value.fechaInicio=bloque.format('YYYY-MM-DD HH:mm')
+    bloque.value=bloqueRespaldo
+    cita.value.fechaInicio=bloque.value.format('YYYY-MM-DD HH:mm')
   }
 
 
-  return {espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
+  return {duracionAct,bloque,contador,agregarSCita,crearEnviarCita,espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
 })

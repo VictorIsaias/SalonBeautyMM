@@ -39,7 +39,7 @@
             <v-container class='d-flex flex-column align-start pt-0 pl-3 pr-0' style='font-family: "Oswald", sans-serif;font-size:1rem'>
             <div class=" d-flex justify-space-between w-100">
             {{event.title}}  
-            <v-btn @click='editarCita(event)' v-if='event.title!="Bloqueado"' class=' ' icon='mdi-pencil' size='x-small' height='25' variant='text'></v-btn>
+            <v-btn @click='editarCita(event.start)' v-if='event.title!="Bloqueado"' class=' ' icon='mdi-pencil' size='x-small' height='25' variant='text'></v-btn>
             <v-btn @click='desactivarBloqueo(event)' v-if='event.title=="Bloqueado"' class='  ' icon='mdi-trash-can' size='x-small' height='25'  variant='text'></v-btn>
             
            </div>
@@ -293,7 +293,6 @@ onMounted(()=>  {
           evento2+=eventos.value[i].start.getHours()*60
           duracion=evento-evento2
           if(evento>start2&&start2>start4||minimo.value*60>evento2||maximo.value*60<evento||evento2==start2&&eventos.value[i]!=eventos.value[o]){
-        
             
             eventos.value[i].end = obj.oldDate.addMinutes(duracion)
             eventos.value[i].start =obj.oldDate
