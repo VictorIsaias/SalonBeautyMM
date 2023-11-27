@@ -2,12 +2,16 @@
 import BotonPagina from "../components/BotonPagina.vue"
 import Footer from '../components/PiePagina.vue';
 import {ref} from 'vue';
-const items =ref([
-    {id:1, image: '../src/assets/img/3_objects.png'},
-    {id:2, imgae: '../src/assets/img/logo.png'},
+const slog =ref([
+    {id:1, image: '../src/assets/img/slogan1.png'},
+    {id:2, image: '../src/assets/img/slogan2.png'},
+    {id:3, image: '../src/assets/img/slogan3.png'},
 ]);
 const servicios=ref([
-    {id:2,image:'../src/assets/img/logo.png'},
+    {id:1, image: '../src/assets/img/servicio3.jpg'},
+    {id:2, image: '../src/assets/img/servicio4.jpg'},
+    {id:3, image: '../src/assets/img/servicio5.jpg'},
+    {id:4, image: '../src/assets/img/servicio6.jpg'},
 ]);
 </script>
 <template>
@@ -20,48 +24,47 @@ const servicios=ref([
             </div><br>
         </div>
         <div class="carrusel">
-            <v-carousel class='h-50'>
-                <v-carousel-item v-for="item in items" :key="item.id" >
-                    <v-img :src="item.image"></v-img>
+            <v-carousel cycle interval="3000" class='h-50'>
+                <v-carousel-item v-for="item in slog" :key="item.id" >
+                    <v-img :src="item.image" style="opacity: 0.7;"></v-img>
                 </v-carousel-item>
             </v-carousel><br>
         </div>
         <div class="item2">
-            <h1>PIDE UNA CITA</h1>
-            <H3>ADQUIERE UN NUEVO ESTILO</H3>
-            <h4>INICIA SESION Y PIDE UNA CITA PUEDE SELECCIONAR EL SERVICIO QUE GUSTE A LA HORA QUE TU QUIERAS</h4>
-            <v-carousel >
+            <h1 style="font-family: 'Times New Roman', Times, serif;">PIDE UNA CITA</h1>
+            <h3 style="font-family: 'Courier New', Courier, monospace;">ADQUIERE UN NUEVO ESTILO</h3>
+            <h4 style="font-family: 'Courier New', Courier, monospace;">INICIA SESION Y PIDE UNA CITA PUEDE SELECCIONAR EL SERVICIO QUE GUSTE A LA HORA QUE TU QUIERAS</h4>
+            <v-carousel cycle interval="3000">
                 <v-carousel-item class="carousel" v-for="item in servicios" :key="item.id">
-                    <v-img :src="item.image"></v-img>
-                </v-carousel-item>
-            </v-carousel>
-            <v-carousel style="height: 400px;">
-                <v-carousel-item class="carousel" v-for="item in service" :key="item.id">
-                    <v-img :src="time.image"></v-img>
+                    <v-img :src="item.image" style="opacity: 0.7;"></v-img>
                 </v-carousel-item>
             </v-carousel>
         </div>
+        <br><br>
         <div class="item3">
-            <h1 style="border-bottom:2px solid black;">SERVICIOS</h1><br>
-            <h3>REVISA NUESTRO CATALOGO DE SERVICIOS</h3><br>
-            <div class="servicios">
-                <div>
-                    <h2>Tinte de cabello</h2>
-                    <p>Renuva el estilo personal que llevas, con un color diferente</p>
-                    <a href="">MAS INFORMACION</a>
-                </div>
-                <div>
-                    <h2>Maquillaje</h2>
-                    <p>Prepara tu mejor imagen para cualquien ocacion especial</p>
-                    <a href="">MAS INFORMACION</a>
-                </div>
-                <div>
-                    <h2>Corte de cabello</h2>
-                    <p>Nutre estilo de gran valor aprovechando lo mejor de ti</p>
-                    <a href="">MAS INFORMACION</a>
-                </div>
-            </div>
-        </div>
+  <h1 style="border-bottom: 2px solid black; font-family: 'Times New Roman', Times, serif;">SERVICIOS</h1><br>
+  <h3 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">REVISA NUESTRO CATÁLOGO DE SERVICIOS</h3><br>
+  <div class="servicios">
+    <v-container class="info">
+      <h2 class="letra">Tinte de cabello</h2>
+      <p>Renuva el estilo personal que llevas, con un color diferente</p>
+      <a class="link" href="" style="margin-top: 20px;">MAS INFORMACIÓN</a>
+    </v-container>
+
+    <v-container class="info">
+      <h2 class="letra">Maquillaje</h2>
+      <p>Prepara tu mejor imagen para cualquier ocasión especial</p>
+      <a class="link" href="" style="margin-top: 20px;">MAS INFORMACIÓN</a>
+    </v-container>
+
+    <v-container class="info">
+      <h2 class="letra">Corte de cabello</h2>
+      <p>Nutre estilo de gran valor aprovechando lo mejor de ti</p>
+      <a class="link" href="" style="margin-top: 20px;">MAS INFORMACIÓN</a>
+    </v-container>
+  </div>
+</div>
+
         <Footer/>
     </div>
 </template>
@@ -112,20 +115,24 @@ const servicios=ref([
     flex-direction:column;
     align-items:center;
 }
-.item3{
-    background-image: url('../assets/img/salon.jpeg');
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    margin: 10px;
-    border-radius: 10px;
+
+.item3 {
+  background-image: url('../assets/img/salon.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 .servicios{
     display:flex;
     height: 500px;
     width:100%;
     justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 .servicios div{
     background-color:#e9bdd2;
@@ -135,5 +142,23 @@ const servicios=ref([
     width: 200px;
     margin: 10px;
     padding: 9px;
+}
+
+.info{
+    background-color: #f7e7ef;
+    display: flexbox;
+}
+
+.info a{
+    justify-content: end;
+    align-items: end;
+}
+.letra{
+    color: #a8a9c8;
+}
+
+.link{
+    color: #51ab92;
+    align-self: flex-end;
 }
 </style>

@@ -1,15 +1,28 @@
-<script setup>
+<script>
+export default {
+    name: 'Contacto'
+}
+const correo = ref([
+    {id: 1, image: ''}
+]);
 </script>
+
 <template>
-     <div class="item4">
-            <h3>!Contactanos!</h3><br>
+    <v-card class="item4">
+        <v-card-title>
+            <h3>!Contactanos!</h3>
+        </v-card-title>
+        <v-card-text>
             <div>
+                <v-icon icon="mdi-whatsapp"></v-icon>
                 <h4>Mine.ejemplo@gmail.com</h4>
                 <h4>87-17-95-77-18</h4>
                 <h4>www.facebook/SalonBeautyMM.com</h4>
             </div>
-        </div>
+        </v-card-text>
+    </v-card>
 </template>
+
 <style scoped>
 .item4{
     display: flex;
