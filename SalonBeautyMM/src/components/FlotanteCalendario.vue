@@ -150,7 +150,7 @@
                         <v-divider class='mt-2'></v-divider>
                         </div>
 
-                        <div v-else-if='espacio2<=serv.duracion'>
+                        <div v-else-if='espacio2<serv.duracion'>
                         <div  class='text-disabled d-flex justify-space-between align-center'>
                           {{serv.nombre}}
                           <div class='text-disabled d-flex align-center '>

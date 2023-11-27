@@ -334,8 +334,6 @@ const minDate = computed (() => {
 
   function anterior (){
     
-   // semanaact.value = semanaact.value.setDate(semanaact.value.getDate() - 7)
- 
    if(week==2){
         week = 1
         document.getElementById("previo").setAttribute('hidden',true)
@@ -353,8 +351,7 @@ const minDate = computed (() => {
 
   function siguiente (){
     
-    //semanaact.value = semanaact.value.setDate(semanaact.value.getDate() + 7)
-    if(week==1){
+   if(week==1){
         
     document.getElementById("previo").removeAttribute('hidden')
       
@@ -381,23 +378,19 @@ const minDate = computed (() => {
     array.value=[]
     
     var fecha = minDate.value.getDay() 
+    if(fecha==0){
+      fecha=7
+    }
  
   switch(week)
   {
     case 1:
-    if(fecha==7){
-    semanaact.value = semanaact.value.setDate(semanaact.value.getDate() + 7)
-    
-    document.getElementById("siguiente").setAttribute('hidden',true)
-    
-    
-  }
-  else{
+  
     while(fecha>=1){
       array.value.push(fecha-1)
       fecha-=1}
       
-  }
+  
     break
     case 2:
       array.value=['']

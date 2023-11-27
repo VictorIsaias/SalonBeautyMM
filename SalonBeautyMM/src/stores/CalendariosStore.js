@@ -564,78 +564,82 @@ var bloqueRespaldo = ''
 
   var espacio = ref(computed(()=>{
     if(bloque!='a'){
-      let subBloque=bloque
+      
       for(let o = 0;o<servicios.value.length;o++){
-      for(let i=0;i<=servs.value.length;i++)
-      {
+  
 
-          if(servicios.value[o].id==servs.value[i]){
-            subBloque = bloque.addMinutes(servicios.value[o].duracion)
+          if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
+       
+            bloque = bloque.addMinutes(servicios.value[o].duracion)
         }
+      
       }
-      }
-      bloque=subBloque
+   
 
-
-
-
-    let dia = computed(()=>{if(subBloque.getDay()==0){
+    let dia = computed(()=>{if(bloque.getDay()==0){
       return 7
-     }else {return subBloque.getDay()}})
+     }else {return bloque.getDay()}})
 
      let espac=0
-     let actual = (subBloque.getHours()*60)+subBloque.getMinutes()
+     let actual = (bloque.getHours()*60)+bloque.getMinutes()
     
 
-    if(bloqueos.value[dia.value].from>=actual){
-      for(let i =actual;i<bloqueos.value[dia.value].from;i+=30)    {
-        espac+=30
-      }
+   
 
+
+
+    let start=null
+
+    let save=[]
+    let menor=0
+
+     
+    for(let i=1;i<=bloqueos.value[dia.value].length-1;i++){
+      if(bloqueos.value[dia.value][i].class=='bloqueado'){
       
-      return espac
-    }
-    else if(bloqueos.value[dia.value].to<=actual){
-     for(let i =actual;i<1200;i+=30)    {
-        espac+=30
-      }
-      
-      return espac
-    }
-    else if(bloqueos.value[dia.value].length==1){
-      for(let i =actual;i<1200;i+=30)    {
-        espac+=30
+      start=bloqueos.value[dia.value][i].from
+      if(start>=actual){
+        save.push(start-actual)
 
       }
-    return espac
+      }
+     menor=Math.min(...save)
     }
-    for(let i=0;i<=bloqueos.value[dia.value].length-1;i++){
-      
-     if((bloqueos.value[dia.value][i].from>=actual&&bloqueos.value[dia.value][i].class=='bloqueado')||(bloqueos.value[dia.value][i].to<=actual&&bloqueos.value[dia.value][i].class=='bloqueado')){
-
-
-      
-
-        if(bloqueos.value[dia.value][i].from>=actual){
-          for(let o =actual;o<bloqueos.value[dia.value][i].from;o+=30)    {
-            espac+=30
-          }
+    menor+=actual
     
-          
-          return espac
-        }
-        else if(bloqueos.value[dia.value][i].to<=actual&&i==bloqueos.value[dia.value].length-1){
-         for(let o =actual;o<1200;o+=30)    {
-            espac+=30
-          }
-          
-          return espac
-        }
-      
+    if(menor>1200){
+      for(let o =actual;o<1200;o+=30)    {
+        espac+=30
+      }
+      return espac
+    }
+
+
+  
+
         
+    if(menor>=actual){
+      for(let o =actual;o<menor;o+=30)    {
+        espac+=30
       }
+
       
+      return espac
     }
+   
+      
+
+
+
+
+
+
+
+
+
+      
+
+    
 
     
 
@@ -645,23 +649,20 @@ var bloqueRespaldo = ''
 
   var espacio2 = ref(computed(()=>{
     if(bloque!='a'){
-      let subBloque=bloque
-      for(let o = 0;o<servicios.value.length;o++){
-      for(let i=0;i<=servs.value.length;i++)
-      {
+    for(let o = 0;o<servicios.value.length;o++){
+  
 
-          if(servicios.value[o].id==servs.value[i]){
-            subBloque = bloque.addMinutes(servicios.value[o].duracion)
+          if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
+       
+            bloque = bloque.addMinutes(servicios.value[o].duracion)
         }
+      
       }
-      }
-      bloque=subBloque
+      
 
-
-
-    let dia = subBloque.getDate()
+    let dia = bloque.getDate()
      let espac=0
-     let actual = (subBloque.getHours()*60)+subBloque.getMinutes()
+     let actual = (bloque.getHours()*60)+bloque.getMinutes()
     
      let locEventos = ['']
      let s=''
@@ -688,7 +689,6 @@ var bloqueRespaldo = ''
 
 
     let start=null
-    let end=null
 
     let save=[]
     let menor=0
@@ -706,9 +706,17 @@ var bloqueRespaldo = ''
      menor=Math.min(...save)
     }
     menor+=actual
+    if(menor>1200){
+      for(let o =actual;o<1200;o+=30)    {
+        espac+=30
+      }
+      return espac
+    }
+
+    
 
         
-    if(menor>actual){
+    if(menor>=actual){
       for(let o =actual;o<menor;o+=30)    {
         espac+=30
       }
@@ -716,14 +724,7 @@ var bloqueRespaldo = ''
       
       return espac
     }
-    else {
-     for(let o =actual;o<1200;o+=30)    {
-        espac+=30
-      }
-      
-      return espac
-    }
-  
+   
       
       
     }
