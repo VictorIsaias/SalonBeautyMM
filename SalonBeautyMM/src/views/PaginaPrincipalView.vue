@@ -33,7 +33,7 @@ const servicios=ref([
         <div class="item2">
             <v-responsive>
             <v-row>
-              <v-col>
+              <v-col align="center" justify="center">
                 <h1 class="headline">PIDE UNA CITA</h1>
                 <h3 class="subtitle-1">ADQUIERE UN NUEVO ESTILO</h3>
                 <h4 class="body-1">INICIA SESION Y PIDE UNA CITA. PUEDES SELECCIONAR EL SERVICIO QUE GUSTES A LA HORA QUE DESEES</h4>
@@ -175,10 +175,10 @@ const servicios=ref([
     font-size: 1rem;
   }
   .subtitle-1 {
-    font-size: 1rem;
+    font-size: 0.70rem;
   }
   .body-1 {
-    font-size: 1rem;
+    font-size: 0.50rem;
   }
 }
 
@@ -187,7 +187,7 @@ const servicios=ref([
     font-size: 2rem;
   }
   .subtitle-1 {
-    font-size: 2rem;
+    font-size: 1.30rem;
   }
   .body-1 {
     font-size: 1rem;
