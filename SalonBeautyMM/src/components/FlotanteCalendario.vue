@@ -390,7 +390,7 @@
 <script setup>
 
 import {ref,computed} from 'vue'
-import {CalendarioStore} from '../stores/CalendariosStore.js'
+import {CalendarioStore} from '@/stores/CalendariosStore.js'
 import { storeToRefs } from 'pinia'
 import boton from './BotonPagina.vue'
 import formulario from './FormularioLayout.vue'

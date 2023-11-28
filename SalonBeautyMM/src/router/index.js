@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import iniciarview from '../views/IniciarSesionView.vue'
-import registrarview from '../views/RegistrarUsuarioView.vue'
-import administrarview from '../views/AdministrarPaginaView.vue'
-import userview from '../views/UserView.vue'
-import servicesview from '../views/ServicesView.vue'
-import detalleview from '../views/DetalleView.vue'
-import vercatalogoview from '../views/VerCatalogoView.vue'
-import verserviciosview from '../views/VerServiciosView.vue'
+import iniciarview from '../views/ClientePrincipal/IniciarSesionView.vue'
+import registrarview from '../views/ClientePrincipal/RegistrarUsuarioView.vue'
+import administrarview from '../views/AdminAdministrar/AdministrarPaginaView.vue'
+import userview from '../views/ClientePrincipal/UserView.vue'
+import servicesview from '../views/ClienteVerServicios/ServicesView.vue'
+import detalleview from '../views/ClienteVerServicios/DetalleView.vue'
+import vercatalogoview from '../views/ClienteVerServicios/VerCatalogoView.vue'
+import verserviciosview from '../views/ClienteVerServicios/VerServiciosView.vue'
+import paginaprincipalview from '../views/ClientePrincipal/PaginaPrincipalView.vue'
+import citasclienteview from '../views/ClienteCitas/CitasClienteView.vue'
+import calendarioclienteview from '../views/ClienteCitas/CalendarioClienteView.vue'
+import calendarioadminview from '../views/AdminControl/CalendarioAdminView.vue'
+import infocontactoview from '../views/ClientePrincipal/InformacionContactoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +19,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'inicio',
-      component: ()=>import('../views/PaginaPrincipalView.vue')
+      component: paginaprincipalview
     },
     {
       path: '/user',
@@ -40,13 +45,13 @@ const router = createRouter({
     {
       path: '/dates',
       name: 'citas_cliente',
-      component: () => import('../views/CitasClienteView.vue')
+      component: citasclienteview
     },
    
     {
       path: '/create_appmnt/:idserv/:serv',
       name: 'crear_cita',
-      component: () => import('../views/CalendarioClienteView.vue')
+      component: calendarioclienteview
     },
     {
       path: '/services',
@@ -71,6 +76,11 @@ const router = createRouter({
 
       ]
     },
+    {
+      path: '/contact',
+      name: 'contacto',
+      component: infocontactoview
+    },
     // Administrador
     {
       path: '/administrar',
@@ -80,7 +90,7 @@ const router = createRouter({
     {
       path: '/calendar',
       name: 'Calendario-admin',
-      component: () => import('../views/CalendarioAdminView.vue')
+      component: calendarioadminview
     }
   ]
 })

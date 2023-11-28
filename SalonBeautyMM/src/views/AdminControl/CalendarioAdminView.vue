@@ -123,11 +123,11 @@
 
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
-import '../assets/vuecal.scss'
+import '@/assets/vuecal.scss'
 import {computed, ref,onMounted,onUnmounted} from "vue"
-import boton from '../components/BotonPagina.vue'
-import ventana from '../components/FlotanteCalendario.vue'
-import {CalendarioStore} from '../stores/CalendariosStore'
+import boton from '@/components/BotonPagina.vue'
+import ventana from '@/components/FlotanteCalendario.vue'
+import {CalendarioStore} from '@/stores/CalendariosStore'
 import { storeToRefs } from 'pinia'
 
 const cal = CalendarioStore()

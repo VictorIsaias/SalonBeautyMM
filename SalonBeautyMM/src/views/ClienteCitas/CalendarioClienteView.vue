@@ -12,6 +12,7 @@
            :max-date="maxDate"
            hideViewSelector
            small
+           class='elevation-3'
            :time-from="minimo * 60"
            :time-to="maximo * 60"
            v-model:selected-date="semanaact"
@@ -62,11 +63,11 @@
 
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
-import '../assets/vuecal.scss'
+import '@/assets/vuecal.scss'
 import {computed, ref,onMounted} from "vue"
-import boton from '../components/BotonPagina.vue'
-import ventana from '../components/FlotanteCalendario.vue'
-import {CalendarioStore} from '../stores/CalendariosStore'
+import boton from '@/components/BotonPagina.vue'
+import ventana from '@/components/FlotanteCalendario.vue'
+import {CalendarioStore} from '@/stores/CalendariosStore'
 import { storeToRefs } from 'pinia'
 
 const cal = CalendarioStore()

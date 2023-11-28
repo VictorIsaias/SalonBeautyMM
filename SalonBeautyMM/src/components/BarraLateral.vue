@@ -27,7 +27,7 @@
 
 import {ref,computed} from 'vue'
 
-import {AdministrarStore} from '../stores/AdministrarStore'
+import {AdministrarStore} from '@/stores/AdministrarStore'
 import { storeToRefs } from 'pinia'
 
 const admins = AdministrarStore()
