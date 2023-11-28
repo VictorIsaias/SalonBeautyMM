@@ -31,20 +31,28 @@ const servicios=ref([
             </v-carousel><br>
         </div>
         <div class="item2">
-            <h1 style="font-family: 'Times New Roman', Times, serif;">PIDE UNA CITA</h1>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">ADQUIERE UN NUEVO ESTILO</h3>
-            <h4 style="font-family: 'Courier New', Courier, monospace;">INICIA SESION Y PIDE UNA CITA PUEDE SELECCIONAR EL SERVICIO QUE GUSTE A LA HORA QUE TU QUIERAS</h4>
-            <v-carousel cycle interval="3000">
-                <v-carousel-item class="carousel" v-for="item in servicios" :key="item.id">
+            <v-responsive>
+            <v-row>
+              <v-col>
+                <h1 class="headline">PIDE UNA CITA</h1>
+                <h3 class="subtitle-1">ADQUIERE UN NUEVO ESTILO</h3>
+                <h4 class="body-1">INICIA SESION Y PIDE UNA CITA. PUEDES SELECCIONAR EL SERVICIO QUE GUSTES A LA HORA QUE DESEES</h4>
+              </v-col>
+            </v-row>
+          </v-responsive>
+        </div>
+        <div class="carrusel">
+            <v-carousel cycle interval="3000" class='h-50'>
+                <v-carousel-item v-for="item in servicios" :key="item.id" >
                     <v-img :src="item.image" style="opacity: 0.7;"></v-img>
                 </v-carousel-item>
-            </v-carousel>
+            </v-carousel><br>
         </div>
-        <br><br>
+        <br>
         <div class="item3">
   <h1 style="border-bottom: 2px solid black; font-family: 'Times New Roman', Times, serif;">SERVICIOS</h1><br>
   <h3 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">REVISA NUESTRO CATÁLOGO DE SERVICIOS</h3><br>
-  <div class="servicios">
+  <div class=" servicios">
     <v-container class="info">
       <h2 class="letra">Tinte de cabello</h2>
       <p>Renuva el estilo personal que llevas, con un color diferente</p>
@@ -160,5 +168,29 @@ const servicios=ref([
 .link{
     color: #51ab92;
     align-self: flex-end;
+}
+
+@media screen and (max-width: 960px) {
+  .headline {
+    font-size: 1rem;
+  }
+  .subtitle-1 {
+    font-size: 1rem;
+  }
+  .body-1 {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .headline {
+    font-size: 2rem;
+  }
+  .subtitle-1 {
+    font-size: 2rem;
+  }
+  .body-1 {
+    font-size: 1rem;
+  }
 }
 </style>
