@@ -23,7 +23,7 @@
 <script setup>
 import {ref,computed} from 'vue'
 import Boton from './BotonPagina.vue'
-import {AdministrarStore} from '../stores/AdministrarStore'
+import {AdministrarStore} from '@/stores/AdministrarStore'
 import { storeToRefs } from 'pinia'
 
 const admins = AdministrarStore()

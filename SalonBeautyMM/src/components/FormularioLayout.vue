@@ -10,6 +10,10 @@
           
                         
         <div class=" pb-3 interior h-100">
+            <div class="pl-4 pr-4">
+                <slot name='info' ></slot>
+            </div>
+            
            <v-container class="pl-10 pr-10">
                 
                         <slot></slot>

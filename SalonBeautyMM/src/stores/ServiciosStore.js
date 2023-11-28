@@ -27,13 +27,14 @@ export const ServiciosStore = defineStore('id', () => {
     }
   }  
 
+
   onMounted(response);
   var seleccion = (id)=>{
     return servicios.value[id-1]
    
   }
    
-    
+   
 
 
   return { seleccion,cServicios,servicios }

@@ -1,4 +1,5 @@
 
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -26,6 +27,4 @@ app.use(router)
 app.use(vuetify)
 
 app.mount('#app')
-
-
  

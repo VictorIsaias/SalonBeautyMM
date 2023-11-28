@@ -10,9 +10,18 @@
             </div>
         </div>
 
+        <div  v-if='tipo=="pedir"'  >
+            <div ref="boton">
+            <v-btn @click='btnClick'  class='btncita'  ref='boton-pry' width='100%' height='3rem' elevation='3' rounded="lg" variant="tonal"  :size="tamaño">
+                <div class='d-flex align-center '><v-icon icon='mdi-calendar-range' class='mr-3'></v-icon>
+                    <strong >{{texto}}</strong></div>
+             </v-btn>
+            </div>
+        </div>
+
         <div  v-if='tipo=="solo"' >
            <router-link :to='{name:link}'>
-            <v-btn @click='btnClick'   ref='boton-pry'   variant="text"  :size="tamaño">
+            <v-btn @click='btnClick'  :color='color' ref='boton-pry'   variant="text"  :size="tamaño">
                 <slot></slot>
             </v-btn>
         </router-link>
@@ -64,8 +73,8 @@ const props = defineProps({
         posicion:{type:String}, //posicion flex-direction: end y start
         tamaño: {type:String}, //tamaño: x-small, small, large, x-large
         propiedad: {type:String}, //propiedad extra de vuetify btn
-        link: {type:String} //nombre de ruta (de routerlink) para boton minus
-        
+        link: {type:String}, //nombre de ruta (de routerlink) para boton minus
+        color:{type:String}
 })
 const boton = ref(null)
 const boton_pry = ref(null)
@@ -114,6 +123,19 @@ onMounted(()=>
 
 
 <style scoped>
+
+.btncita{
+    opacity: 0.88;
+  color:azure;
+  font-size: 1.2rem;
+  font-family: britannnic;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 108, 77, 0.097);
+  background: radial-gradient(circle, #28ebb3 0%, #89ffde 100%);
+  background-blend-mode: normal;
+  backdrop-filter: blur(23px);
+  box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
+}
 
 .texto{
     color: #9F3E6D;

@@ -43,11 +43,11 @@
 
 <script setup>
 import {ref,computed} from 'vue'
-import FormularioPrincipal from '../components/FormularioLayout.vue'
-import router from '../router/index'
-import {PaginaStore} from '../stores/PaginaStore.js'
+import FormularioPrincipal from '@/components/FormularioLayout.vue'
+import router from '@/router/index'
+import {PaginaStore} from '@/stores/PaginaStore.js'
 import { storeToRefs } from 'pinia'
-import rules from '../validations/rules.js'
+import rules from '@/validations/rules.js'
 
 const pagina = PaginaStore()
 const {usuarios,id} = storeToRefs(pagina)

@@ -102,10 +102,10 @@
 
 <script setup>
 import {ref,computed} from 'vue'
-import contServicios from '../components/ContenedorServicios.vue'
-import barralateral from '../components/BarraLateral.vue'
-import formulario from '../components/FormularioLayout.vue'
-import {AdministrarStore} from '../stores/AdministrarStore.js'
+import contServicios from '@/components/ContenedorServicios.vue'
+import barralateral from '@/components/BarraLateral.vue'
+import formulario from '@/components/FormularioLayout.vue'
+import {AdministrarStore} from '@/stores/AdministrarStore.js'
 import { storeToRefs } from 'pinia'
 
 const admins = AdministrarStore()

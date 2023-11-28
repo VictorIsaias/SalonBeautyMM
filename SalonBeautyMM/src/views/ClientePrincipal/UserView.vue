@@ -6,7 +6,7 @@
 
 <script setup>
 import {ref,computed,onMounted} from 'vue'
-import router from '../router/index'
+import router from '@/router/index'
 
 onMounted(()=>{
     router.push({ name: 'iniciar'})
