@@ -39,7 +39,7 @@ const servicios =[
     
 
     <div class="barra pb-1 pl-2 pr-2 elevation-3" v-show='estadonav==0'>
-       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="public/assets/img/logo.png" alt=""></RouterLink></div>
+       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
         <div></div>
        <div class="item2">
         <v-menu>
@@ -60,7 +60,7 @@ const servicios =[
         <div></div>
       <div class="item6">
         <RouterLink class="rutas" :to="{name:'iniciar'}">
-            <buttom class="button" v-bind="props"><img class="iconos" src="public/assets/img/perfil.png" alt=""></buttom>
+            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
         </RouterLink>
       </div>
     </div>
@@ -70,7 +70,7 @@ const servicios =[
 
 
     <div class=" barra pb-1 pl-2 pr-2 elevation-3 text-button" v-show='estadonav==1'>
-       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="public/assets/img/logo.png" alt=""></RouterLink></div>
+       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
        
       <div class="item2">
         <v-menu>
@@ -91,11 +91,11 @@ const servicios =[
         <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">NUEVA CITA</button></RouterLink>
         </div>
       <div class="item6 d-flex">
-        <div class="item5 pr-5"><img class="iconos noti" src="public/assets/img/noti.png" alt=""></div>
+        <div class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
         <v-menu>
           <template v-slot:activator="{ props }">
-            <buttom class="button" v-bind="props"><img class="iconos" src="public/assets/img/perfil.png" alt=""></buttom>
+            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
           </template>
           <v-list>
             <v-list-item >
@@ -114,7 +114,7 @@ const servicios =[
 
 
     <div class=" barra pb-1 pl-2 pr-2 elevation-3" v-show='estadonav==2'>
-       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="public/assets/img/logo.png" alt=""></RouterLink></div>
+       <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
        
       <div class="item2">
         <v-menu>
@@ -135,11 +135,11 @@ const servicios =[
         <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">CALENDARIO</button></RouterLink>
         </div>
       <div class="item6 d-flex">
-        <div class="item5 pr-5"><img class="iconos noti" src="public/assets/img/noti.png" alt=""></div>
+        <div class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
         <v-menu>
           <template v-slot:activator="{ props }">
-            <buttom class="button" v-bind="props"><img class="iconos" src="public/assets/img/perfil.png" alt=""></buttom>
+            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
           </template>
           <v-list>
             <v-list-item @click="handelperfil" v-for="(perfil, index) in perfil" :key="index">
