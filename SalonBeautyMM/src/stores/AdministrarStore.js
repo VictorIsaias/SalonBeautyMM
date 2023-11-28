@@ -7,6 +7,9 @@ export const AdministrarStore = defineStore('admin', () => {
     var modo = ref(1)
     var id = ref(1)
     var idcat = ref(0)
+
+
+
 var servicio = ref({
   id:'',
   nombre: '',

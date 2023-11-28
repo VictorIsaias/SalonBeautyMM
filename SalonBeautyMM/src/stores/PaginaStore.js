@@ -8,6 +8,8 @@ export const PaginaStore = defineStore('pagina', () => {
   var correo = ref('')
 
 
+// informacion de catalogos que se va a leer desde backend READ
+// Consulta para ver todos los usuarios: id, nombre, apellidoP, apellidoM, telefono, correo, contrasena (que esten activos)
 
 
   var usuarios = ref([{
