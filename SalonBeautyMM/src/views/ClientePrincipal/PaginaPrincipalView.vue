@@ -3,21 +3,21 @@ import BotonPagina from "@/components/BotonPagina.vue"
 import Footer from '@/components/PiePagina.vue';
 import {ref} from 'vue';
 const slog =ref([
-    {id:1, image: 'public/assets/img/slogan1.png'},
-    {id:2, image: 'public/assets/img/slogan2.png'},
-    {id:3, image: 'public/assets/img/slogan3.png'},
+    {id:1, image: '/img/slogan1.png'},
+    {id:2, image: '/img/slogan2.png'},
+    {id:3, image: '/img/slogan3.png'},
 ]);
 const servicios=ref([
-    {id:1, image: 'public/assets/img/servicio3.jpg'},
-    {id:2, image: 'public/assets/img/servicio4.jpg'},
-    {id:3, image: 'public/assets/img/servicio5.jpg'},
-    {id:4, image: 'public/assets/img/servicio6.jpg'},
+    {id:1, image: '/img/servicio3.jpg'},
+    {id:2, image: '/img/servicio4.jpg'},
+    {id:3, image: '/img/servicio5.jpg'},
+    {id:4, image: '/img/servicio6.jpg'},
 ]);
 </script>
 <template>
-    <div class='fondop'>
+    <div style='height: 100vh;' class='fondop'>
         <div class="header">
-            <div class='logo'><img src="public/assets/img/logo2.png" alt=""></div>
+            <div class='logo'><img src="/img/logo2.png" alt=""></div>
             <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
             <div class="item">
                 <botonPagina link='catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
@@ -55,37 +55,36 @@ const servicios=ref([
   <div class=" servicios">
     <v-container class="info pt-0">
         
-        <img src='public/assets/img/grupo 9.png' style='width:6.9rem;height:7rem;position: relative; bottom:2.5rem'>
+        <img src='/img/Grupo9.png' style='width:6.9rem;height:7rem;position: relative; bottom:2.5rem'>
            <div class='pt-1 ' style='position: relative; bottom:2.5rem'> <h2 class="letra">Tinte de cabello</h2>
       <p>Renuva el estilo personal que llevas, con un color diferente</p>
     
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-    
+        <router-link style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:4,cat:"Tinte de cabello"}}'>MAS INFORMACIÓN</router-link>
         
     </v-container>
 
     <v-container class="info pt-0">
-        <img src='public/assets/img/grupo 7.png' style='width:6.9rem;height:6rem;position: relative; bottom:2.5rem'>
+        <img src='/img/Grupo7.png' style='width:6.9rem;height:6rem;position: relative; bottom:2.5rem'>
             
         <div class='pt-1' style='position: relative; bottom:2.5rem'>
             <h2 class="letra">Maquillaje</h2>
       <p>Prepara tu mejor imagen para cualquier ocasión especial</p>
       
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-     </v-container>
+        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:2,cat:"Maquillaje"}}'>MAS INFORMACIÓN</router-link>
+        </v-container>
 
     <v-container class="info pt-0">
-        <img src='public/assets/img/grupo 8.png' style='width:6.3rem;height:7rem;position: relative; bottom:2.5rem'>
+        <img src='/img/Grupo8.png' style='width:6.3rem;height:7rem;position: relative; bottom:2.5rem'>
               
         <div class='pt-1' style='position: relative; bottom:2.5rem'>
             <h2 class="letra">Corte de cabello</h2>
       <p>Nutre estilo de gran valor aprovechando lo mejor de ti</p>
      
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-    </v-container>
+        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:1,cat:"Corte de cabello"}}'>MAS INFORMACIÓN</router-link>
+         </v-container>
   </div>
 </div>
 
@@ -141,8 +140,9 @@ const servicios=ref([
 }
 
 .item3 {
-  background-image: url('public/assets/img/salon.jpeg');
+  background-image: url('/img/salon.jpeg');
   background-size: cover;
+  opacity: 0.9;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;

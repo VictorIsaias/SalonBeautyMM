@@ -1,5 +1,6 @@
 <template>
-  <v-container >
+  <div style='height: 100vh;'>
+    <v-container >
     <v-row style="background-color:#FDCCB5">
       <v-col v-for="(item, index) in cServicios" :key="index" cols="12">
         <v-card color= 'pink-lighten-5' theme='black'>
@@ -30,6 +31,8 @@
       </v-col>
     </v-row>
   </v-container>
+  </div>
+ 
 </template>
 
 <script setup>

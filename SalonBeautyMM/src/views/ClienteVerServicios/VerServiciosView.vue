@@ -13,6 +13,7 @@ const {servicios} = storeToRefs(serv)
 </script>
 
 <template>
+    <div style='height: 100vh;'>
   <v-container class="bg-red-lighten-4 elevation-5">
     <v-card v-for="service in servicios" :key="service.id" class="pink lighten-4" style="margin-bottom: 20px;">
         <v-container v-if='$route.params.idcat==service.categoria' style="background-color: #fee0e0;">
@@ -35,6 +36,7 @@ const {servicios} = storeToRefs(serv)
         </v-container>
     </v-card>
   </v-container>
+    </div>
 </template>
 
 <style>

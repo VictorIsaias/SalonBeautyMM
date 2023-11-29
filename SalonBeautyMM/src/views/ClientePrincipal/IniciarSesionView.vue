@@ -1,5 +1,5 @@
 <template>
-  <div class="fondo" align='center'>
+  <div class="fondo" style='height: 100vh;' align='center'>
     <v-container class="pt-16">
 
 <FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
