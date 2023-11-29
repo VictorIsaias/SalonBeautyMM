@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import {ServiciosStore} from '../stores/ServiciosStore.js'
+import {ServiciosStore} from '@/stores/ServiciosStore.js'
 import { storeToRefs } from 'pinia'
 
 const serv = ServiciosStore()
