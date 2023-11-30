@@ -1,9 +1,16 @@
 <script setup>
+
+import { storeToRefs } from 'pinia'
 import barra from '@/components/BarraNav.vue'
+import {PaginaStore} from '@/stores/PaginaStore.js'
+
+const pagina = PaginaStore()
+
+const {estadonav} = storeToRefs(pagina)
 
 </script>
 
-<template>
+<template >
   <div class="fondo">
     <div :elevation="4" >
       <barra ></barra>

@@ -4,7 +4,7 @@
 
 <FormularioPrincipal class='w-50 h-100' tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' :param='correo' @datos='verificar' titulo='Registro para clientes' enviar='Registrar'>
 
-  <v-form ref="form">
+ <v-form ref="form">
       <v-text-field :rules="[rules.requerido]" v-model="input.input1" label="Nombre/s*" variant="underlined"></v-text-field>
 
    

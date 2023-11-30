@@ -37,15 +37,44 @@
            </template>
            <template #event="{event}">   
             <v-container class='d-flex flex-column align-start pt-0 pl-3 pr-0' style='font-family: "Oswald", sans-serif;font-size:1rem'>
-            <div class=" d-flex justify-space-between w-100">
-            {{event.title}}  
-            <v-btn @click='editarCita(event.start)' v-if='event.title!="Bloqueado"' class=' ' icon='mdi-pencil' size='x-small' height='25' variant='text'></v-btn>
-            <v-btn @click='desactivarBloqueo(event)' v-if='event.title=="Bloqueado"' class='  ' icon='mdi-trash-can' size='x-small' height='25'  variant='text'></v-btn>
-            
+            <div class=" d-flex justify-space-between text-start align-start w-100">
+            <v-row  v-if='event.class!="citat"'>
+              
+              
+              <v-col  cols='10'>
+                
+              {{event.title}} 
+              </v-col>
+
+              <v-col cols='2'>
+
+              </v-col>
+            </v-row>
+            <v-row v-else>
+              <v-col cols='9'>
+
+              </v-col>
+              <v-col  cols='2'>
+
+                              
+              <v-btn @click='editarCita(event.start)' v-if='event.class=="citat"' class='align-self-end' icon='mdi-pencil' size='x-small' height='25' variant='text'></v-btn>
+              <v-btn @click='desactivarBloqueo(event)' v-if='event.title=="Bloqueado"' class='  ' icon='mdi-trash-can' size='x-small' height='25'  variant='text'></v-btn>
+
+              </v-col>
+           
+            </v-row>
+              
+  
+         
+         
+           
            </div>
+           <div v-if='event.class!="citat"'>
+
+           
                {{event.start.format('HH:mm')}} - {{event.end.format('HH:mm')}}
        
-       
+              </div>
             </v-container>
            </template>
           <template v-slot:title>

@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const PaginaStore = defineStore('pagina', () => {
   
-  var estadonav = ref(2) //0 es sin sesion, 1 es cliente y 2 es admin
+  var estadonav = ref(1) //0 es sin sesion, 1 es cliente y 2 es admin
   var id = ref('')
   var correo = ref('')
 

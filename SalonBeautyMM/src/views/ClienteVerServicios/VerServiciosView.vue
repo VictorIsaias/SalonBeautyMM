@@ -36,7 +36,7 @@ const {servicios} = storeToRefs(serv)
         </v-container>
     </v-card>
   </v-container>
-    </div>
+    </div> 
 </template>
 
 <style>

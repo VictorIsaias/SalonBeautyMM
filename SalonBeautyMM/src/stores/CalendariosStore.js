@@ -35,44 +35,22 @@ var bloqueos= ref({
 
 var citas = ref([
   {
-    id:1,
-    fechaInicio: '2023-11-21 12:00',
-    duracionTotal: 60
+    id:9,
+    fechaInicio: '2023-11-30 9:00',
+    duracionTotal: 30,
+    clienteId:9
   },
   {
-    id:2,
-    fechaInicio: '2023-11-25 12:00',
-    duracionTotal: 120
+    id:10,
+    fechaInicio: '2023-11-30 10:30',
+    duracionTotal: 90,
+    clienteId:10
   },
   {
-    id:3,
-    fechaInicio: '2023-11-23 13:00',
-    duracionTotal: 30
-  },
-  {
-    id:4,
-    fechaInicio: '2023-11-25 16:00',
-    duracionTotal: 60
-  },
-  {
-    id:5,
-    fechaInicio: '2023-11-24 11:00',
-    duracionTotal: 240
-  },
-  {
-    id:6,
-    fechaInicio: '2023-11-25 8:00',
-    duracionTotal: 90
-  },
-  {
-    id:7,
-    fechaInicio: '2023-11-22 12:00',
-    duracionTotal: 150
-  },
-  {
-    id:8,
-    fechaInicio: '2023-11-21 9:00',
-    duracionTotal: 30
+    id:11,
+    fechaInicio: '2023-11-30 16:30',
+    duracionTotal: 120,
+    clienteId:11
   }
 ])
 
@@ -105,10 +83,11 @@ function leerBloqueos(){
 
 
 function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
-  if(idserv==0){
  
-    idserv=servCita.value[servCita.value.length-1].id+1
-  }
+if(idserv==0){
+  idserv=eventos.value[eventos.value.length-1].id+1
+}
+
   let titulo
   let size = false
   let dra = false
@@ -123,8 +102,6 @@ function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
       for(let i = 0;i<=servicios.value.length-1;i++){
       if(servicios.value[i].id==servi)
         titulo = servicios.value[i].nombre
-      
-       
       }
     tipo='cita'+catalogo
     }
@@ -158,16 +135,6 @@ function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
 
 
 
-function leerCitas(){
-
- 
-    for(let o = 0;o<=servCita.value.length-1;o++){
-      agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value[o].id)
-
-    }
-  
- 
-}
 
 
 // informacion de Cita que se va a enviar a backend CREATE
@@ -188,6 +155,32 @@ var cita = ref(
 var SCita = ref([
 
 ])
+
+function leerCitas(){
+  eventos.value=[]
+
+  let dutotal=0
+
+ 
+  for(let o = 0;o<=servCita.value.length-1;o++){
+    agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value.length)
+ 
+}
+
+for(let i = 0;i<=citas.value.length-1;i++){
+  for(let o = 0;o<=servCita.value.length-1;o++){
+    if(citas.value[i].id==servCita.value[o].idCita){
+      dutotal+=servCita.value[o].duracion
+    }
+  } 
+  agregarCita(citas.value[i].fechaInicio,dutotal,2,'','t',eventos.value.length)
+  dutotal=0
+
+}
+  
+}
+
+
 
 function agregarSCita (){
 
@@ -214,7 +207,19 @@ if(servs.value[i]==servicios.value[o].id){
 }}
 }
 
+var cliente=ref({
+  id:0,
+  nombre:'',
+  apellido_paterno:'',
+  apellido_materno:'',
+  telefono:''
+})
+
+var clientes=ref([])
+
 function crearEnviarCita(){
+   if(servs.value.length>1){
+  
   agregarSCita()
 
   let catalogo=0
@@ -231,16 +236,51 @@ function crearEnviarCita(){
     
   }
 
-
-  cita.value.idCliente = null
-  cita.value.tipo = 'cita'
   
+cliente.value.id=clientes.value.length
 
+
+  cita.value.idCliente = cliente.value.id
+  cita.value.tipo = 'cita'
+//insert de servicio cita (no son los datos reales)
+let catt=0
+for(let o = 0;o<=SCita.value.length-1;o++){
+  for(let i=0;i<=servicios.value.length-1;i++){
+    if(servicios.value[i].id==SCita.value[o].idServicio){
+      catt=servicios.value[i].catalogo
+    }
+  }
+servCita.value.push({
+  id:servCita.value.length,
+  idCita: SCita.value[o].idCita,
+  idServicio: SCita.value[o].idServicio,
+  precio: SCita.value[o].precio,
+  duracion: SCita.value[o].duracion,
+  fechaServicio:SCita.value[o].fechaServicio,
+  tipo: 0,
+  catalogo: catt
+})
+
+}
+
+//insert de cita
+
+citas.value.push(cita.value)
+  //insert de cliente nuevo con el objeto cliente
+  clientes.value.push(cliente.value)
+
+  leerCitas()
   crearSC(servs.value)
   alert('Su cita ha sido creada')
   cancelar('cerrar')
-  console.log(SCita.value)
+  
+  modocita.value='cita'
+  console.log(servCita.value)
   console.log(eventos.value)
+}
+else{
+ alert('Selecciona al menos un servicio')
+}
 }
 
 
@@ -269,229 +309,42 @@ function crearSC (ids){
 
 var servCita = ref([
   {
-    id:1,
-    idCita: 1,
-    idServicio: 1,
-    precio: 70,
-    duracion: 30,
-    fechaServicio:'2023-11-23 12:00',
-    tipo: 0,
-    catalogo: 1
-  },
-  {
-    id:2,
-    idCita: 1,
-    idServicio: 4,
-    precio: 500,
-    duracion: 180,
-    fechaServicio:'2023-11-23 12:30',
-    tipo: 0,
-    catalogo: 2
-  },
-  {
-    id:3,
-    idCita: 2,
-    idServicio: 3,
-    precio: 200,
-    duracion: 120,
-    fechaServicio:'2023-11-24 14:30',
-    tipo: 0,
-    catalogo: 2
-  },
-  {
-    id:4,
-    idCita: 2,
-    idServicio: 5,
-    precio: 200,
-    duracion: 30,
-    fechaServicio:'2023-11-24 16:30',
-    tipo: 0,
-    catalogo: 3
-  },
-  {
-    id:5,
-    idCita: 3,
-    idServicio: 2,
-    precio: 70,
-    duracion: 30,
-    fechaServicio:'2023-11-25 10:00',
-    tipo: 0,
-    catalogo: 1
-  },
-  {
-    id:6,
-    idCita: 4,
-    idServicio: 6,
-    precio: 70,
-    duracion: 30,
-    fechaServicio:'2023-11-23 9:30',
-    tipo: 0,
-    catalogo: 3
-  },
-
-
-
-  {
-    id:7,
-    idCita: 5,
-    idServicio: 7,
-    precio: 450,
-    duracion: 30,
-    fechaServicio:'2023-11-26 13:00',
-    tipo: 0,
-    catalogo: 4
-  },
-  {
-    id:8,
-    idCita: 6,
-    idServicio: 8,
-    precio: 0,
-    duracion: 30,
-    fechaServicio:'2023-11-25 15:30',
-    tipo: 0,
-    catalogo: 5
-  },
-  {
-    id:9,
-    idCita: 7,
-    idServicio: 9,
-    precio: 0,
-    duracion: 30,
-    fechaServicio:'2023-11-23 17:30',
-    tipo: 0,
-    catalogo: 5
-  },
-  {
-    id:10,
-    idCita: 8,
-    idServicio: 10,
-    precio: 180,
-    duracion: 60,
-    fechaServicio:'2023-11-24 8:30',
-    tipo: 0,
-    catalogo: 6
-  },
-  {
-    id:11,
-    idCita: 8,
-    idServicio: 11,
-    precio: 250,
-    duracion: 120,
-    fechaServicio:'2023-11-26 9:30',
-    tipo: 0,
-    catalogo: 6
-  },
-
-  {
-    id:21,
-    idCita:9,
-    idServicio: 4,
-    precio: 500,
-    duracion: 180,
-    fechaServicio:'2023-11-27 8:00',
-    tipo: 0,
-    catalogo: 1
-  },
-  {
-    id:22,
-    idCita: 9,
-    idServicio: 7,
-    precio: 450,
-    duracion: 30,
-    fechaServicio:'2023-11-29 9:00',
-    tipo: 0,
-    catalogo: 3
-  },
-  {
-    id:23,
-    idCita: 10,
-    idServicio: 11,
-    precio: 250,
-    duracion: 120,
-    fechaServicio:'2023-11-27 13:30',
-    tipo: 0,
-    catalogo: 2
-  },
-  {
-    id:24,
-    idCita: 11,
-    idServicio: 4,
-    precio: 500,
-    duracion: 180,
-    fechaServicio:'2023-11-28 16:30',
-    tipo: 0,
-    catalogo: 2
-  },
-  {
-    id:25,
-    idCita: 12,
-    idServicio: 2,
-    precio: 70,
-    duracion: 30,
-    fechaServicio:'2023-11-28 15:00',
-    tipo: 0,
-    catalogo: 1
-  },
-  {
-    id:26,
-    idCita: 12,
-    idServicio: 6,
-    precio: 70,
-    duracion: 30,
-    fechaServicio:'2023-11-27 15:30',
-    tipo: 0,
-    catalogo: 3
-  },
-
-
-
-  {
-    id:27,
-    idCita: 13,
-    idServicio: 7,
-    precio: 450,
-    duracion: 30,
-    fechaServicio:'2023-11-28 9:00',
-    tipo: 0,
-    catalogo: 4
-  },
-  {
     id:28,
-    idCita: 13,
+    idCita: 9,
     idServicio: 8,
     precio: 0,
     duracion: 30,
-    fechaServicio:'2023-11-28 9:30',
+    fechaServicio:'2023-11-30 9:00',
     tipo: 0,
     catalogo: 5
   },
   {
     id:29,
-    idCita: 14,
+    idCita: 10,
     idServicio: 9,
     precio: 0,
     duracion: 30,
-    fechaServicio:'2023-11-29 10:30',
+    fechaServicio:'2023-11-30 10:30',
     tipo: 0,
     catalogo: 5
   },
   {
     id:30,
-    idCita: 14,
+    idCita: 10,
     idServicio: 10,
     precio: 180,
     duracion: 60,
-    fechaServicio:'2023-11-29 11:00',
+    fechaServicio:'2023-11-30 11:00',
     tipo: 0,
     catalogo: 6
   },
   {
     id:31,
-    idCita: 15,
+    idCita: 11,
     idServicio: 11,
     precio: 250,
     duracion: 120,
-    fechaServicio:'2023-11-29 16:30',
+    fechaServicio:'2023-11-30 16:30',
     tipo: 0,
     catalogo: 6
   }
@@ -623,6 +476,7 @@ var espac=0
 var duracionAct=ref(0)
 
   var espacio = ref(computed(()=>{
+    
     if(bloque.value!='a'&&largo<servs.value.length){
       for(let o = 0;o<servicios.value.length;o++){
   
@@ -649,8 +503,9 @@ var duracionAct=ref(0)
     let save=[]
     let menor=0
 
-     
     for(let i=1;i<=bloqueos.value[dia.value].length-1;i++){
+     
+  
       if(bloqueos.value[dia.value][i].class=='bloqueado'){
       
       start=bloqueos.value[dia.value][i].from
@@ -661,9 +516,20 @@ var duracionAct=ref(0)
       }
      menor=Math.min(...save)
     }
-    menor+=actual
+    if(menor==0){
+      espac=0
+      for(let o =actual;o<1200;o+=30)    {
+        espac+=30
+      }
+      return espac
+    }
+    else{
+
+      menor+=actual
+    }
     
     if(menor>1200){
+      
       espac=0
       for(let o =actual;o<1200;o+=30)    {
         espac+=30
@@ -672,6 +538,7 @@ var duracionAct=ref(0)
     }
    
     if(menor>=actual){
+      
       espac=0
       for(let o =actual;o<menor;o+=30)    {
         espac+=30
@@ -817,14 +684,32 @@ var duracionAct=ref(0)
     modocita.value='editar'
     flotante.value = !flotante.value
 
+
+
     let dia = computed(()=>{if(citaBloq.getDay()==0){
       return 7
     }else {return citaBloq.getDay()}})
 
     let actual = (citaBloq.getHours()*60)+citaBloq.getMinutes()
-      
+    let clienteid=0
+    
 
-
+    for(let i=0;i<=citas.value.length-1;i++){
+      if(citas.value[i].fechaInicio==citaBloq.format('YYYY-MM-DD HH:mm')){
+        cliente=citas.value[i].idCliente
+      }
+    }
+    for(let i=0;i<=clientes.value.length-1;i++){
+      if(clientes.value[i].id==clienteid){
+        cliente.value={
+          id:clientes.value[i].id,
+          nombre:clientes.value[i].nombre,
+          apellido_paterno:clientes.value[i].apellido_paterno,
+          apellido_materno:clientes.value[i].apellido_materno,
+          telefono:clientes.value[i].telefono
+        }
+      }
+    }
     bloqueRespaldo = bloque.value
     actualizarCita()
 
@@ -873,8 +758,15 @@ var duracionAct=ref(0)
 
 //If si el modo es de crear cita
 
-   if (modocita.value=='cita'){
 
+   if (modocita.value=='cita'){
+    cliente.value={
+      id:0,
+      nombre:'',
+      apPa:'',
+      apMa:'',
+      telefono:''
+    }
     
 
 
@@ -895,16 +787,7 @@ var duracionAct=ref(0)
     duracionTotal:0,
     tipo:'',
   }
-  servCita.value=[
-    {
-      idCita: 0,
-      idServicio: 0,
-      precio: 0,
-      duracion: 0,
-      fechaServicio:''
 
-    }
-  ]
   
   bloqueRespaldo = bloque.value
   
@@ -920,6 +803,27 @@ var duracionAct=ref(0)
     }
     agregarCita(bloque.value.format('YYYY-MM-DD HH:mm'),30,1,0,0,0)
     
+    //insert en servicio-cita (no son los datos verdaderos)
+    servCita.value.push({
+      id:servCita.value[servCita.value.length-1].id+1,
+      idCita: 0,
+      idServicio: 0,
+      precio: 0,
+      duracion: 30,
+      fechaServicio:bloque.value.format('YYYY-MM-DD HH:mm'),
+      tipo: 1,
+      catalogo: 0
+    })
+
+    //insert en citas (sin id)
+    citas.value.push(
+      {
+        id:citas.value[citas.value.length-1].id+1,
+        fechaInicio: bloque.value.format('YYYY-MM-DD HH:mm'),
+        duracionTotal: 30,
+        clienteId:0
+      }
+    )
 
 
 
@@ -1009,7 +913,7 @@ var duracionAct=ref(0)
     for (let i =0;i<=servicios.value.length;i++){
       activo.value.push(true)
     }
-  
+    
     contador.value=0
     servs.value=[""]
     cita.value={
@@ -1026,5 +930,5 @@ var duracionAct=ref(0)
   }
 
 
-  return {duracionAct,bloque,contador,agregarSCita,crearEnviarCita,espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
+  return {cliente,duracionAct,bloque,contador,agregarSCita,crearEnviarCita,espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
 })

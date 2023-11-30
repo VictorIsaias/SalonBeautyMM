@@ -85,13 +85,7 @@
                         
                     </v-expansion-panel-text>
                 </v-expansion-panel>
-                <v-expansion-panel value='4' class='barra'>
-                    <v-expansion-panel-title>Otros</v-expansion-panel-title>
-                    <v-expansion-panel-text>
-                        
-                    </v-expansion-panel-text>
-                </v-expansion-panel>
-                
+               
 
             </v-expansion-panels>
         </vue-col>

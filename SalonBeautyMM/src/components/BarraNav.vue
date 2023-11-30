@@ -7,6 +7,22 @@ import {PaginaStore} from '@/stores/PaginaStore.js'
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
 
 
+function cambiar(){
+switch(estadonav.value){
+  case 0:
+    estadonav.value=1
+    break
+    case 1:
+    estadonav.value=2
+    break
+    case 2:
+    estadonav.value=0
+    break
+}
+
+}
+
+
 const pagina = PaginaStore()
 const servs = ServiciosStore()
 
@@ -45,7 +61,6 @@ const {servicios,cServicios} = storeToRefs(servs)
         <div></div>
         <div class="item2 ">
         <v-menu 
-      v-model="menu"
       :close-on-content-click="false"
       location="center"
     >
@@ -86,8 +101,8 @@ const {servicios,cServicios} = storeToRefs(servs)
         <RouterLink class="rutas" :to="{name:'iniciar'}"><button class="button">INICIAR SESION</button></RouterLink>
         </div>
         <div></div>
-      <div class="item6">
-        <RouterLink class="rutas" :to="{name:'iniciar'}">
+      <div  @click='cambiar' class="item6">
+        <RouterLink  class="rutas" :to="{name:'iniciar'}">
             <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
         </RouterLink>
       </div>
@@ -145,7 +160,7 @@ const {servicios,cServicios} = storeToRefs(servs)
         <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">NUEVA CITA</button></RouterLink>
         </div>
       <div class="item6 d-flex">
-        <div class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+        <div @click='cambiar' class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -171,29 +186,22 @@ const {servicios,cServicios} = storeToRefs(servs)
        <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
        
       <div class="item2">
-        <v-menu>
-          <template v-slot:activator="{ props }">
-            <button class="button" v-bind="props">ADMINISTRAR</button>
-          </template>
-          <v-list>
-            <v-list-item @click="handelservicios" v-for="(admin, index) in Administrar" :key="index">
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">{{ admin.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+            <RouterLink class="rutas" :to="{name:'Administrar'}">
+            <button class="button" >ADMINISTRAR</button></RouterLink>
+       
       </div>
       <div class="item3">
         <RouterLink class="rutas" :to="{name:'citas_cliente'}"><button class="button">VER CITAS</button></RouterLink>
       </div>
-      <div class="item4">
-        <RouterLink class="rutas" :to="{name:'Calendario-admin',params:{idserv:0,serv:'none'}}"><button class="button">CALENDARIO</button></RouterLink>
+      <div class="item4"> <RouterLink class="rutas" :to="{name:'Calendario-admin',params:{idserv:0,serv:'none'}}"><button class="button">CALENDARIO</button></RouterLink>
+       
         </div>
       <div class="item6 d-flex">
-        <div class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+        <div @click='cambiar' class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
         <v-menu>
           <template v-slot:activator="{ props }">
-            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
+            <buttom  class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
           </template>
           <v-list>
             <v-list-item @click="handelperfil" v-for="(perfil, index) in perfil" :key="index">
@@ -228,6 +236,13 @@ const {servicios,cServicios} = storeToRefs(servs)
   display:flex;
   align-items:center;
   justify-content:space-between;
+  left: 0px;
+  top: 0px;
+  width: 100vw;
+  height: 8vh;
+ 
+  background-blend-mode: normal;
+  box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
    
 }
 .button{
