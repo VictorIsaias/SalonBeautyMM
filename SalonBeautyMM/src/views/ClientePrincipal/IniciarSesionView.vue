@@ -2,12 +2,16 @@
   <div class="fondo" style='height: 100vh;' align='center'>
     <v-container class="pt-16">
 
-<FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
-  <v-form ref='form'>
-    <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="input1" label="Correo electronico" variant="underlined"></v-text-field>
-    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="input2" label="Contraseña" variant="underlined"></v-text-field>
+<FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='login' titulo='Acceso para cliente' enviar='Iniciar'>
+  <v-form @submit.prevent ref='form'>
+
+    <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="usuario.input1" label="Correo electronico" variant="underlined"></v-text-field>
+    <v-text-field @keypress.enter="verificar" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="usuario.input2" label="Contraseña" variant="underlined"></v-text-field>
 
   </v-form>
+
+
+
   <v-alert
     type="error"
     variant='tonal'
@@ -33,28 +37,56 @@ import {PaginaStore} from '@/stores/PaginaStore.js'
 
 const pagina = PaginaStore()
 
-const {correo,usuarios,estadonav} = storeToRefs(pagina)
-
-onMounted(()=>{
-  input1.value = correo.value
-})
+const {usuarioLocal,usuarios,estadonav} = storeToRefs(pagina)
+const {setUser}=pagina
 
 
 
 var error=ref(false)
 
+async function login(){
+  
+  const { valid } = await form.value.validate()
+  
+  if(!valid){
+    return
+  }
+
+
+  fetch("http://localhost/user",{
+    method:'POST',
+    body:JSON.stringify(usuario.value)
+  }).then(response=>response.json()).then(data=>{
+    //window.clearLocalStorage()
+    if(data.status!=200){
+      alert(data.message)
+
+      return
+    }
+    usuarioLocal.setUser(data).date
+  //  router.push({name:'citas_cliente'})
+
+  })
+
+
+
+
+
+}
+
+
 
 
 
 const form = ref()
+
 async function verificar(){
-  const { valid } = await form.value.validate()
   
   if (valid){
     
     let val = true
     for(let i = 0;i<usuarios.value.length;i++){
-      if (input1.value==usuarios.value[i].correo&&input2.value==usuarios.value[i].contrasena){
+      if (usuario.value.input1==usuarios.value[i].correo&&usuario.value.input2==usuarios.value[i].contrasena){
         
         val=false
         i=usuarios.value.length
@@ -74,9 +106,10 @@ router.replace({ name: 'inicio' })
 }
 
 
-
-var input1 = ref('')
-var input2 = ref('')
+var usuario=ref({
+input1 :'',
+input2 :''
+})
 var show1 = ref('')
 var show2 = ref('')
 

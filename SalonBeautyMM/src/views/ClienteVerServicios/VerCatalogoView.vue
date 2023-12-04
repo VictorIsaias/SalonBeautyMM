@@ -1,7 +1,7 @@
 <template>
-  <div style='height: 100vh;'>
+  <div >
     <v-container >
-    <v-row style="background-color:#FDCCB5">
+    <v-row style="background-color: #fee0e0;" class='elevation-3'>
       <v-col v-for="(item, index) in cServicios" :key="index" cols="12">
         <v-card color= 'pink-lighten-5' theme='black'>
           <v-row>

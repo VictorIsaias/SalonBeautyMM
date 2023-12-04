@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed ,onMounted} from 'vue'
 import { defineStore } from 'pinia'
 import router from '../router/index'
 
@@ -34,27 +34,77 @@ var bloqueos= ref({
 
 
 var citas = ref([
-  {
-    id:9,
-    fechaInicio: '2023-11-30 9:00',
-    duracionTotal: 30,
-    clienteId:9
-  },
-  {
-    id:10,
-    fechaInicio: '2023-11-30 10:30',
-    duracionTotal: 90,
-    clienteId:10
-  },
-  {
-    id:11,
-    fechaInicio: '2023-11-30 16:30',
-    duracionTotal: 120,
-    clienteId:11
-  }
+
 ])
 
+const rCitas = async () => {
+  try{
+      const response = await fetch('http://localhost/citas_calendario');
+      const data = await response.json();
+      citas.value=data.data;
+      
+  }catch{
 
+  }
+}
+
+onMounted(rCitas);
+
+
+// informacion de Servicio-Cita que se va a enviar a backend CREATE
+// inserciones en tabla de servicio-cita que van a enviar: precio, id servicio, fecha servicio, duracion (si su cita relacionada esta activa)
+
+var servCita = ref([
+  
+])
+
+const rServicioCita = async () => {
+  try{
+      const response = await fetch('http://localhost/servicio_citas_calendario');
+      const data = await response.json();
+      servCita.value=data.data;
+      
+  }catch{
+
+  }
+}
+
+onMounted(rServicioCita);
+
+// informacion de servicios que se va a leer desde backend READ
+// Consulta para ver todos los servicios: id,nombre,duracion,precio,nombre-catalogo(que esten activos)
+
+
+var servicios = ref([  ])
+
+
+const rServicios = async () => {
+  try{
+      const response = await fetch('http://localhost/servicios_calendario');
+      const data = await response.json();
+      servicios.value=data.data;
+      
+  }catch{
+
+  }
+}
+
+var serv_bloqueos = ref([  ])
+
+const bloqueos_admin = async () => {
+  try{
+      const response = await fetch('http://localhost/servicio_bloqueos_calendario');
+      const data = await response.json();
+      serv_bloqueos.value=data.data;
+      
+  }catch{
+
+  }
+}
+
+onMounted(rServicios);
+
+onMounted(bloqueos_admin);
 
 function agregarBloqueo(fechaInicio,duracion){
 
@@ -72,8 +122,8 @@ function agregarBloqueo(fechaInicio,duracion){
 
 }
 
-function leerBloqueos(){
-
+async function leerBloqueos(){
+  await rCitas()
   for(let i = 0;i<=citas.value.length-1;i++){
   
     agregarBloqueo(citas.value[i].fechaInicio,citas.value[i].duracionTotal)
@@ -85,9 +135,8 @@ function leerBloqueos(){
 function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
  
 if(idserv==0){
-  idserv=eventos.value[eventos.value.length-1].id+1
+  idserv=eventos.value.length+1
 }
-
   let titulo
   let size = false
   let dra = false
@@ -111,7 +160,10 @@ if(idserv==0){
        
       
       fechaInicio = new Date(fechaInicio)
-      let fechaFin = fechaInicio.addMinutes(duracion)
+      let fechaFin=''
+
+      fechaFin = fechaInicio.addMinutes(duracion)
+   
       fechaInicio=fechaInicio.format('YYYY-MM-DD HH:mm')
       fechaFin=fechaFin.format('YYYY-MM-DD HH:mm')
 
@@ -156,10 +208,13 @@ var SCita = ref([
 
 ])
 
-function leerCitas(){
+async function leerCitas(){
+  await rCitas()
+  await rServicioCita()
+  await bloqueos_admin()
   eventos.value=[]
 
-  let dutotal=0
+
 
  
   for(let o = 0;o<=servCita.value.length-1;o++){
@@ -167,23 +222,21 @@ function leerCitas(){
  
 }
 
-for(let i = 0;i<=citas.value.length-1;i++){
-  for(let o = 0;o<=servCita.value.length-1;o++){
-    if(citas.value[i].id==servCita.value[o].idCita){
-      dutotal+=servCita.value[o].duracion
-    }
-  } 
-  agregarCita(citas.value[i].fechaInicio,dutotal,2,'','t',eventos.value.length)
-  dutotal=0
+for(let o = 0;o<=serv_bloqueos.value.length-1;o++){
+  agregarCita(serv_bloqueos.value[o].fechaServicio,serv_bloqueos.value[o].duracion,serv_bloqueos.value[o].tipo,serv_bloqueos.value[o].idServicio,serv_bloqueos.value[o].catalogo,serv_bloqueos.value.length)
 
 }
-  
+
+for(let i = 0;i<=citas.value.length-1;i++){
+  agregarCita(citas.value[i].fechaInicio,citas.value[i].duracionTotal,2,'','t',eventos.value.length)
+ 
+
+}
 }
 
 
 
 function agregarSCita (){
-
   let fecha =new Date(cita.value.fechaInicio)
   for(let i=1;i<=servs.value.length-1;i++){
     for(let o=0;o<=servicios.value.length-1;o++){
@@ -207,6 +260,14 @@ if(servs.value[i]==servicios.value[o].id){
 }}
 }
 
+
+
+
+
+
+
+
+
 var cliente=ref({
   id:0,
   nombre:'',
@@ -217,9 +278,11 @@ var cliente=ref({
 
 var clientes=ref([])
 
-function crearEnviarCita(){
+async function crearEnviarCita(){
    if(servs.value.length>1){
-  
+
+    
+    SCita.value=[]
   agregarSCita()
 
   let catalogo=0
@@ -242,14 +305,19 @@ cliente.value.id=clientes.value.length
 
   cita.value.idCliente = cliente.value.id
   cita.value.tipo = 'cita'
-//insert de servicio cita (no son los datos reales)
-let catt=0
+
+if(modocita.value=='editar'){
+  //update de servicio cita
+  let catt=0
 for(let o = 0;o<=SCita.value.length-1;o++){
   for(let i=0;i<=servicios.value.length-1;i++){
     if(servicios.value[i].id==SCita.value[o].idServicio){
       catt=servicios.value[i].catalogo
     }
   }
+
+  for(let i = 0;i<=servCita.value.length-1;i++){
+   
 servCita.value.push({
   id:servCita.value.length,
   idCita: SCita.value[o].idCita,
@@ -260,20 +328,91 @@ servCita.value.push({
   tipo: 0,
   catalogo: catt
 })
-
+  }
 }
 
-//insert de cita
+  //update de cita
+  for(let i = 0;i<=eventos.value.length-1;i++){
+  if(eventos.value[i].start==cita.value.fechaInicio&&eventos.value[i].class=='citat'){
 
-citas.value.push(cita.value)
+      eventos.value[i].end=cita.value.fechaFin
+    }
+  }
+  for(let i = 0;i<=citas.value.length-1;i++){
+    if(citas.value[i].fechaInicio==cita.value.fechaInicio){
+      citas.value[i]=cita.value
+    }}   
+
+  
+}
+else{
+
+
+
   //insert de cliente nuevo con el objeto cliente
   clientes.value.push(cliente.value)
+     
+  //insert de cita
+  let fActual = new Date()
+
+    let  inst1={
+      cliente:cita.value.idCliente,
+      costo:cita.value.costo,
+      fecha_hora_inicio:cita.value.fechaInicio,
+      fecha_hora_fin:cita.value.fechaFin,
+      duracion_total:cita.value.duracionTotal,
+      estado:'confirmado',
+      tipo:0,
+      fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
+   }
+
+ await fetch('http://localhost/crear_cita_calendario', {
+    method: 'POST',
+    body: JSON.stringify(inst1),
+}).then(response => response.json())
+    .then(responsej => {
+        if (responsej.status != 200) {
+            return
+        }
+
+
+    });
+
+//insert de servicio cita 
+let inst={}
+for(let i=0;i<=SCita.value.length-1;i++){
+ inst={
+  id_servicio:SCita.value[i].idServicio,
+  precio:SCita.value[i].precio,
+  duracion_min:SCita.value[i].duracion,
+  fecha_hora:SCita.value[i].fechaServicio,
+  tipo:SCita.value[i].tipo
+ }
+  fetch('http://localhost/crear_sc_calendario', {
+      method: 'POST',
+      body: JSON.stringify(inst),
+  }).then(response => response.json())
+      .then(responsej => {
+          if (responsej.status != 200) {
+              return
+          }
+ 
+
+      });
+    }
+
+
+
+  
+}
+
 
   leerCitas()
+  servs.value=['']
   crearSC(servs.value)
   alert('Su cita ha sido creada')
   cancelar('cerrar')
-  
+
   modocita.value='cita'
   console.log(servCita.value)
   console.log(eventos.value)
@@ -288,7 +427,7 @@ function enviarCita(idcliente){
   if(servs.value.length>1){
     cita.value.idCliente = idcliente
     cita.value.tipo = 'cita'
-  
+    
     crearSC(servs.value)
     alert('Su cita ha sido creada')
     cancelar('cerrar')
@@ -304,148 +443,8 @@ function crearSC (ids){
 }
 
 
-// informacion de Servicio-Cita que se va a enviar a backend CREATE
-// inserciones en tabla de servicio-cita que van a enviar: precio, id servicio, fecha servicio, duracion (si su cita relacionada esta activa)
-
-var servCita = ref([
-  {
-    id:28,
-    idCita: 9,
-    idServicio: 8,
-    precio: 0,
-    duracion: 30,
-    fechaServicio:'2023-11-30 9:00',
-    tipo: 0,
-    catalogo: 5
-  },
-  {
-    id:29,
-    idCita: 10,
-    idServicio: 9,
-    precio: 0,
-    duracion: 30,
-    fechaServicio:'2023-11-30 10:30',
-    tipo: 0,
-    catalogo: 5
-  },
-  {
-    id:30,
-    idCita: 10,
-    idServicio: 10,
-    precio: 180,
-    duracion: 60,
-    fechaServicio:'2023-11-30 11:00',
-    tipo: 0,
-    catalogo: 6
-  },
-  {
-    id:31,
-    idCita: 11,
-    idServicio: 11,
-    precio: 250,
-    duracion: 120,
-    fechaServicio:'2023-11-30 16:30',
-    tipo: 0,
-    catalogo: 6
-  }
-  
-])
-
-// informacion de servicios que se va a leer desde backend READ
-// Consulta para ver todos los servicios: id,nombre,duracion,precio,nombre-catalogo(que esten activos)
 
 
-var servicios = ref([
-{
-    id: 1,
-    nombre: 'Cortes de caballero natural',
-    duracion: 30,
-    precio: 70,
-    catalogo: 1,
-
-  },
-{
-    id: 2,
-    nombre: 'Corte de caballero escolar',
-    duracion: 30,
-    precio: 70,
-    catalogo: 1,
-
-  },
-{
-    id: 3,
-    nombre: 'Diseño de uñas con acrilico',
-    duracion: 120,
-    precio: 200,
-    catalogo: 2,
-
-  },
-{
-    id: 4,
-    nombre: 'Diseño de uñas con gelish',
-    duracion: 180,
-    precio: 500,
-    catalogo: 2,
-
-  },
-{
-    id: 5,
-    nombre: 'Depilacion de rostro completo',
-    duracion: 30,
-    precio: 200,
-    catalogo: 3,
-
-  },
-{
-    id: 6,
-    nombre: 'Depilacion de ceja con cera',
-    duracion: 30,
-    precio: 70,
-    catalogo: 3,
-
-  },
-{
-    id: 7,
-    nombre: 'Maquillaje y peinado',
-    duracion: 30,
-    precio: 450,
-    catalogo: 4,
-
-  },
-{
-    id: 8,
-    nombre: 'Mechas',
-    duracion: 30,
-    precio: 0,
-    catalogo: 5,
-
-  },
-{
-    id: 9,
-    nombre: 'Luces',
-    duracion: 30,
-    precio: 0,
-    catalogo: 5,
-
-  },
-{
-    id: 10,
-    nombre: 'Tinte en cabello corto',
-    duracion: 60,
-    precio: 180,
-    catalogo: 6,
-
-  },
-{
-    id: 11,
-    nombre: 'Corte de caballero escolar',
-     duracion: 120,
-    precio: 250,
-    catalogo: 6,
-
-
-}
-])
 
 function leerServicios(){
 
@@ -470,7 +469,8 @@ var bloqueRespaldo = ''
     cita.value.fechaFin=bloqueRespaldo.addMinutes(cita.value.duracionTotal).format('YYYY-MM-DD HH:mm')
   }
 
- 
+//largo es el respaldo de la longitud de servs 
+  
 var largo=0
 var espac=0
 var duracionAct=ref(0)
@@ -562,8 +562,11 @@ var duracionAct=ref(0)
 
 
   var espacio2 = ref(computed(()=>{
+ 
     if(bloque.value!='a'&&largo<servs.value.length){
-      
+
+      //Añade a bloque la duracion de todos los elementos en serv
+
         for(let o = 0;o<servicios.value.length;o++){
     
   
@@ -576,21 +579,30 @@ var duracionAct=ref(0)
         
         }
 
+        //Dia actual del mes
+
     let dia = bloque.value.getDate()
+
+    //Posicion actual en minutos
     
      let actual = (bloque.value.getHours()*60)+bloque.value.getMinutes()
     
+    //LocEventos son todos los eventos del dia actual
+
      let locEventos = ['']
      let s=''
      for(let i = 0;i<=eventos.value.length-1;i++){
       s=new Date(eventos.value[i].start)
-       if(s.getDate()==dia){
+       if(s.getDate()==dia&&eventos.value[i].class!='citat'){
         
          locEventos.push(eventos.value[i])
        }
  
      }
 
+
+     //Si no hay eventos en el dia actual el espacio llega hasta 1200
+  
 
      if(locEventos.length==1){
       espac=0
@@ -603,14 +615,15 @@ var duracionAct=ref(0)
     }
 
 
+    //Bloque de calculo del evento con menor valor en el dia
+    //Menos es el evento con menor valor
 
     let start=null
     let save=[]
     let menor=0
-
-    if(modocita.value=='editar'&&servs.value.length==1){
+ /*   if(modocita.value=='editar'&&servs.value.length==1){
       locEventos=locEventos.filter(item => item.start !== bloque.value.format('YYYY-MM-DD HH:mm'))
-    }
+    }*/
       for(let i=1;i<locEventos.length;i++){
         start=new Date(locEventos[i].start)
         start=(start.getHours()*60)+(start.getMinutes())
@@ -623,25 +636,29 @@ var duracionAct=ref(0)
        menor=Math.min(...save)
       }
       menor+=actual
-    
-    
-      for(let i=1;i<locEventos.length;i++){
-        start=new Date(locEventos[i].start)
-        start=(start.getHours()*60)+(start.getMinutes())
-        if(start>=actual){
-          save.push(start-actual)
-  
-  
-        }
-        
-       menor=Math.min(...save)
-      }
-      menor+=actual
-    
 
+      
+    
+  /*    for(let i=1;i<locEventos.length;i++){
+        start=new Date(locEventos[i].start)
+        start=(start.getHours()*60)+(start.getMinutes())
+        if(start>=actual){
+          save.push(start-actual)
+  
+  
+        }
+        
+       menor=Math.min(...save)
+      }
+      menor+=actual
+
+*/
+    
     
     if(menor>1200){
+      
       espac=0
+      largo=0
       for(let o =actual;o<1200;o+=30)    {
         espac+=30
       }
@@ -667,6 +684,7 @@ var duracionAct=ref(0)
     else{
       largo=servs.value.length
       espac=espac+duracionAct.value
+
         return espac
       
         
@@ -682,10 +700,11 @@ var duracionAct=ref(0)
   function editarCita(citaBloq){
     bloque.value=citaBloq
     modocita.value='editar'
+    
     flotante.value = !flotante.value
 
-
-
+    cita.value.fechaInicio=citaBloq.format('YYYY-MM-DD HH:mm')
+  
     let dia = computed(()=>{if(citaBloq.getDay()==0){
       return 7
     }else {return citaBloq.getDay()}})
@@ -695,8 +714,17 @@ var duracionAct=ref(0)
     
 
     for(let i=0;i<=citas.value.length-1;i++){
+    
       if(citas.value[i].fechaInicio==citaBloq.format('YYYY-MM-DD HH:mm')){
-        cliente=citas.value[i].idCliente
+        clienteid=citas.value[i].idCliente
+        cita.value.fechaFin=citaBloq.addMinutes(citas.value[i].duracionTotal)
+
+      for(let o=0;o<=servCita.value.length-1;o++){
+          if(citas.value[i].id==servCita.value[o].idCita){
+            servs.value.push(servCita.value[o].idServicio)
+          }
+        }
+        
       }
     }
     for(let i=0;i<=clientes.value.length-1;i++){
@@ -741,6 +769,10 @@ var duracionAct=ref(0)
 
   
   function abrirCrearcita(bloq){
+
+
+
+
   
     //Asignacion de valores globales de la funcion (dia, actual, bloque)
 
@@ -751,8 +783,29 @@ var duracionAct=ref(0)
 
       let actual = (bloq.getHours()*60)+bloq.getMinutes()
         
-
-
+      if(modocita.value=='cita'||modocita.value=='bloq'){
+      let locEventos = ['']
+      let s=''
+      let diames = bloque.value.getDate()
+      for(let i = 0;i<=eventos.value.length-1;i++){
+       s=new Date(eventos.value[i].start)
+        if(s.getDate()==diames){
+         
+          locEventos.push(eventos.value[i])
+        }
+  
+      }
+    for(let i=0;i<=locEventos.length-1;i++){
+      let start = new Date(locEventos[i].start)
+      start =  (start.getHours()*60)+start.getMinutes()
+      let end = new Date(locEventos[i].end)
+      end =  (end.getHours()*60)+end.getMinutes()
+      if(start<=actual&&end>actual){
+  
+        return
+      }
+    }
+  }
 
 
 
@@ -803,27 +856,30 @@ var duracionAct=ref(0)
     }
     agregarCita(bloque.value.format('YYYY-MM-DD HH:mm'),30,1,0,0,0)
     
-    //insert en servicio-cita (no son los datos verdaderos)
-    servCita.value.push({
-      id:servCita.value[servCita.value.length-1].id+1,
-      idCita: 0,
-      idServicio: 0,
-      precio: 0,
-      duracion: 30,
-      fechaServicio:bloque.value.format('YYYY-MM-DD HH:mm'),
-      tipo: 1,
-      catalogo: 0
-    })
+ 
 
     //insert en citas (sin id)
-    citas.value.push(
-      {
-        id:citas.value[citas.value.length-1].id+1,
-        fechaInicio: bloque.value.format('YYYY-MM-DD HH:mm'),
-        duracionTotal: 30,
-        clienteId:0
-      }
-    )
+
+    
+    let  inst1={
+      id_servicio:null,
+      precio:0,
+        duracion_min:30,
+        fecha_hora:bloque.value.format('YYYY-MM-DD HH:mm'),
+        tipo:1
+   }
+
+  fetch('http://localhost/crear_sc_calendario', {
+    method: 'POST',
+    body: JSON.stringify(inst1),
+}).then(response => response.json())
+    .then(responsej => {
+        if (responsej.status != 200) {
+            return
+        }
+
+
+    });
 
 
 
@@ -905,7 +961,7 @@ var duracionAct=ref(0)
   function cancelar(cerrar){
     if(cerrar=='cerrar'){
       flotante.value = !flotante.value
-      modocita.value='editar'
+      modocita.value='cita'
     }
 
     activo.value=['']
@@ -915,7 +971,34 @@ var duracionAct=ref(0)
     }
     
     contador.value=0
+    if(cerrar=='editar'){
+
+
+      largo=0
     servs.value=[""]
+    if(bloque.value.format('YYYY-MM-DD HH:mm')==cita.value.fechaInicio){
+      let fin =new Date(cita.value.fechaFin)
+      fin = (fin.getHours()*60)+fin.getMinutes()
+      let punto=new Date(cita.value.fechaInicio)
+      punto=(punto.getHours()*60)+punto.getMinutes()
+      let inicio=null
+      let inicio2=null
+      let fin2=null
+      for(let i = 0;i<=eventos.value.length-1;i++){
+        inicio=new Date(eventos.value[i].start)
+        fin2=new Date(eventos.value[i].end)
+        fin2=(fin2.getHours()*60)+fin2.getMinutes()
+
+        if(fin2<=fin&&inicio.getDate()==bloque.value.getDate()&&eventos.value[i].class!='citat'){
+         
+          eventos.value.splice(i,1)
+         i=0 
+          }
+      }
+    }
+    
+
+    }
     cita.value={
       id:0,
       costo: 0,

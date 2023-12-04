@@ -168,7 +168,7 @@ const {servicios,cServicios} = storeToRefs(servs)
           </template>
           <v-list>
             <v-list-item >
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Configuracion</v-list-item-title>
+              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"perfil"}'>Configuracion</router-link></v-list-item-title>
               <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"contacto"}'>Contacto</router-link></v-list-item-title>
              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Cerrar sesion</v-list-item-title>
              </v-list-item>
@@ -204,9 +204,11 @@ const {servicios,cServicios} = storeToRefs(servs)
             <buttom  class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
           </template>
           <v-list>
-            <v-list-item @click="handelperfil" v-for="(perfil, index) in perfil" :key="index">
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">{{ perfil.title }}</v-list-item-title>
-            </v-list-item>
+            <v-list-item >
+              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"perfil"}'>Configuracion</router-link></v-list-item-title>
+              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"contacto"}'>Contacto</router-link></v-list-item-title>
+             <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Cerrar sesion</v-list-item-title>
+             </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -236,15 +238,14 @@ const {servicios,cServicios} = storeToRefs(servs)
   display:flex;
   align-items:center;
   justify-content:space-between;
-  left: 0px;
-  top: 0px;
-  width: 100vw;
+  width: 100%;
   height: 8vh;
- 
   background-blend-mode: normal;
   box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
-   
+  
 }
+
+
 .button{
   border:none;
 

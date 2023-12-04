@@ -135,7 +135,6 @@
     v-model="flotante" 
           class="align-center justify-center h-100"
         >
-       
         <formulario style='overflow-y: auto; max-height: 90vh;'  tipo='info' class='w-100 h-100' v-if='modo==1'>
   
           <v-container class='pa-0 ' style="height:102vh; width:33rem">
@@ -175,7 +174,7 @@
                   <template v-slot:default="{ isActive }">
                   
                   <v-card title="Servicios" >
-                  
+                    {{largo}}
                     <v-card-text  v-for='serv in servicios' :key='serv.id'>
                       <div v-if='espacio2>=serv.duracion&&contador<=3&&activo[serv.id]'>
                       <div  class='d-flex justify-space-between align-center'>
@@ -291,6 +290,10 @@
 
         
         </v-overlay>
+
+
+
+
         <v-overlay 
     v-else-if='modocita=="editar"'
     v-model="flotante"
@@ -325,7 +328,7 @@
       
 
   </v-form>
-                   <v-text-field readonly @click='cancelar' v-bind="props" class='text-body-2 '  variant="underlined">
+                   <v-text-field readonly @click='cancelar("editar")' v-bind="props" class='text-body-2 '  variant="underlined">
                    <div class='d-flex justify-space-between w-100 h-0'>
                      Añadir servicios ({{(servs.length-1)}}) <v-icon icon="mdi-plus" color='#169873'></v-icon>
                    </div>

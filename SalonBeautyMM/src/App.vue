@@ -11,7 +11,7 @@ const {estadonav} = storeToRefs(pagina)
 </script>
 
 <template >
-  <div class="fondo">
+  <div class="fondo" >
     <div :elevation="4" >
       <barra ></barra>
     
@@ -24,7 +24,7 @@ const {estadonav} = storeToRefs(pagina)
 
 <style scoped>
 .fondo {
-  
+  height: 100%;
   background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
   overflow-x: hidden;
 }

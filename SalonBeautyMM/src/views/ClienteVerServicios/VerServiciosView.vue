@@ -13,8 +13,8 @@ const {servicios} = storeToRefs(serv)
 </script>
 
 <template>
-    <div style='height: 100vh;'>
-  <v-container class="bg-red-lighten-4 elevation-5">
+    <div >
+  <v-container class="bg-red-lighten-4  elevation-5">
     <v-card v-for="service in servicios" :key="service.id" class="pink lighten-4" style="margin-bottom: 20px;">
         <v-container v-if='$route.params.idcat==service.categoria' style="background-color: #fee0e0;">
             <v-row>
@@ -22,13 +22,13 @@ const {servicios} = storeToRefs(serv)
           <v-img :src="service.imagen" cover class='h-100' width="300" :aspect-ratio="1">
       </v-img>
         </v-col>
-        <v-col>
+        <v-col >
           <h2 style="font-family: Britannic;">{{ service.nombre }}</h2>
           <h4 style="font-family: Oswald;">${{ service.precio }}.00</h4>
           <p style="font-family: Oswald;">{{ service.duracion_min }}min.</p>
           <p style="font-family: Oswald;">{{ service.descripcion }}</p>
-          <v-row class="fill-height d-flex align-center justify-end">
-            <v-col cols="6"><router-link :to='{name:"detalles",params:{idserv:service.id,serv:service.nombre}}'><boton texto="Mas informacion"></boton></router-link></v-col>
+          <v-row class="mt-2 d-flex align-center justify-end">
+            <v-col cols="6"><router-link  :to='{name:"detalles",params:{idserv:service.id,serv:service.nombre}}'><boton texto="Mas informacion"></boton></router-link></v-col>
             <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id,serv:service.nombre}}'><boton texto="Crear cita"></boton></router-link></v-col>
           </v-row>
         </v-col>
