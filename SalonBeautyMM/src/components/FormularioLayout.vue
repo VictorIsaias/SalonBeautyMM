@@ -34,11 +34,11 @@
                 <template v-slot:default="{ isActive }">
                         <v-card  class="mx-auto float-start" elevation="16" min-width="270" title="¿Eliminar elemento?">
                             
-                            <div class="pa-4 text-end">
+                            <div class="pa-4 text-end" >
                             <v-btn class="text-none mr-3" color="medium-emphasis" min-width="100" rounded variant="outlined" @click="isActive.value = false">
                                 Cancelar
                             </v-btn>
-                            <v-btn class="text-none" color="medium-emphasis" min-width="100" rounded variant="outlined" @click="isActive.value = false; basuraact()">
+                            <v-btn  class="text-none" color="medium-emphasis" min-width="100" rounded variant="outlined" @click="isActive.value = false; basuraact();">
                                 Aceptar
                             </v-btn>
                             </div>

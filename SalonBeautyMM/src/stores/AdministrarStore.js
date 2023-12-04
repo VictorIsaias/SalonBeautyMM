@@ -176,7 +176,7 @@ var servicios = ref([
 ])
 
 const abrirAñadir = (param)=>{
-    if(param='servicio'){
+    if(param=='servicio'){
         servicio.value = {
             id:'',
             nombre: '',

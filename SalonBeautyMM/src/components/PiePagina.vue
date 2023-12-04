@@ -53,6 +53,7 @@ const correo = ref([
 .contenedor{
     height:7.5rem;
     width: 100%;
-    background-color:rgb(179, 147, 179);
+    background-color:#cd67a9;
+    opacity: 0.75;
 }
 </style>

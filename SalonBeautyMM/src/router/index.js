@@ -12,6 +12,9 @@ import citasclienteview from '../views/ClienteCitas/CitasClienteView.vue'
 import calendarioclienteview from '../views/ClienteCitas/CalendarioClienteView.vue'
 import calendarioadminview from '../views/AdminControl/CalendarioAdminView.vue'
 import infocontactoview from '../views/ClientePrincipal/InformacionContactoView.vue'
+import editarperfilview from '../views/ClientePrincipal/EditarPerfilView.vue'
+
+import {PaginaStore} from '../stores/PaginaStore.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +48,10 @@ const router = createRouter({
     {
       path: '/dates',
       name: 'citas_cliente',
-      component: citasclienteview
+      component: citasclienteview,
+      meta:{
+        requiresAuth:true
+      }
     },
    
     {
@@ -80,6 +86,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contacto',
       component: infocontactoview
+    },
+    {
+      path: '/profile',
+      name: 'perfil',
+      component: editarperfilview
     },
     // Administrador
     {

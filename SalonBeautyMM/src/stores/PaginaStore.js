@@ -5,7 +5,19 @@ export const PaginaStore = defineStore('pagina', () => {
   
   var estadonav = ref(1) //0 es sin sesion, 1 es cliente y 2 es admin
   var id = ref('')
-  var correo = ref('')
+
+
+ var usuarioLocal=ref({
+    usuario:{
+      correo:null,
+      contrasena:null
+    },
+    __token:null
+  })
+
+  function setUser(user){
+    console.log(user)
+  }
 
 
 // informacion de catalogos que se va a leer desde backend READ
@@ -42,6 +54,8 @@ export const PaginaStore = defineStore('pagina', () => {
 ])
 
 
-  return {id,usuarios,estadonav,correo}
-})
+  return {setUser,id,usuarios,estadonav,usuarioLocal}
+}
+//,{persist:true}
+)
 

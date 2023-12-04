@@ -15,7 +15,7 @@ const respuesta = async () =>{
     const data = await response.json();
     citas_cliente.value=data.data;
   }catch{
-
+    
   }
 }
 onMounted(respuesta);

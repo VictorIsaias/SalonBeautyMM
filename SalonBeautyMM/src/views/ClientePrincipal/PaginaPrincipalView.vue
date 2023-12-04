@@ -15,7 +15,7 @@ const servicios=ref([
 ]);
 </script>
 <template>
-    <div class='fondop'>
+    <div style='height: 100vh;' class='fondop'>
         <div class="header">
             <div class='logo'><img src="/img/logo2.png" alt=""></div>
             <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
@@ -60,8 +60,7 @@ const servicios=ref([
       <p>Renuva el estilo personal que llevas, con un color diferente</p>
     
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-    
+        <router-link style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:4,cat:"Tinte de cabello"}}'>MAS INFORMACIÓN</router-link>
         
     </v-container>
 
@@ -73,8 +72,8 @@ const servicios=ref([
       <p>Prepara tu mejor imagen para cualquier ocasión especial</p>
       
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-     </v-container>
+        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:2,cat:"Maquillaje"}}'>MAS INFORMACIÓN</router-link>
+        </v-container>
 
     <v-container class="info pt-0">
         <img src='/img/Grupo8.png' style='width:6.3rem;height:7rem;position: relative; bottom:2.5rem'>
@@ -84,8 +83,8 @@ const servicios=ref([
       <p>Nutre estilo de gran valor aprovechando lo mejor de ti</p>
      
         </div>
-        <a class="link " href="" style='position: relative; bottom:1.5rem'>MAS INFORMACIÓN</a>
-    </v-container>
+        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:1,cat:"Corte de cabello"}}'>MAS INFORMACIÓN</router-link>
+         </v-container>
   </div>
 </div>
 
@@ -143,6 +142,7 @@ const servicios=ref([
 .item3 {
   background-image: url('/img/salon.jpeg');
   background-size: cover;
+  opacity: 0.9;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
