@@ -39,7 +39,7 @@ var citas = ref([
 
 const rCitas = async () => {
   try{
-      const response = await fetch('http://localhost/citas_calendario');
+      const response = await fetch('http://18.218.1.15:81/citas_calendario');
       const data = await response.json();
       citas.value=data.data;
       
@@ -60,7 +60,7 @@ var servCita = ref([
 
 const rServicioCita = async () => {
   try{
-      const response = await fetch('http://localhost/servicio_citas_calendario');
+      const response = await fetch('http://18.218.1.15:81/servicio_citas_calendario');
       const data = await response.json();
       servCita.value=data.data;
       
@@ -80,7 +80,7 @@ var servicios = ref([  ])
 
 const rServicios = async () => {
   try{
-      const response = await fetch('http://localhost/servicios_calendario');
+      const response = await fetch('http://18.218.1.15:81/servicios_calendario');
       const data = await response.json();
       servicios.value=data.data;
       
@@ -93,7 +93,7 @@ var serv_bloqueos = ref([  ])
 
 const bloqueos_admin = async () => {
   try{
-      const response = await fetch('http://localhost/servicio_bloqueos_calendario');
+      const response = await fetch('http://18.218.1.15:81/servicio_bloqueos_calendario');
       const data = await response.json();
       serv_bloqueos.value=data.data;
       
@@ -365,8 +365,8 @@ else{
       tipo:0,
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
-
- await fetch('http://localhost/crear_cita_calendario', {
+   
+ await fetch('http://18.218.1.15:81/crear_cita_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
@@ -388,7 +388,7 @@ for(let i=0;i<=SCita.value.length-1;i++){
   fecha_hora:SCita.value[i].fechaServicio,
   tipo:SCita.value[i].tipo
  }
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://18.218.1.15:81/crear_sc_calendario', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -869,7 +869,7 @@ var duracionAct=ref(0)
         tipo:1
    }
 
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://18.218.1.15:81/crear_sc_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())

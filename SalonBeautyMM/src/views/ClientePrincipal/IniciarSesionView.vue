@@ -53,7 +53,7 @@ async function login(){
   }
 
 
-  fetch("http://localhost/user",{
+  fetch("http://18.218.1.15:81/user",{
     method:'POST',
     body:JSON.stringify(usuario.value)
   }).then(response=>response.json()).then(data=>{

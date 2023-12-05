@@ -11,7 +11,7 @@ const citas_cliente =ref([]);
 
 const respuesta = async () =>{
   try{
-    const response = await fetch('http://localhost/servicio_cita');
+    const response = await fetch('http://18.218.1.15:81/servicio_cita');
     const data = await response.json();
     citas_cliente.value=data.data;
   }catch{
