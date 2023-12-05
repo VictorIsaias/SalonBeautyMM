@@ -161,13 +161,10 @@ const servicios =[
 }
 
 .flex-barra{
-
   height: 60px;
   width: 100%;
   background-color: 0,0,0,0;
   line-height: 60px;
-  
-  
 }
 
 .barra{
@@ -178,7 +175,6 @@ const servicios =[
 }
 .button{
   border:none;
-
   text-decoration: none;;
 }
 .button:hover{

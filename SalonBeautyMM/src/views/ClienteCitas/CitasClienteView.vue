@@ -99,9 +99,7 @@ alert(id)
   justify-content: center;
   padding-top:30px;
 }
-.citas .boton{
-  margin-left:570px;
-}
+
 th{
   border: 1px rgba(0, 0, 0, 0.085) solid;
   background-color:white;
@@ -117,5 +115,26 @@ td{
   height: 10px;
   width: 100px;
   font-size: 5px;
+}
+
+.boton{
+  height: 70px;
+  width: 230px;
+}
+@media screen and (max-width: 960px){
+  .boton{
+    height: 60px;
+  width: 200px;
+  font-size: .45rem;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .boton{
+    height: 60px;
+  width: 180px;
+  font-size: .45rem;
+
+  }
 }
 </style>
