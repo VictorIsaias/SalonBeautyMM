@@ -301,7 +301,7 @@
         >
         <formulario style='overflow-y: auto; max-height: 90vh;'  tipo='info' class='w-100 h-100' v-if='modo==1'>
   
-  <v-container class='pa-0 ' style="height:102vh; width:33rem">
+  <v-container class='pa-0 ' style="height:109vh; width:33rem">
   <v-row>
            <v-col>
              <formulario class='h-100 w-100 flotante' titulo='Editar cita' tipo='sinboton'>
@@ -325,7 +325,7 @@
   </v-row>
  
   <v-text-field readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-      
+    
 
   </v-form>
                    <v-text-field readonly @click='cancelar("editar")' v-bind="props" class='text-body-2 '  variant="underlined">
@@ -333,7 +333,14 @@
                      Añadir servicios ({{(servs.length-1)}}) <v-icon icon="mdi-plus" color='#169873'></v-icon>
                    </div>
                   </v-text-field>
-
+                  <v-row class='mt-1 '>
+                    <v-col cols='6'>
+                      <boton icon='mdi-table-cancel' clase='cancelar' texto='cancelar cita' tamaño='large'></boton>
+                    </v-col>
+                    <v-col cols='6'>
+                      <boton icon='mdi-calendar-check' clase='finalizar' texto='finalizar cita' tamaño='large'></boton>
+                    </v-col>
+                  </v-row>
                  </template>
 
                  <template v-slot:default="{ isActive }">

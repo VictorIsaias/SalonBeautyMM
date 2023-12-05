@@ -11,7 +11,7 @@ const citas_cliente =ref([]);
 
 const respuesta = async () =>{
   try{
-    const response = await fetch('http://localhost/servicio_cita');
+    const response = await fetch('http://localhost/ver_citas');
     const data = await response.json();
     citas_cliente.value=data.data;
   }catch{
@@ -32,7 +32,7 @@ alert(id)
 <template>
   <div class="citas">
     <v-container class='d-flex flex-column'>
-      <boton texto='Buscar por estado' @click="estados" class="boton mb-2"></boton>
+      <boton texto='Buscar por estado' @click="estados" class="boton mb-5"></boton>
       
      <v-table 
      style='background-color:rgb(255, 237, 237);'
@@ -92,16 +92,13 @@ alert(id)
 </template>
 <style>
 .citas{
-  background-color:rgb(255, 218, 225);
   height: 1000px;
   width: 100%;
   display: flex;
   justify-content: center;
   padding-top:30px;
 }
-.citas .boton{
-  margin-left:570px;
-}
+
 th{
   border: 1px rgba(0, 0, 0, 0.085) solid;
   background-color:white;
@@ -118,4 +115,23 @@ td{
   width: 100px;
   font-size: 5px;
 }
+
+.boton{
+  width: 230px;
+}
+@media screen and (max-width: 960px){
+  .boton{
+  width: 200px;
+  font-size: .45rem;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .boton{
+  width: 180px;
+  font-size: .45rem;
+
+  }
+}
 </style>
+

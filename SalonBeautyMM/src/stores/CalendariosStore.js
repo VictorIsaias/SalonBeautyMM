@@ -134,9 +134,7 @@ async function leerBloqueos(){
 
 function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
  
-if(idserv==0){
-  idserv=eventos.value.length+1
-}
+
   let titulo
   let size = false
   let dra = false
@@ -218,17 +216,17 @@ async function leerCitas(){
 
  
   for(let o = 0;o<=servCita.value.length-1;o++){
-    agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value.length)
+    agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value[o].id)
  
 }
 
 for(let o = 0;o<=serv_bloqueos.value.length-1;o++){
-  agregarCita(serv_bloqueos.value[o].fechaServicio,serv_bloqueos.value[o].duracion,serv_bloqueos.value[o].tipo,serv_bloqueos.value[o].idServicio,serv_bloqueos.value[o].catalogo,serv_bloqueos.value.length)
+  agregarCita(serv_bloqueos.value[o].fechaServicio,serv_bloqueos.value[o].duracion,serv_bloqueos.value[o].tipo,serv_bloqueos.value[o].idServicio,serv_bloqueos.value[o].catalogo,serv_bloqueos.value[o].id)
 
 }
 
 for(let i = 0;i<=citas.value.length-1;i++){
-  agregarCita(citas.value[i].fechaInicio,citas.value[i].duracionTotal,2,'','t',eventos.value.length)
+  agregarCita(citas.value[i].fechaInicio,citas.value[i].duracionTotal,2,'','t','100'+citas.value[i].id)
  
 
 }
@@ -365,7 +363,7 @@ else{
       tipo:0,
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
-
+   
  await fetch('http://localhost/crear_cita_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
@@ -751,8 +749,19 @@ var duracionAct=ref(0)
   function desactivarBloqueo(citaBloq){
     for(let i=0;i<=eventos.value.length-1;i++){
       if(eventos.value[i].id==citaBloq.id){
-      
+      //////////////////////////////////////////////////////777
         eventos.value.splice(i,1)
+        fetch('http://localhost/crear_sc_calendario', {
+          method: 'POST',
+          body: JSON.stringify(inst),
+      }).then(response => response.json())
+          .then(responsej => {
+              if (responsej.status != 200) {
+                  return
+              }
+     
+    
+          });
 
 
       }
@@ -869,7 +878,7 @@ var duracionAct=ref(0)
         tipo:1
    }
 
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://18.218.1.15:81/crear_sc_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
