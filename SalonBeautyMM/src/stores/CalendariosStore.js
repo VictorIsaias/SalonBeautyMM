@@ -39,7 +39,11 @@ var citas = ref([
 
 const rCitas = async () => {
   try{
+<<<<<<< HEAD
       const response = await fetch('http://18.218.1.15:81/citas_calendario');
+=======
+      const response = await fetch('http://localhost/citas_calendario');
+>>>>>>> main
       const data = await response.json();
       citas.value=data.data;
       
@@ -60,7 +64,11 @@ var servCita = ref([
 
 const rServicioCita = async () => {
   try{
+<<<<<<< HEAD
       const response = await fetch('http://18.218.1.15:81/servicio_citas_calendario');
+=======
+      const response = await fetch('http://localhost/servicio_citas_calendario');
+>>>>>>> main
       const data = await response.json();
       servCita.value=data.data;
       
@@ -80,7 +88,11 @@ var servicios = ref([  ])
 
 const rServicios = async () => {
   try{
+<<<<<<< HEAD
       const response = await fetch('http://18.218.1.15:81/servicios_calendario');
+=======
+      const response = await fetch('http://localhost/servicios_calendario');
+>>>>>>> main
       const data = await response.json();
       servicios.value=data.data;
       
@@ -93,7 +105,11 @@ var serv_bloqueos = ref([  ])
 
 const bloqueos_admin = async () => {
   try{
+<<<<<<< HEAD
       const response = await fetch('http://18.218.1.15:81/servicio_bloqueos_calendario');
+=======
+      const response = await fetch('http://localhost/servicio_bloqueos_calendario');
+>>>>>>> main
       const data = await response.json();
       serv_bloqueos.value=data.data;
       
@@ -134,9 +150,13 @@ async function leerBloqueos(){
 
 function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
  
+<<<<<<< HEAD
 if(idserv==0){
   idserv=eventos.value.length+1
 }
+=======
+
+>>>>>>> main
   let titulo
   let size = false
   let dra = false
@@ -218,17 +238,29 @@ async function leerCitas(){
 
  
   for(let o = 0;o<=servCita.value.length-1;o++){
+<<<<<<< HEAD
     agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value.length)
+=======
+    agregarCita(servCita.value[o].fechaServicio,servCita.value[o].duracion,servCita.value[o].tipo,servCita.value[o].idServicio,servCita.value[o].catalogo,servCita.value[o].id)
+>>>>>>> main
  
 }
 
 for(let o = 0;o<=serv_bloqueos.value.length-1;o++){
+<<<<<<< HEAD
   agregarCita(serv_bloqueos.value[o].fechaServicio,serv_bloqueos.value[o].duracion,serv_bloqueos.value[o].tipo,serv_bloqueos.value[o].idServicio,serv_bloqueos.value[o].catalogo,serv_bloqueos.value.length)
+=======
+  agregarCita(serv_bloqueos.value[o].fechaServicio,serv_bloqueos.value[o].duracion,serv_bloqueos.value[o].tipo,serv_bloqueos.value[o].idServicio,serv_bloqueos.value[o].catalogo,serv_bloqueos.value[o].id)
+>>>>>>> main
 
 }
 
 for(let i = 0;i<=citas.value.length-1;i++){
+<<<<<<< HEAD
   agregarCita(citas.value[i].fechaInicio,citas.value[i].duracionTotal,2,'','t',eventos.value.length)
+=======
+  agregarCita(citas.value[i].fechaInicio,citas.value[i].duracionTotal,2,'','t','100'+citas.value[i].id)
+>>>>>>> main
  
 
 }
@@ -366,7 +398,11 @@ else{
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
    
+<<<<<<< HEAD
  await fetch('http://18.218.1.15:81/crear_cita_calendario', {
+=======
+ await fetch('http://localhost/crear_cita_calendario', {
+>>>>>>> main
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
@@ -388,7 +424,11 @@ for(let i=0;i<=SCita.value.length-1;i++){
   fecha_hora:SCita.value[i].fechaServicio,
   tipo:SCita.value[i].tipo
  }
+<<<<<<< HEAD
   fetch('http://18.218.1.15:81/crear_sc_calendario', {
+=======
+  fetch('http://localhost/crear_sc_calendario', {
+>>>>>>> main
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -751,8 +791,19 @@ var duracionAct=ref(0)
   function desactivarBloqueo(citaBloq){
     for(let i=0;i<=eventos.value.length-1;i++){
       if(eventos.value[i].id==citaBloq.id){
-      
+      //////////////////////////////////////////////////////777
         eventos.value.splice(i,1)
+        fetch('http://localhost/crear_sc_calendario', {
+          method: 'POST',
+          body: JSON.stringify(inst),
+      }).then(response => response.json())
+          .then(responsej => {
+              if (responsej.status != 200) {
+                  return
+              }
+     
+    
+          });
 
 
       }

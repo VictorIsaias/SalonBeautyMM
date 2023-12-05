@@ -3,16 +3,16 @@
     <div v-show='tipo!="ninguno"'>
         
         <div  v-if='tipo=="enviar"' >
-            <div ref="boton">
-            <v-btn @click='btnClick'  color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
-                <div   div class='texto'><strong>{{texto}}</strong></div>
+            <div ref="boton" >
+            <v-btn  @click='btnClick' :class=' clase' color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
+                <v-icon v-if='icon' :icon='icon' class='mr-2'></v-icon><strong class='texto' >{{texto}}</strong>
              </v-btn>
             </div>
         </div>
 
         <div  v-if='tipo=="pedir"'  >
             <div ref="boton">
-            <v-btn @click='btnClick'  class='btncita'  ref='boton-pry' width='100%' height='3rem' elevation='3' rounded="lg" variant="tonal"  :size="tamaño">
+            <v-btn @click='btnClick'  :class='clase'  ref='boton-pry' width='100%' height='3rem' elevation='3' rounded="lg" variant="tonal"  :size="tamaño">
                 <div class='d-flex align-center '><v-icon icon='mdi-calendar-range' class='mr-3'></v-icon>
                     <strong >{{texto}}</strong></div>
              </v-btn>
@@ -74,7 +74,9 @@ const props = defineProps({
         tamaño: {type:String}, //tamaño: x-small, small, large, x-large
         propiedad: {type:String}, //propiedad extra de vuetify btn
         link: {type:String}, //nombre de ruta (de routerlink) para boton minus
-        color:{type:String}
+        color:{type:String},
+        clase:{type:String},
+        icon:{type:String}
 })
 const boton = ref(null)
 const boton_pry = ref(null)
@@ -132,6 +134,41 @@ onMounted(()=>
   border-radius: 15px;
   border: 1px solid rgba(0, 108, 77, 0.097);
   background: radial-gradient(circle, #28ebb3 0%, #89ffde 100%);
+  background-blend-mode: normal;
+  backdrop-filter: blur(23px);
+  box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
+}
+
+.btncita strong,.cancelar strong,.finalizar strong,.btncita *,.cancelar *,.finalizar *{
+   
+  color:rgb(228, 255, 255);
+  font-size: 1rem;
+  font-family: britannnic;
+
+}
+
+
+.cancelar{
+    opacity: 0.88;
+  color:azure;
+  font-size: 1.2rem;
+  font-family: britannnic;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 108, 77, 0.097);
+  background: radial-gradient(circle, #eb4c2899 0%, #d17f5f97 100%);
+  background-blend-mode: normal;
+  backdrop-filter: blur(23px);
+  box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
+}
+
+.finalizar{
+    opacity: 0.88;
+  color:azure;
+  font-size: 1.2rem;
+  font-family: britannnic;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 108, 45, 0.097);
+  background: radial-gradient(circle, #28eb70a5 0%, #82f8adc2 100%);
   background-blend-mode: normal;
   backdrop-filter: blur(23px);
   box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);

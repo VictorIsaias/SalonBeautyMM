@@ -50,7 +50,7 @@ const items = ref([
               <div class="font-weight-bold">{{servicio.duracion_min}} min. Aprox.</div>
             </v-col>
             <v-col cols="9">
-              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir'  texto="PEDIR CITA" ></boton></router-link>
+              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
             </v-col>
         </v-row>
         </v-container>

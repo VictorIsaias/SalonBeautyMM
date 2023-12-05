@@ -123,7 +123,7 @@ const {servicios,cServicios} = storeToRefs(servs)
     >
       <template v-slot:activator="{ props }">
         <div class="item2">
-        <button  v-bind='props' class="button">SERVICIOS</button>
+        <button  v-bind='props' class="button rutas">SERVICIOS</button>
       </div>
       </template>
 
@@ -225,13 +225,10 @@ const {servicios,cServicios} = storeToRefs(servs)
 }
 
 .flex-barra{
-
   height: 60px;
   width: 100%;
   background-color: 0,0,0,0;
   line-height: 60px;
-  
-  
 }
 
 .barra{
@@ -248,7 +245,6 @@ const {servicios,cServicios} = storeToRefs(servs)
 
 .button{
   border:none;
-
   text-decoration: none;;
 }
 .button:hover{
@@ -257,7 +253,7 @@ const {servicios,cServicios} = storeToRefs(servs)
 }
 .iconos{
   height: 31px;
-  height: 31px;
+  width: 31px;
   margin-top: 15px;
 }
 .noti{
@@ -285,5 +281,40 @@ const {servicios,cServicios} = storeToRefs(servs)
   flex-grow: 1;
 }
 
+@media screen and (max-width: 960px){
+  .logo{
+  margin-left: 15px;
+  height: 30px;
+  width: 40px;
+  margin-top:5px;
+}
 
+.iconos{
+  height: 21px;
+  width: 21px;
+  margin-top: 10px;
+}
+
+.rutas{
+  font-size: .70rem;
+}
+}
+
+@media screen and (max-width: 450px){
+  .logo{
+  margin-left: 15px;
+  height: 30px;
+  width: 40px;
+  margin-top:5px;
+}
+.iconos{
+  height: 15px;
+  width: 15px;
+  margin-top: 13px;
+}
+
+.rutas{
+  font-size: .60rem;
+}
+}
 </style>
