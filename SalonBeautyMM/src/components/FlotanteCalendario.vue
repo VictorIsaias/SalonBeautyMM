@@ -301,11 +301,7 @@
         >
         <formulario style='overflow-y: auto; max-height: 90vh;'  tipo='info' class='w-100 h-100' v-if='modo==1'>
   
-<<<<<<< HEAD
-  <v-container class='pa-0 ' style="height:102vh; width:33rem">
-=======
   <v-container class='pa-0 ' style="height:109vh; width:33rem">
->>>>>>> main
   <v-row>
            <v-col>
              <formulario class='h-100 w-100 flotante' titulo='Editar cita' tipo='sinboton'>
@@ -329,11 +325,7 @@
   </v-row>
  
   <v-text-field readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-<<<<<<< HEAD
-      
-=======
     
->>>>>>> main
 
   </v-form>
                    <v-text-field readonly @click='cancelar("editar")' v-bind="props" class='text-body-2 '  variant="underlined">

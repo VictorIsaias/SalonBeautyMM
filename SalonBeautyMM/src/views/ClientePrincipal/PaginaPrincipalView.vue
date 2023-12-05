@@ -13,81 +13,6 @@ const servicios=ref([
     {id:3, image: '/img/servicio5.jpg'},
     {id:4, image: '/img/servicio6.jpg'},
 ]);
-<<<<<<< HEAD
-</script>
-<template>
-    <div style='height: 100vh;' class='fondop'>
-        <div class="header">
-            <div class='logo'><img src="/img/logo2.png" alt=""></div>
-            <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
-            <div class="item">
-                <botonPagina link='catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
-            </div><br>
-        </div>
-        <div class="carrusel">
-            <v-carousel cycle interval="3000" class='h-50'>
-                <v-carousel-item v-for="item in slog" :key="item.id" >
-                    <v-img :src="item.image" style="opacity: 0.7;"></v-img>
-                </v-carousel-item>
-            </v-carousel><br>
-        </div>
-        <div class="item2 ma-4 mb-10">
-            <v-responsive>
-            <v-row>
-              <v-col class='d-flex flex-column align-center text-center'>
-                <h1 class="text-headline">PIDE UNA CITA</h1>
-                <h3 class="text-subtitle-1">ADQUIERE UN NUEVO ESTILO</h3>
-                <h4 class="text-body-1">INICIA SESION Y PIDE UNA CITA. PUEDES SELECCIONAR EL SERVICIO QUE GUSTES A LA HORA QUE DESEES</h4>
-              </v-col>
-            </v-row>
-          </v-responsive>
-        </div>
-        <div class="carrusel">
-            <v-carousel cycle interval="3000" class='h-50'>
-                <v-carousel-item v-for="item in servicios" :key="item.id" >
-                    <v-img :src="item.image" style="opacity: 0.7;"></v-img>
-                </v-carousel-item>
-            </v-carousel><br>
-        </div>
-        <br>
-        <div class="item3">
-  <h1 style="border-bottom: 2px solid black; font-family: 'Britannic', Times, serif;font-size:4rem">SERVICIOS</h1><br>
-  <h3 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">REVISA NUESTRO CATÁLOGO DE SERVICIOS</h3><br>
-  <div class=" servicios">
-    <v-container class="info pt-0">
-        
-        <img src='/img/Grupo9.png' style='width:6.9rem;height:7rem;position: relative; bottom:2.5rem'>
-           <div class='pt-1 ' style='position: relative; bottom:2.5rem'> <h2 class="letra">Tinte de cabello</h2>
-      <p>Renuva el estilo personal que llevas, con un color diferente</p>
-    
-        </div>
-        <router-link style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:4,cat:"Tinte de cabello"}}'>MAS INFORMACIÓN</router-link>
-        
-    </v-container>
-
-    <v-container class="info pt-0">
-        <img src='/img/Grupo7.png' style='width:6.9rem;height:6rem;position: relative; bottom:2.5rem'>
-            
-        <div class='pt-1' style='position: relative; bottom:2.5rem'>
-            <h2 class="letra">Maquillaje</h2>
-      <p>Prepara tu mejor imagen para cualquier ocasión especial</p>
-      
-        </div>
-        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:2,cat:"Maquillaje"}}'>MAS INFORMACIÓN</router-link>
-        </v-container>
-
-    <v-container class="info pt-0">
-        <img src='/img/Grupo8.png' style='width:6.3rem;height:7rem;position: relative; bottom:2.5rem'>
-              
-        <div class='pt-1' style='position: relative; bottom:2.5rem'>
-            <h2 class="letra">Corte de cabello</h2>
-      <p>Nutre estilo de gran valor aprovechando lo mejor de ti</p>
-     
-        </div>
-        <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:1,cat:"Corte de cabello"}}'>MAS INFORMACIÓN</router-link>
-         </v-container>
-  </div>
-=======
 </script><template>
   <div class='fondop'>
       <div class="header">
@@ -163,7 +88,6 @@ const servicios=ref([
       <router-link  style='color:#169873;position: relative; bottom:1.5rem' :to='{name:"sub-servicios",params:{idcat:1,cat:"Corte de cabello"}}'>MAS INFORMACIÓN</router-link>
        </v-container>
 </div>
->>>>>>> main
 </div>
 
       <Footer/>
@@ -218,17 +142,6 @@ const servicios=ref([
 }
 
 .item3 {
-<<<<<<< HEAD
-  background-image: url('/img/salon.jpeg');
-  background-size: cover;
-  opacity: 0.9;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  position: relative;
-  text-align: center;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-=======
 background-image: url('/img/salon.jpeg');
 background-size: cover;
 background-position: center;
@@ -237,7 +150,6 @@ height: 100vh;
 position: relative;
 text-align: center;
 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
->>>>>>> main
 }
 .servicios{
   display:flex;
