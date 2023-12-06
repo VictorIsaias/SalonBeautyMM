@@ -1,8 +1,8 @@
 <template>
   <div class="fondo" align='center'>
-    <v-container class="pt-16">
+    <v-container class="item">
 
-<FormularioPrincipal class='w-50 h-100' tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' :param='correo' @datos='verificar' titulo='Registro para clientes' enviar='Registrar'>
+<FormularioPrincipal tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' :param='correo' @datos='verificar' titulo='Registro para clientes' enviar='Registrar'>
 
   <v-form ref="form">
       <v-text-field :rules="[rules.requerido]" v-model="input.input1" label="Nombre/s*" variant="underlined"></v-text-field>
@@ -10,11 +10,13 @@
    
   <v-row>
     <v-col>
-      <v-text-field  v-model="input.input2" label="Apellido Paterno" variant="underlined"></v-text-field>
+      <v-text-field  v-model="input.input2" label="Apellido Paterno" variant="underlined" class="text"></v-text-field>
+      <v-text-field  v-model="input.input2" label="Apellido P." variant="underlined" class="text2"></v-text-field>
      
     </v-col>
     <v-col>
-      <v-text-field v-model="input.input3" label="Apellido Materno" variant="underlined"></v-text-field>
+      <v-text-field v-model="input.input3" label="Apellido Materno" variant="underlined" class="text"></v-text-field>
+      <v-text-field v-model="input.input3" label="Apellido M." variant="underlined" class="text2"></v-text-field>
      
     </v-col>
   </v-row>
@@ -96,6 +98,7 @@ var input = ref({
 var show1 = ref('')
 var show2 = ref('')
 
+
 </script>
 
 <style scoped>
@@ -105,4 +108,33 @@ var show2 = ref('')
   background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
 }
 
+.item{
+    margin-top: 50px;
+  }
+@media screen and (min-width: 500px) {
+.item{
+  width: 200px;
+}
+}
+@media screen and (min-width: 700px) {
+.item{
+  width: 500px;
+}
+}
+@media screen and (min-width: 381px){
+  .text2{
+    display: none;
+  }
+}
+@media screen and (max-width: 380px) {
+  .fondo {
+    height: auto;
+  }
+  .item {
+    width: 100%;
+  }
+  .text{
+    display: none;
+  }
+}
 </style>

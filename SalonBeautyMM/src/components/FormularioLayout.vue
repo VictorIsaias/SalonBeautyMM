@@ -1,4 +1,27 @@
 <template >
+    <div>
+        <v-card class='w-100 h-100  '  v-show='tipo=="info"' elevation='4'   width='45%'  >
+        <v-card-title  class='d-flex justify-start'>{{titulo}}
+           
+        </v-card-title>
+        <v-card-text class='d-flex justify-start'>
+            
+        </v-card-text>
+          
+                        
+        <div class=" pb-3 interior h-100">
+            <div class="pl-4 pr-4">
+                <slot name='info' ></slot>
+            </div>
+            
+           <v-container class="pl-10 pr-10">
+                
+                        <slot></slot>
+    
+            </v-container>
+            </div>
+        </v-card>
+
     <v-card class='w-100 h-100 contenedor' v-show='tipo!="info"'  elevation='4'   width='45%'  align='center'>
         <v-card-title class="titulo">{{titulo}}
             <v-dialog width="700" v-if='basura=="true"'> 
@@ -48,6 +71,7 @@
     
 
 </v-card>
+</div>
 </template>
 
 <script setup>
