@@ -1,8 +1,8 @@
 <template>
   <div class="fondo" align='center'>
-    <v-container class="pt-16">
+    <v-container class="item">
 
-<FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
+<FormularioPrincipal tamañobtn='large' link='registrar' pie='Registrarse' @datos='verificar' titulo='Acceso para cliente' enviar='Iniciar'>
   <v-form ref='form'>
     <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="input1" label="Correo electronico" variant="underlined"></v-text-field>
     <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="input2" label="Contraseña" variant="underlined"></v-text-field>
@@ -88,5 +88,17 @@ var show2 = ref('')
   width: 100vw;
   background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
 }
-
+.item{
+    margin-top: 50px;
+  }
+@media screen and (min-width: 500px) {
+.item{
+  width: 450px;
+}
+}
+@media screen and (min-width: 700px) {
+.item{
+  width: 500px;
+}
+}
 </style>
