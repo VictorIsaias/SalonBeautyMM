@@ -1,95 +1,84 @@
-<template>
-    <v-container >
-      <v-row style="background-color:#FDCCB5">
-        <v-col v-for="(item, index) in services" :key="index" cols="12">
-          <v-card color= 'pink-lighten-5' theme='black'>
-            <v-row>
-              <v-col cols="12" md="4">
-                 
-                  <v-img class="item.image" width="300" :aspect-ratio="1" :src="item.image" cover></v-img>
-               
-              </v-col>
-              <v-col cols="12" md="6">
-                <div class="d-flex flex-direction-column justify-space-between">
-                  <div>
-                    <v-card-title class="text-h5">{{ item.title }}</v-card-title>
-                    <v-card-subtitle>{{ item.subtitle }}</v-card-subtitle>
-                    <v-card-actions>
-                      <v-btn class="botoncito" elevation="8" size="x-large"  >
-                         {{ item.buttonText }}
-                      </v-btn>
-                    </v-card-actions>
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-</template>
-
 <script setup>
+  import { ref } from 'vue';
+import {ServiciosStore} from '@/stores/ServiciosStore.js'
+import { storeToRefs } from 'pinia'
 
-import { ref } from 'vue';
+const serv = ServiciosStore()
 
-const services = ref([
-{
-title: 'Corte de Cabello',
-subtitle: 'Luce espectacular con un nuevo y grandioso corte de cabello...',
-buttonText: 'ver servicios',
-image:'https://media.istockphoto.com/id/638948482/es/foto/peluquer%C3%ADa-en-acci%C3%B3n.jpg?s=1024x1024&w=is&k=20&c=CJtYfp7nx0yd9w90OHzt8aYHlOTuCPZ_URw2JwS3taM=',
-},
-{
-title: 'Aplicación de uñas',
-subtitle: 'Disfruta de una excelente manicura...',
-buttonText: 'ver servicios',
-image: 'https://www.rbs-nails-academy.com.ar/wp-content/uploads/2020/11/Curso-Unas-Esculpidas-en-Acrilico-2--e1605812147470.jpg',
-},
-{
-title: 'Depilación',
-subtitle: 'Luce una piel extra limpia y saludable con nuestros servicios de depilación...',
-buttonText: 'ver servicios',
-image: 'https://tse2.explicit.bing.net/th?id=OIP.mTHE9F90IPtfFHJ4f59CeAHaEK&pid=Api&P=0&h=180',
-},
-{
-title: 'Trabajos de color',
-subtitle: 'Trabajos desde ballagaye hasta mechas...',
-buttonText: 'ver servicios',
-image: 'https://www.instyle.es/medio/2020/12/11/color-melting_74fe8f06_900x1125.jpg',
-},
-{
-title: 'Aplicación de tinte',
-subtitle: 'Atrevete a un cambio de look para sorprender...',
-buttonText: 'ver servicios',
-image: 'https://tse1.explicit.bing.net/th?id=OIP.F9kP86vPI4gz4grSi2pYaQHaE8&pid=Api&P=0&h=180',
-},
-{
-title: 'Maquillaje y peinado',
-subtitle: 'Luce increible para tu evento o tu día especial...',
-buttonText: 'ver servicios',
-image: 'https://www.hogarmania.com/archivos/201703/belleza-maquillaje-novia-2-XxXx80.jpg',
-},
-]);
-
+const {cServicios} = storeToRefs(serv)
 </script>
+<template>
+  <div class="fondo">
+    <v-container class="bg-red-lighten-4 elevation-5 contenedor">
+      <v-card  v-for="(item, index) in services" :key="index" cols="12" style="background-color: #FCE4EC; margin-bottom: 20px;">
+      <v-container style="background-color: #fee0e0;">
+        <v-row class="desaparce">
+                <v-col cols="3">
+                  <v-img :src="item.image" cover class="h-100" width="300" :aspect-ratio="1"></v-img>
+                </v-col>
+                <v-col cols="9">
+                  <v-card-title class="font-weight-black" style="font-family: Britannic; font-size: 1.5rem">{{ item.nombre }}</v-card-title>
+                  <v-card-text style="font-family: Oswald;">{{ item.descripcion }}</v-card-text>
+                  <v-row class="fill-height d-flex align-center">
+                    <v-card-actions>
+                    <router-link :to='{name:"sub-servicios",params:{idcat:item.id,cat:item.nombre}}'>
+                      <v-btn class="botoncito" elevation="8" size="x-large"  >
+                       Ver servicio
+                      </v-btn>
+                    </router-link>
+                  </v-card-actions>
+                </v-row>
+                </v-col>
+              </v-row>
 
-<style>
-
-
-.text-h4 {
-font-size: 24px;
-font-weight:bold;
-
+              <div align="center" justify="center">
+              <v-row class="desaparce2">
+                <v-col cols="12" align="center" justify="center">
+                  <v-img :src="item.image" cover class="h-100" width="300" :aspect-ratio="1"></v-img>
+                </v-col>
+                <v-col cols="12">
+                  <v-card-title class="font-weight-black" style="font-family: Britannic; font-size: 1.5rem">{{ item.nombre }}</v-card-title>
+                  <v-card-text style="font-family: Oswald;">{{ item.descripcion }}</v-card-text>
+                  <v-row class="fill-height d-flex align-center" justify="center">
+                    <v-card-actions>
+                    <router-link :to='{name:"sub-servicios",params:{idcat:item.id,cat:item.nombre}}'>
+                      <v-btn class="botoncito" elevation="8" size="x-large"  >
+                       Ver servicio
+                      </v-btn>
+                    </router-link>
+                  </v-card-actions>
+                </v-row>
+                </v-col>
+              </v-row>
+            </div>
+      </v-container>
+      </v-card>
+    </v-container>
+  </div>
+</template>
+<style scoped>
+.fondo{
+  background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
 }
-
-.text-h5 {
-font-size: 20px;
-font-weight: bold;
+@media screen and (max-width: 800px){
+.botoncito{
+  margin-bottom: 20px;
 }
-
-.text-body-2 {
-font-size: 14px;
-color: #757575;
+}
+@media screen and (max-width: 752px){
+.botoncito{
+  margin-bottom: 60px;
+}
+.desaparce{
+  display: none;
+}
+.contenedor{
+  width: 300px;
+}
+}
+@media screen and (min-width: 753px){
+  .desaparce2{
+    display: none;
+  }
 }
 </style>
