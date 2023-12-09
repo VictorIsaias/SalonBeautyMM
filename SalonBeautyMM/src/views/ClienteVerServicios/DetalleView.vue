@@ -23,49 +23,88 @@ const items = ref([
 </script>
 
 <template>
-  <div style='height: 100vh;'>
-    <v-container  class="bg-red-lighten-4 elevation-5 contenedor">
-    <v-row >
-      <v-col cols="6" class='carrusel'>
-        <v-carousel style="height: 100%; width: 100%;" cycle interval="3000">
-          <v-carousel-item v-for="(item, index) in items" :key="index">
-            <v-img :src="item.src" aspect-ratio="1" width="600"></v-img></v-carousel-item>
-        </v-carousel>
-      </v-col>
-
-      <v-col cols="6" >
-        <v-container class='d-flex  h-100 w-100 flex-column' >
-          <v-card-title class="font-weight-black" style="font-family: Britannic ; font-size:1.5rem">{{servicio.nombre}}</v-card-title>
-        
-          <v-card-text style="font-family: Oswald;">{{servicio.descripcion}}</v-card-text>
-          <v-row class="h-100  d-flex justify-center align-end ">
-           <v-card-text style='font-size:1.1rem' class=" font-weight-black"> <v-divider class="mb-5 border-opacity-25"></v-divider>
-            ${{servicio.precio}}</v-card-text>
-        
+  <div class="fondo">
+    <v-container class="bg-red-lighten-4 elevation-5 contenedor">
+      <v-card>
+        <v-container style="background-color: #fee0e0;">
+          
+          <v-row class="desaparce">
+            <v-col cols="6">
+              <div class="carrusel"  align="center" justify="center">
+            <v-carousel cycle interval="3000" style="height: 100%; width: 100%;" :aspect-ratio="1" hide-delimiter-background show-arrows="hover">
+                <v-carousel-item v-for="(item, index) in items" :key="index">
+                    <v-img :src="item.src" aspect-ratio="1" width="600"></v-img>
+                </v-carousel-item>
+            </v-carousel>
+        </div>
+            </v-col>
+            <v-col cols="6">
+              <v-card-title class="font-weight-black titulo" style="font-family: Britannic Bold;">{{servicio.nombre}}</v-card-title>
+              <v-card-text style="font-family: Oswald;">{{servicio.descripcion}}</v-card-text>
+              <div class="fill-height d-flex align-center">
+              <v-row>
+                <v-col cols="4">
+                  <v-card-subtitle class="font-weight-black">${{servicio.precio}}</v-card-subtitle>
+                  <v-card-text class="font-weight-bold">{{servicio.duracion_min}}min Aprox.</v-card-text>
+                </v-col>
+                <v-col cols="8">
+                  <v-row justify="end">
+                <v-card-actions>
+                  <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir'  texto="PEDIR CITA" ></boton></router-link>
+                </v-card-actions>
+              </v-row>
+              </v-col>
+              </v-row>
+            </div>
+            </v-col>
           </v-row>
-          <v-row class=" d-flex align-end justify-end">
-           
-          <v-col cols="3" >
-            
-              <div class="font-weight-bold">{{servicio.duracion_min}} min. Aprox.</div>
-            </v-col>
-            <v-col cols="9">
-              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir'  texto="PEDIR CITA" ></boton></router-link>
-            </v-col>
-        </v-row>
+
+          <div align="center" justify="center">
+            <v-row class="desaparce2">
+              <v-col cols="12" align="center" justify="center">
+                <div class="carrusel">
+            <v-carousel cycle interval="3000" style="height: 100%; width: 100%;" :aspect-ratio="1" hide-delimiter-background show-arrows="hover">
+                <v-carousel-item v-for="(item, index) in items" :key="index">
+                    <v-img :src="item.src" aspect-ratio="1" width="600"></v-img>
+                </v-carousel-item>
+            </v-carousel>
+                </div>
+              </v-col>
+              <v-col cols="12">
+                <v-card-title class="font-weight-black titulo" style="font-family: Britannic Bold;">{{servicio.nombre}}</v-card-title>
+              <v-card-text style="font-family: Oswald;">{{servicio.descripcion}}</v-card-text>
+              <v-row align="center" justify="center">
+                <v-col cols="4">
+                  <v-card-subtitle class="font-weight-black">${{servicio.precio}}</v-card-subtitle>
+                  <v-card-text class="font-weight-bold">{{servicio.duracion_min}}min Aprox.</v-card-text>
+                </v-col>
+                <v-col cols="8">
+                  <v-row justify="end">
+                <v-card-actions>
+                  <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir'  texto="PEDIR CITA" ></boton></router-link>
+                </v-card-actions>
+              </v-row>
+              </v-col>
+              </v-row>
+              </v-col>
+            </v-row>
+          </div>
+
         </v-container>
-      </v-col>
-    </v-row>
-  </v-container>
+      </v-card>
+    </v-container>
   </div>
-      
 </template>
 
 <style scoped>
+.titulo{
+  font-size: 2em;
+}
 .contenedor{
   background: linear-gradient(153deg, #ffd3c6 0%, #ffc0ab 30.2%, #fcb5b5 100%);
   background-blend-mode: normal;
   box-shadow: 0px 2px 4px 4px rgba(100,100,100,0.5);
+  margin-top: 50px;
 }
 .carrusel{
   border-radius: 8px;
@@ -74,5 +113,51 @@ const items = ref([
   background-blend-mode: normal;
   backdrop-filter: blur(50px);
   box-shadow: 0px 1px 1px 1px rgba(100,100,100,0.3);
+}
+
+@media screen and (min-width: 686px) {
+  .desaparce2{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 686px) {
+  .desaparce{
+    display: none;
+  }
+
+  .contenedor{
+    width: 550px;
+  }
+
+  .titulo{
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 634px) {
+  .titulo{
+    font-size: 1.8em;
+  }
+}
+@media screen and (max-width: 585px) {
+  .titulo{
+    font-size: 1.6em;
+  }
+}
+@media screen and (max-width: 780px) {
+  .botoncito{
+    margin-bottom: 40px;
+  }
+}
+@media screen and (max-width: 752px) {
+  .botoncito{
+    margin-bottom: 50px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .titulo{
+    font-size: 1.3em;
+  }
 }
 </style>
