@@ -5,7 +5,7 @@
         <div  v-if='tipo=="enviar"' >
             <div ref="boton" >
             <v-btn  @click='btnClick' :class=' clase' color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
-                <v-icon v-if='icon' :icon='icon' class='mr-2'></v-icon><strong class='texto' >{{texto}}</strong>
+                <v-icon v-if='icon' :icon='icon' class='mr-2'></v-icon><strong class='textoc' >{{texto}}</strong>
              </v-btn>
             </div>
         </div>
@@ -32,10 +32,10 @@
         <div  v-if='tipo=="dual"' >
             <div ref="boton">
             <v-btn @click='btn2Click'  color='#ffdcd5'  ref='boton-pry'   elevation='3' rounded="lg" variant="flat"  :size="tamaño">
-                <div div class='texto'><strong>CANCELAR</strong></div>
+                <div div class='textoc'><strong>CANCELAR</strong></div>
              </v-btn>
              <v-btn  @click='btnClick'   color='#ffdcd5' ref='boton-pry'   elevation='3' rounded="lg" variant="flat"  :size="tamaño">
-                <div div class='texto'><strong>{{texto}}</strong></div>
+                <div div class='textoc'><strong>{{texto}}</strong></div>
              </v-btn>
             </div>
         </div>
@@ -126,6 +126,8 @@ onMounted(()=>
 
 <style scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Oswald:wght@200;300;400;500;600;700&family=Rubik:wght@300&display=swap');
+
 .btncita{
     opacity: 0.88;
   color:azure;
@@ -142,8 +144,10 @@ onMounted(()=>
 .btncita strong,.cancelar strong,.finalizar strong,.btncita *,.cancelar *,.finalizar *{
    
   color:rgb(228, 255, 255);
-  font-size: 1rem;
-  font-family: britannnic;
+  font-size: 0.9rem;
+  
+  
+  font-family: 'Oswald' ExtraLight;
 
 }
 
@@ -152,10 +156,9 @@ onMounted(()=>
     opacity: 0.88;
   color:azure;
   font-size: 1.2rem;
-  font-family: britannnic;
   border-radius: 15px;
   border: 1px solid rgba(0, 108, 77, 0.097);
-  background: radial-gradient(circle, #eb4c2899 0%, #d17f5f97 100%);
+  background: radial-gradient(circle, #ff725399 0%, #ffa68397 100%);
   background-blend-mode: normal;
   backdrop-filter: blur(23px);
   box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
@@ -165,7 +168,6 @@ onMounted(()=>
     opacity: 0.88;
   color:azure;
   font-size: 1.2rem;
-  font-family: britannnic;
   border-radius: 15px;
   border: 1px solid rgba(0, 108, 45, 0.097);
   background: radial-gradient(circle, #28eb70a5 0%, #82f8adc2 100%);
@@ -174,7 +176,7 @@ onMounted(()=>
   box-shadow: 0px 2px 4px 2px rgba(100,100,100,0.5);
 }
 
-.texto{
+.textoc{
     color: #9F3E6D;
     
 }
@@ -192,5 +194,23 @@ onMounted(()=>
   background-blend-mode: normal;
   backdrop-filter: blur(29px);
 
+}
+@media screen and (max-width: 427px){
+    .textoc,.btncita strong,.cancelar strong,.finalizar strong,.btncita *,.cancelar *,.finalizar *{
+   
+   font-size: 0.7rem;
+   
+   
+ 
+ }
+}
+@media screen and (max-width: 321px){
+    .textoc,.btncita strong,.cancelar strong,.finalizar strong,.btncita *,.cancelar *,.finalizar *{
+   
+   font-size: 0.6rem;
+   
+   
+ 
+ }
 }
 </style>

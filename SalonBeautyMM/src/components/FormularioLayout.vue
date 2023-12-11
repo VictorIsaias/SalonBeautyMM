@@ -25,7 +25,7 @@
 
 
 
-    <v-card class='w-100 h-100' v-show='tipo!="info"'  elevation='4'   width='45%'  align='center'>
+    <v-card class='w-100 h-100 contenedor' v-show='tipo!="info"'  elevation='4'   width='45%'  align='center'>
         <v-card-title>{{titulo}}
             <v-dialog width="700" v-if='basura=="true"'> 
                 <template v-slot:activator="{ props }">
@@ -49,7 +49,7 @@
 
           
                         
-        <div class="interior pb-3">
+        <div class="interior pb-3 contenedor">
             <v-divider v-show='titulo' class="border-opacity-50"></v-divider>
             
             <v-container class="pl-10 pr-10">
@@ -124,4 +124,17 @@ background: linear-gradient(182deg, rgba(255,255,255,0.55) 0%, rgba(211,211,211,
 background-blend-mode: normal;
 backdrop-filter: blur(50px);
 }
+
+.titulo{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+@media screen and (max-width:320px) {
+  .titulo{
+    font-size: 1.1em;
+  }
+    .icon{
+        width: 1px;
+    }
+}
+
 </style>

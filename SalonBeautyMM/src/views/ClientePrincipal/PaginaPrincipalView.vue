@@ -14,22 +14,24 @@ const servicios=ref([
     {id:4, image: '/img/servicio6.jpg'},
 ]);
 </script><template>
-  <div class='fondop'>
+  <div class='fondope'>
       <div class="header">
           <div class='logo'><img src="/img/logo2.png" alt=""></div>
           <h3 class='slogan'>Relajate, renuevate y resplandece</h3><br>
-          <div class="item">
-              <botonPagina link='catalogos' tipo='solo'><h2 class='texto morado'>Catalogos disponibles</h2></botonPagina>
+          <div class="item ">
+              <botonPagina  link='catalogos' tipo='solo'><h2 class=' morado'>Catalogos disponibles</h2></botonPagina>
           </div><br>
       </div>
-      <div class="carrusel">
+      <div class="carrusel ">
+        <v-responsive>
           <v-carousel cycle interval="3000" style="height: 100%; width: 100%;" :aspect-ratio="1" hide-delimiter-background show-arrows="hover">
-              <v-carousel-item v-for="item in slog" :key="item.id" >
+              <v-carousel-item  v-for="item in slog" :key="item.id" >
                   <v-img :src="item.image" style="opacity: 0.7;"></v-img>
               </v-carousel-item>
           </v-carousel><br>
-      </div>
-      <v-card class="blanca elevation">
+        </v-responsive>
+      </div><br>
+      <v-card class="blanca ">
       <div class="item2">
           <v-responsive>
           <v-row>
@@ -50,11 +52,11 @@ const servicios=ref([
       </div>
     </v-card>
       <br>
-      <div class="item3">
+      <div class="item3 d-flex align-center flex-column" >
 <v-card-title class="serv">SERVICIOS</v-card-title><br>
-<v-card-text class="textS">REVISA NUESTRO CATÁLOGO DE SERVICIOS</v-card-text><br>
-<div class=" servicios">
-  <v-container class="info pt-0">
+<v-card-text  class="textS">REVISA NUESTRO CATÁLOGO DE SERVICIOS</v-card-text><br>
+<div class=" servicios ">
+  <v-container class="info pt-0 ">
       
       <img src='/img/Grupo9.png' style='width:6.9rem;height:7rem;position: relative; bottom:2.5rem'>
          <div class='pt-1 ' style='position: relative; bottom:2.5rem'> <h2 class="letra">Tinte de cabello</h2>
@@ -96,7 +98,7 @@ const servicios=ref([
 <style scoped>
 
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Oswald:wght@200;300;400;500;600;700&family=Rubik:wght@300&display=swap');
-.fondop{
+.fondope{
   background: linear-gradient(213deg, #ffffff 0%, #ffd2e8 38.3%, #cd67a9 100%);
   
 }
@@ -157,7 +159,7 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   width:100%;
   justify-content: center;
   align-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 .servicios div{
   background-color:#e9bdd2;
@@ -215,6 +217,7 @@ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans
 
 .serv{
 border-bottom: 2px solid black;
+width: 50rem;
 font-family: 'Britannic', Times, serif;
 }
 
@@ -223,11 +226,6 @@ box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
 background-color:  #ffd2e8 ; 
 }
 
-.carrusel .v-carousel__prev, .carrusel .v-carousel__next {
-font-size: 12px; /* Ajusta el tamaño del texto de los botones según tus preferencias */
-width: 30px; /* Ajusta el ancho de los botones según tus preferencias */
-height: 30px; /* Ajusta la altura de los botones según tus preferencias */
-}
 @media screen and (max-width: 960px){
 .titulo{
   font-size: 2em;
@@ -246,14 +244,63 @@ height: 30px; /* Ajusta la altura de los botones según tus preferencias */
 .textS{
   font-size: 1em;
 }
+.carrusel {
+
+height: 30rem;
 }
-@media screen and (min-width: 960px){
+}
+@media screen and (max-width: 1440px){
+
+.carrusel {
+
+height: 31rem;
+}
+}
+@media screen and (max-width: 2000px){
+
+.carrusel {
+
+height: 33rem;
+}
+}
+@media screen and (max-width: 1024px){
+
+.carrusel {
+
+height: 19rem;
+}
+}
+@media screen and (max-width: 768px){
+
+.carrusel {
+
+height: 13rem;
+}
+}
+@media screen and (max-width: 426px){
+.logo{
+  width: 5rem;
+}
+.carrusel {
+
+height: 9rem;
+}
+}
+@media screen and (max-width: 321px){
+
+.carrusel {
+
+height: 6.5rem;
+}
+}
+@media screen and (min-width: 961px){
 .serv{
   font-size: 3em;
 }
 .textS{
   font-size: 1em;
 }
+
 }
 
 @media screen and (max-width: 450px){

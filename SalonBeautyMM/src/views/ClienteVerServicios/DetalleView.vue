@@ -1,19 +1,52 @@
 <script setup>
 import boton from '@/components/BotonPagina.vue';
-import { ref,onMounted } from 'vue';
+import { ref,onMounted,onActivated, onUpdated } from 'vue';
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
 import { storeToRefs } from 'pinia'
 
 const serv = ServiciosStore()
 
-const {seleccion} = serv
 
+
+const servicio = ref({
+  nombre:'none',
+  precio:0,
+duracion_min:0,
+descripcion:''
+})
 import {useRoute} from 'vue-router'
 
   const route = useRoute()
- 
 
-const servicio = seleccion(route.params.idserv)
+  var servicios = ref([])
+  const response = async ()=>{
+    try{
+        const respuesta = await fetch('http://localhost/servicios_activos');
+        const data = await respuesta.json();
+        servicios.value=data.data;
+    }catch{
+
+    }
+  }  
+
+
+  onMounted(   seleccion);
+  onUpdated(   seleccion);
+  async function seleccion (){
+    await response()
+    for(let i=0;i<=servicios.value.length-1;i++){
+      if(route.params.idserv==servicios.value[i].id){
+        
+        servicio.value= servicios.value[i]
+        
+      }
+    }
+    
+    return 
+   
+  }
+
+
 
 const items = ref([
   { src: 'https://trozmer.edu.mx/wp-content/uploads/2020/08/corte_dama.jpg' },
@@ -27,10 +60,8 @@ const items = ref([
     <v-container  class="bg-red-lighten-4 elevation-5 contenedor">
     <v-row >
       <v-col cols="6" class='carrusel'>
-        <v-carousel style="height: 100%; width: 100%;" cycle interval="3000">
-          <v-carousel-item v-for="(item, index) in items" :key="index">
-            <v-img :src="item.src" aspect-ratio="1" width="600"></v-img></v-carousel-item>
-        </v-carousel>
+        <v-img :src="servicio.img" cover class='h-100' width="100%" height='100%' :aspect-ratio="1"></v-img>
+                
       </v-col>
 
       <v-col cols="6" >
@@ -40,23 +71,29 @@ const items = ref([
           <v-card-text style="font-family: Oswald;">{{servicio.descripcion}}</v-card-text>
           <v-row class="h-100  d-flex justify-center align-end ">
            <v-card-text style='font-size:1.1rem' class=" font-weight-black"> <v-divider class="mb-5 border-opacity-25"></v-divider>
-            ${{servicio.precio}}</v-card-text>
+             ${{servicio.precio}}</v-card-text>
         
           </v-row>
           <v-row class=" d-flex align-end justify-end">
            
           <v-col cols="3" >
             
-              <div class="font-weight-bold">{{servicio.duracion_min}} min. Aprox.</div>
+              <div class="font-weight-bold">{{servicio.duracion_min}} minutos</div>
             </v-col>
             <v-col cols="9">
-              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id,serv:servicio.nombre}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
+              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
             </v-col>
         </v-row>
+        
         </v-container>
+        
       </v-col>
+      
     </v-row>
+    
   </v-container>
+  <div class="text-caption font-italic mt-1 ml-1">Todos los precios y duraciones son aproximaciones y podrian no ser exactos</div> 
+       
   </div>
       
 </template>
@@ -68,6 +105,8 @@ const items = ref([
   box-shadow: 0px 2px 4px 4px rgba(100,100,100,0.5);
 }
 .carrusel{
+  width: 35rem;
+  height: 28rem;
   border-radius: 8px;
   border: 1px dashed rgba(128,128,128,0);
   background: linear-gradient(182deg, rgba(255,255,255,0.55) 0%, rgba(211,211,211,0.55) 100%);

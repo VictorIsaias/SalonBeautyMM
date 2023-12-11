@@ -1,8 +1,8 @@
 <template>
   <div class="fondo" style='height: 100vh;' align='center'>
-    <v-container class="pt-16">
+    <v-container class="item">
 
-<FormularioPrincipal class='w-50 h-100' tamañobtn='large' link='registrar' pie='Registrarse' @datos='login' titulo='Acceso para cliente' enviar='Iniciar'>
+<FormularioPrincipal  tamañobtn='large' link='registrar' pie='Registrarse' @datos='login' titulo='Acceso para cliente' enviar='Iniciar'>
   <v-form @submit.prevent ref='form'>
 
     <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="usuario.input1" label="Correo electronico" variant="underlined"></v-text-field>
@@ -44,6 +44,8 @@ const {setUser}=pagina
 
 var error=ref(false)
 
+
+const form = ref()
 async function login(){
   
   const { valid } = await form.value.validate()
@@ -78,7 +80,6 @@ async function login(){
 
 
 
-const form = ref()
 
 async function verificar(){
   
@@ -121,5 +122,17 @@ var show2 = ref('')
   width: 100vw;
   background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
 }
-
+.item{
+    margin-top: 50px;
+  }
+@media screen and (min-width: 500px) {
+.item{
+  width: 450px;
+}
+}
+@media screen and (min-width: 700px) {
+.item{
+  width: 500px;
+}
+}
 </style>

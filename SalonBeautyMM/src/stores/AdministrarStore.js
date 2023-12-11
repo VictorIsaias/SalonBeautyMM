@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed,onMounted } from 'vue'
 import { defineStore } from 'pinia'
 
 export const AdministrarStore = defineStore('admin', () => {
@@ -10,170 +10,86 @@ export const AdministrarStore = defineStore('admin', () => {
 
 
 
+    var idContacto=ref()
+    var contactoTemp=ref({
+        nombre:'',
+        valor:''
+    })
+
+ //Array de contactos especificos consultado
+
+    var contacto = ref([
+        871133113,871133113,871133113
+    ])
+
+    
+
+
+   
+
 var servicio = ref({
   id:'',
   nombre: '',
   descripcion: '',
-  duracion: '',
+  duracion_min: '',
   precio: '',
-  catalogo: '',
+  categoria: '',
   activo:true,
-  imagen:''
+  img:''
 })
 
+var direccion = ref({
+    localidad:'',
+    colonia:'',
+    calle:'',
+    num_ext:''
+  })
 
-const cServicios = ref([
-    {
-    id: 1,
-    nombre: 'Corte de Cabello',
-    descripcion: 'Luce espectacular con un nuevo y grandioso corte de cabello...',
-    imagen:'https://media.istockphoto.com/id/638948482/es/foto/peluquer%C3%ADa-en-acci%C3%B3n.jpg?s=1024x1024&w=is&k=20&c=CJtYfp7nx0yd9w90OHzt8aYHlOTuCPZ_URw2JwS3taM=',
-    },
-    {
-    id: 2,
-    nombre: 'Aplicación de uñas',
-    descripcion: 'Disfruta de una excelente manicura...',
-    imagen: 'https://www.rbs-nails-academy.com.ar/wp-content/uploads/2020/11/Curso-Unas-Esculpidas-en-Acrilico-2--e1605812147470.jpg',
-    },
-    {
-    id: 3,
-    nombre: 'Depilación',
-    descripcion: 'Luce una piel extra limpia y saludable con nuestros servicios de depilación...',
-    imagen: 'https://tse2.explicit.bing.net/th?id=OIP.mTHE9F90IPtfFHJ4f59CeAHaEK&pid=Api&P=0&h=180',
-    },
-    {
-    id: 4,
-    nombre: 'Maquillaje y peinado',
-    descripcion: 'Luce increible para tu evento o tu día especial...',
-    imagen: 'https://www.hogarmania.com/archivos/201703/belleza-maquillaje-novia-2-XxXx80.jpg',
-    },
-    {
-    id: 5,
-    nombre: 'Trabajos de color',
-    descripcion: 'Trabajos desde ballagaye hasta mechas...',
-    imagen: 'https://www.instyle.es/medio/2020/12/11/color-melting_74fe8f06_900x1125.jpg',
-    },
-    { 
-    id: 6,
-    nombre: 'Aplicación de tinte',
-    descripcion: 'Atrevete a un cambio de look para sorprender...',
-    imagen: 'https://tse1.explicit.bing.net/th?id=OIP.F9kP86vPI4gz4grSi2pYaQHaE8&pid=Api&P=0&h=180',
-    },
-    
-    ])
 
-var servicios = ref([
-  {
-      id: 1,
-      nombre: 'Cortes de caballero natural',
-      descripcion: 'descripcion',
-      duracion: 30,
-      precio: 70,
-      catalogo: 1,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 2,
-      nombre: 'Corte de caballero escolar',
-      descripcion: 'descripcion',
-      duracion: 30,
-      precio: 70,
-      catalogo: 1,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 3,
-      nombre: 'Diseño de uñas con acrilico',
-      descripcion: 'descripcion',
-      duracion: 120,
-      precio: 200,
-      catalogo: 2,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 4,
-      nombre: 'Diseño de uñas con gelish',
-      descripcion: 'descripcion',
-      duracion: 180,
-      precio: 500,
-      catalogo: 2,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 5,
-      nombre: 'Depilacion de rostro completo',
-      descripcion: 'descripcion',
-      duracion: 30,
-      precio: 200,
-      catalogo: 3,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 6,
-      nombre: 'Depilacion de ceja con cera',
-      descripcion: 'descripcion',
-      duracion: 30,
-      precio: 70,
-      catalogo: 3,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 7,
-      nombre: 'Maquillaje y peinado',
-      descripcion: 'descripcion',
-      duracion: 0,
-      precio: 450,
-      catalogo: 4,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 8,
-      nombre: 'Mechas',
-      descripcion: 'descripcion',
-      duracion: 0,
-      precio: 0,
-      catalogo: 5,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 9,
-      nombre: 'Luces',
-      descripcion: 'descripcion',
-      duracion: 0,
-      precio: 0,
-      catalogo: 5,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 10,
-      nombre: 'Tinte en cabello corto',
-      descripcion: 'descripcion',
-      duracion: 60,
-      precio: 180,
-      catalogo: 6,
-      activo:true,
-      imagen:''
-  },
-  {
-      id: 11,
-      nombre: 'Corte de caballero escolar',
-      descripcion: 'descripcion',
-      duracion: 120,
-      precio: 250,
-      catalogo: 6,
-      activo:true,
-      imagen:''
+
+  const cServicios = ref([])
+  const respuesta = async () => {
+      try{
+          const respuesta = await fetch('http://localhost/categorias');
+          const data = await respuesta.json();
+          cServicios.value=data.data;
+      }catch{
+
+      }
+      for(let i=0;i<=cServicios.value.length-1;i++){
+        if(cServicios.value[i].activo==1){
+            cServicios.value[i].activo=true
+        }
+        else if(cServicios.value[i].activo==0){
+            cServicios.value[i].activo=false
+        }
+      }
   }
-])
+
+onMounted(respuesta);
+var servicios = ref([])
+
+const response = async ()=>{
+  try{
+      const respuesta = await fetch('http://localhost/servicios');
+      const data = await respuesta.json();
+      servicios.value=data.data;
+    
+  }catch{
+
+  }
+  for(let i=0;i<=servicios.value.length-1;i++){
+    if(servicios.value[i].activo==1){
+        servicios.value[i].activo=true
+    }
+    else if(servicios.value[i].activo==0){
+        servicios.value[i].activo=false
+    }
+  }
+}  
+
+
+onMounted(response);
 
 const abrirAñadir = (param)=>{
     if(param=='servicio'){
@@ -181,11 +97,11 @@ const abrirAñadir = (param)=>{
             id:'',
             nombre: '',
             descripcion: '',
-            duracion: '',
+            duracion_min: '',
             precio: '',
-            catalogo: '',
+            categoria: '',
             activo:true,
-            imagen:''
+            img:''
             }  
             modo.value=3
     }
@@ -197,7 +113,7 @@ const abrirAñadir = (param)=>{
                 nombre: '',
                 descripcion: '',
                 activo:true,
-                imagen:''
+                img:''
                 }  
                 modo.value=4
     }
@@ -206,7 +122,7 @@ const abrirAñadir = (param)=>{
     
 }
 
-
+var inst = {}
 
 const eliminar = ()=>{
     alert(id.value)
@@ -214,44 +130,171 @@ const eliminar = ()=>{
     modo.value=1
 }
 
-const añadir = (param) =>{
+const añadir = async (param) =>{
+    let inst = {}
+    let activ
+    if(servicio.value.activo==true){
+        activ=1
+    }
+    else if (servicio.value.activo==false){
+        activ=0
+    }
+    let url = ''
+    const formData = new FormData();
+    let imagen=servicio.value.img[0]
+   
+        formData.append('img', imagen);
+   
+   
+    await fetch('http://localhost:3000/servicios', {
+        method: 'POST',
+        body: formData,
+      }).then(response => response.text())
+      .then(data => {
+   
+        url='http://localhost:3000/public/'+data
+      })
+
     if (param){
-        servicio.value.catalogo = id.value
-        servicio.value.id = cServicios.value.length+1
+
+ //enviar a servidor multer
+
+
         
-        cServicios.value.push(servicio.value)
+        inst = {
+            nombre:servicio.value.nombre,
+            descripcion:servicio.value.descripcion,
+                 img:url,
+            activo:activ
+        }
+        await fetch('http://localhost/crear_categoria', {
+  method: 'POST',
+  body: JSON.stringify(inst),
+}).then(response => response.json())
+  .then(responsej => {
+      if (responsej.status != 200) {
+          return
+      }
+
+
+  });
+
     }
     else{
-        servicio.value.catalogo = id.value
-        servicio.value.id = servicios.value.length+1
+       
+       
         
-        servicios.value.push(servicio.value)
-        
+        servicio.value.categoria = id.value
+        inst = {
+            nombre:servicio.value.nombre,
+            descripcion:servicio.value.descripcion,
+            precio:servicio.value.precio,
+            duracion_min:servicio.value.duracion_min,
+            categoria:servicio.value.categoria,
+            img:url,
+            activo:activ
+        }
+        await fetch('http://localhost/crear_servicio', {
+  method: 'POST',
+  body: JSON.stringify(inst),
+}).then(response => response.json())
+  .then(responsej => {
+      if (responsej.status != 200) {
+          return
+      }
+    });
     }
-    
+    respuesta()
+    response()
     modo.value=1
    
 }
-
+var editarimg=ref()
 
 const cancelar = ()=> modo.value=1
-const actualizar = (idd,param)=>{
+const actualizar = async (idd,param)=>{
+    let activ
+    if(servicio.value.activo==true){
+        activ=1
+    }
+    else if (servicio.value.activo==false){
+        activ=0
+    }
+
+    if(editarimg.value!=''){
+        const formData = new FormData();
+        let imagen=editarimg.value[0]
+    
+            formData.append('img', imagen);
+    
+    
+        await fetch('http://localhost:3000/servicios', {
+            method: 'POST',
+            body: formData,
+        }).then(response => response.text())
+        .then(data => {
+    
+            servicio.value.img='http://localhost:3000/public/'+data
+        })
+    }
+
     if(param=='param'){
+        let inst = {
+            id:servicio.value.id,
+            descripcion:servicio.value.descripcion,
+            nombre:servicio.value.nombre,
+            img:servicio.value.img,
+            activo:activ
+          }
+          await fetch('http://localhost/categoria/actualizar', {
+            method: 'POST',
+            body: JSON.stringify(inst),
+        }).then(response => response.json())
+            .then(responsej => {
+                if (responsej.status != 200) {
+                    return
+                }
+        
+        
+            });
        
-        cServicios.value[idcat.value]=servicio.value
-        modo.value=1
+       
+       
     }
     else{
-        idd -= 1
-        servicios.value[idd]=servicio.value
-        modo.value=1
+        
+
+        let inst = {
+            id:servicio.value.id,
+            descripcion:servicio.value.descripcion,
+            nombre:servicio.value.nombre,
+            activo:activ,
+            precio:servicio.value.precio,
+             img:servicio.value.img,
+            duracion_min:servicio.value.duracion_min
+          }
+          await fetch('http://localhost/servicio/actualizar', {
+            method: 'POST',
+            body: JSON.stringify(inst),
+        }).then(response => response.json())
+            .then(responsej => {
+                if (responsej.status != 200) {
+                    return
+                }
+        
+        
+            });
+       
+       
     }
-    
+    modo.value=1
+    respuesta()
+    response()
 }
 
 const editar = (idd,param) => {
+    editarimg.value=''
     if(param=='servicio'){
-        
         idd -= 1
         modo.value = 2
         servicio.value = servicios.value[idd]
@@ -262,7 +305,6 @@ const editar = (idd,param) => {
         modo.value = 5
         servicio.value = cServicios.value[idcat.value]
         
-        
     }
 }
 
@@ -270,5 +312,5 @@ const recibirid = (idc) => {id.value=idc}
 
 
 
-  return {servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
+  return {editarimg,contactoTemp,idContacto,contacto,direccion,servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
 })
