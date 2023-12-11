@@ -1,17 +1,20 @@
 <script setup>
 import {ref,onMounted} from 'vue';
 import boton from '@/components/BotonPagina.vue'
+import { borrarServicioCita } from '../../stores/ServiciosStore'; 
+const borrarServicio=borrarServicioCita();
+
 const estado =[
   {tittle:'completo'},
   {tittle:'pendiente'},
   {tittle:'confirmado'},
   {tittle:'cancelado'}];
 
+// consulta de registro_citas para la vista de citas cliente //
 const citas_cliente =ref([]);
-
 const respuesta = async () =>{
   try{
-    const response = await fetch('http://localhost/servicio_cita');
+    const response = await fetch('http://localhost/registro_citas');
     const data = await response.json();
     citas_cliente.value=data.data;
   }catch{
@@ -19,6 +22,12 @@ const respuesta = async () =>{
   }
 }
 onMounted(respuesta);
+
+const delServ = (id) =>{
+  const id_servicio = id  
+  borrarServicio.setVariable(id)
+  console.log(id_servicio)
+};
 
 function estados(){
 
@@ -61,10 +70,7 @@ alert(id)
           Fecha
         </th>
         <th class="text-left">
-          Estado
-        </th>
-        <th class="text-left">
-        
+          Editar
         </th>
         
         
@@ -72,18 +78,14 @@ alert(id)
     </thead>
     <tbody>
       <tr
-        v-for="item in citas_cliente"
-        :key="item.name"
-      >
+        v-for="item in citas_cliente" :key="item.name">
         <td>{{ item.id }}</td>
-        <td>{{ item.Cliente }}</td>
-        <td>{{ item.Servicio }}</td>
-        <td>${{ item.precio }}.00</td>
-        <td>{{ item.duracion_min }} min.</td>
-        <td>{{ item.fecha_hora }}</td>
-        <td>{{ item.estado }}</td>
-
-        <td><boton tipo='solo' @Click='editarEstado(item.id)' color='#169873'>Editar</boton></td>
+        <td>{{ item.cliente }}</td>
+        <td>{{ item.servicio }}</td>
+        <td>${{item.costo }}.00</td>
+        <td>{{ item.duracion_total }} min.</td>
+        <td>{{ item.fecha_hora_inicio }}</td>
+        <td><boton tipo='solo' @Click='delServ(item.id)' color='#169873'>Editar</boton></td>
       </tr>
     </tbody>
      </v-table>

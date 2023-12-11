@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { defineStore } from 'pinia'
 import router from '../router/index'
 
@@ -245,6 +245,32 @@ function crearEnviarCita(){
 
 
 function enviarCita(idcliente){
+
+  let id_servicio=ref('');
+  let id_cliente=ref('');
+  let precio=ref('');
+  let duracin_min=ref('');
+  let fecha_hora=ref('');
+  let estado=ref('');
+
+
+const registrarCita= async () => {
+  const cita = {
+        id_servicio_: id_servicio.value,
+        id_cliente_: id_cliente.value,
+        precio_: precio.value,
+        duracion_min_: duracin_min.value,
+        fecha_hora_: fecha_hora.value,
+        estado_: estado.value,
+  };
+  try { 
+        const response = await fetch.post('http://backend.vetcachorros.one/registrarMascota',cita);
+  } catch (error) {
+        console.error(error);
+  }
+};
+  
+  
   if(servs.value.length>1){
     cita.value.idCliente = idcliente
     cita.value.tipo = 'cita'
@@ -502,107 +528,26 @@ var servCita = ref([
 // Consulta para ver todos los servicios: id,nombre,duracion,precio,nombre-catalogo(que esten activos)
 
 
-var servicios = ref([
-{
-    id: 1,
-    nombre: 'Cortes de caballero natural',
-    duracion: 30,
-    precio: 70,
-    catalogo: 1,
+var servicios = ref([])
 
-  },
-{
-    id: 2,
-    nombre: 'Corte de caballero escolar',
-    duracion: 30,
-    precio: 70,
-    catalogo: 1,
+const respuesta = async ()=>{
+  try{
+    const response = await fetch('http://localhost/servicios');
+    const data = await response.json();
+    servicios.value=data.data;
+  }catch{
 
-  },
-{
-    id: 3,
-    nombre: 'Diseño de uñas con acrilico',
-    duracion: 120,
-    precio: 200,
-    catalogo: 2,
-
-  },
-{
-    id: 4,
-    nombre: 'Diseño de uñas con gelish',
-    duracion: 180,
-    precio: 500,
-    catalogo: 2,
-
-  },
-{
-    id: 5,
-    nombre: 'Depilacion de rostro completo',
-    duracion: 30,
-    precio: 200,
-    catalogo: 3,
-
-  },
-{
-    id: 6,
-    nombre: 'Depilacion de ceja con cera',
-    duracion: 30,
-    precio: 70,
-    catalogo: 3,
-
-  },
-{
-    id: 7,
-    nombre: 'Maquillaje y peinado',
-    duracion: 30,
-    precio: 450,
-    catalogo: 4,
-
-  },
-{
-    id: 8,
-    nombre: 'Mechas',
-    duracion: 30,
-    precio: 0,
-    catalogo: 5,
-
-  },
-{
-    id: 9,
-    nombre: 'Luces',
-    duracion: 30,
-    precio: 0,
-    catalogo: 5,
-
-  },
-{
-    id: 10,
-    nombre: 'Tinte en cabello corto',
-    duracion: 60,
-    precio: 180,
-    catalogo: 6,
-
-  },
-{
-    id: 11,
-    nombre: 'Corte de caballero escolar',
-     duracion: 120,
-    precio: 250,
-    catalogo: 6,
-
-
+  }
 }
-])
+onMounted(respuesta)
+
 
 function leerServicios(){
 
 }
 
 
-
-
 var bloqueRespaldo = ''
-
 
 
   function actualizarCita(){
@@ -610,7 +555,7 @@ var bloqueRespaldo = ''
       for(let i = 0;i<=servs.value.length;i++){
         if(servicios.value[o].id==servs.value[i]){
           cita.value.costo+=servicios.value[o].precio
-          cita.value.duracionTotal+=servicios.value[o].duracion
+          cita.value.duracionTotal+=servicios.value[o].duracion_min
         }
       }
     }
@@ -854,7 +799,6 @@ var duracionAct=ref(0)
   }
 
 
-  
   function abrirCrearcita(bloq){
   
     //Asignacion de valores globales de la funcion (dia, actual, bloque)
@@ -988,16 +932,6 @@ var duracionAct=ref(0)
   }  }
 
 
-
-
-
-
-
-
-
-
-
-  
   function cancelar(cerrar){
     if(cerrar=='cerrar'){
       flotante.value = !flotante.value

@@ -4,13 +4,13 @@
         
         <div  v-if='tipo=="enviar"' >
             <div ref="boton">
-            <v-btn @click='btnClick'  color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
-                <div   div class='texto'><strong>{{texto}}</strong></div>
+            <v-btn @click='btnClick' type="submit"  color='#ffdcd5' ref='boton-pry' block  elevation='3' rounded="lg" variant="flat"  :size="tamaño">
+                <div  div class='texto'><strong>{{texto}}</strong></div>
              </v-btn>
             </div>
         </div>
 
-        <div  v-if='tipo=="pedir"'  >
+        <div  v-if='tipo=="pedir"'>
             <div ref="boton">
             <v-btn @click='btnClick'  class='btncita'  ref='boton-pry' width='100%' height='3rem' elevation='3' rounded="lg" variant="tonal"  :size="tamaño">
                 <div class='d-flex align-center '><v-icon icon='mdi-calendar-range' class='mr-3'></v-icon>

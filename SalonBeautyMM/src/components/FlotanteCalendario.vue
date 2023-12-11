@@ -28,12 +28,13 @@
                     <v-card title="Servicios" >
                     
                       <v-card-text  v-for='serv in servicios' :key='serv.id'>
-                        <div v-if='espacio>=serv.duracion&&contador<=3&&activo[serv.id]'>
+                        <div v-if='espacio>=serv.duracion_min&&contador<=3&&activo[serv.id]'>
                         <div  class='d-flex justify-space-between align-center'>
-                          {{serv.nombre}}
+                          <!-- Este es la caja 2 -->
+                          {{serv.nombre}} 
                           <div class='text-medium-emphasis d-flex align-center '>
                             ${{serv.precio}}.00
-                             - {{serv.duracion}}min.
+                             - {{serv.duracion_min}}min.
                              <v-checkbox @click='activo[serv.id]=!activo[serv.id]; contador+=1;servs.push(serv.id)'  v-model='servs' :value='serv.id' color='#169873' class='d-flex'></v-checkbox>
                           </div>
                         </div>
@@ -41,9 +42,9 @@
                         </div>
                            <div v-else-if='!activo[serv.id]'>
                         <div  class=' d-flex justify-space-between align-center'>
-                          {{serv.nombre}}
+                          {{serv.nombre}}  
                           <div class=' d-flex align-center '>
-                            ${{serv.precio}}.00
+                            ${{serv.precio}}.00 
                              - {{serv.duracion}}min.
                              <v-checkbox  @click='activo[serv.id]=!activo[serv.id]; contador-=1;servs=servs.filter(item => item !== serv.id);bloque = bloque.subtractMinutes(serv.duracion);duracionAct=serv.duracion'  v-model='servs' :value='serv.id' color='#169873' class='d-flex'></v-checkbox>
                           </div>
@@ -54,9 +55,9 @@
 
                         <div v-else-if='espacio<=serv.duracion||contador>3'>
                         <div  class='text-disabled d-flex justify-space-between align-center'>
-                          {{serv.nombre}}
+                          {{serv.nombre}} 
                           <div class='text-disabled d-flex align-center '>
-                            ${{serv.precio}}.00
+                            ${{serv.precio}}.00 
                              - {{serv.duracion}}min.
                              <v-checkbox  disabled v-model='servs' :value='serv.id' color='#169873' class='d-flex'></v-checkbox>
                           </div>
@@ -95,10 +96,11 @@
               
                 <formulario  tipo='info'  class='mb-7 w-100 h-100' titulo='Servicios:'>
                   <template v-slot:info >
+                    <!-- Esta es la caja Servicios: -->
                   <ul v-for='serv in servicios' :key='serv.id'>
                     <div v-for='(s,index) in servs' :key='index'>
                       <p v-if='serv.id == servs[index]' class='text-body-2 mb-1'>
-                        {{serv.nombre}} (${{serv.precio}}.00)
+                        {{serv.nombre}} (${{serv.precio}})
                       </p>
                     </div>
                   
@@ -110,9 +112,10 @@
             <v-col>
                
                 <formulario tipo='info' class='mb-7 w-100 h-100' titulo='Detalle:'>
+                  <!-- Este es caja Detalle: -->
                   <template v-slot:info>
                    <strong> Duracion total: </strong>{{cita.duracionTotal}} min.<br>
-                   <strong> Precio total:</strong> ${{cita.costo}}.00<br>
+                   <strong> Precio total:</strong> ${{cita.costo}}<br>
                    <strong> Fecha:</strong> {{cita.fechaInicio}} - {{cita.fechaFin}}
                   </template>
           

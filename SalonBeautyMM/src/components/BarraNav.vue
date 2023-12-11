@@ -101,8 +101,8 @@ const servicios =[
             <v-list-item >
               <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Configuracion</v-list-item-title>
               <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"contacto"}'>Contacto</router-link></v-list-item-title>
-             <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Cerrar sesion</v-list-item-title>
-             </v-list-item>
+              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"iniciar"}'>Iniciar sesion</router-link></v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
