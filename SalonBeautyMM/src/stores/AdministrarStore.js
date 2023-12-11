@@ -50,7 +50,7 @@ var direccion = ref({
   const cServicios = ref([])
   const respuesta = async () => {
       try{
-          const respuesta = await fetch('http://localhost/categorias');
+          const respuesta = await fetch('http://3.143.143.93/categorias');
           const data = await respuesta.json();
           cServicios.value=data.data;
       }catch{
