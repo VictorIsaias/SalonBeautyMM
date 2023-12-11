@@ -127,7 +127,7 @@ const items = ref([
   }
 
   .contenedor{
-    width: 550px;
+    width: 350px;
   }
 
   .titulo{
