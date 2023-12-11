@@ -31,23 +31,23 @@ const router = createRouter({
           name: 'iniciar',
           component: iniciarview
         },
-          {
-              path: 'sign-in',
-              name: 'registrar',
-              component: registrarview
-          },
-          
+        {
+          path: 'sign-in',
+          name: 'registrar',
+          component: registrarview
+        },
+
       ]
     },
-    
-    
-   
+
+
+
     {
       path: '/dates',
       name: 'citas_cliente',
       component: citasclienteview
     },
-   
+
     {
       path: '/create_appmnt/:idserv/:serv',
       name: 'crear_cita',
@@ -63,16 +63,16 @@ const router = createRouter({
           name: 'catalogos',
           component: vercatalogoview,
         },
-            {
-              path: 'sub-services/:idcat/:cat',
-              name: 'sub-servicios',
-              component: verserviciosview,
-            },
-                {
-                  path: 'detail/:idserv/:serv',
-                  name: 'detalles',
-                  component: detalleview,
-                }
+        {
+          path: 'sub-services/:idcat/:cat',
+          name: 'sub-servicios',
+          component: verserviciosview,
+        },
+        {
+          path: 'detail/:idserv/:serv',
+          name: 'detalles',
+          component: detalleview,
+        }
 
       ]
     },
