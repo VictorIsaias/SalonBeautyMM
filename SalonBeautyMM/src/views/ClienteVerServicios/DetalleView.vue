@@ -21,7 +21,7 @@ import {useRoute} from 'vue-router'
   var servicios = ref([])
   const response = async ()=>{
     try{
-        const respuesta = await fetch('http://localhost/servicios_activos');
+        const respuesta = await fetch('http://3.143.143.93/servicios_activos');
         const data = await respuesta.json();
         servicios.value=data.data;
     }catch{

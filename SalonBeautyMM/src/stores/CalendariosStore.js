@@ -23,7 +23,7 @@ export const CalendarioStore = defineStore('cal', () => {
       id:idact,
       estado:'cancelado'
     }
-    await fetch('http://localhost/registro_citas/actualizar', {
+    await fetch('http://3.143.143.93/registro_citas/actualizar', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -44,7 +44,7 @@ export const CalendarioStore = defineStore('cal', () => {
       id:idact,
       estado:'completado'
     }
-    await fetch('http://localhost/registro_citas/actualizar', {
+    await fetch('http://3.143.143.93/registro_citas/actualizar', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -84,7 +84,7 @@ var citas = ref([
 
 const rClientes = async () => {
   try{
-      const response = await fetch('http://localhost/usuarios');
+      const response = await fetch('http://3.143.143.93/usuarios');
       const data = await response.json();
       clientes.value=data.data;
       
@@ -97,7 +97,7 @@ onMounted(rClientes);
 
 const rCitas = async () => {
   try{
-      const response = await fetch('http://localhost/citas_calendario');
+      const response = await fetch('http://3.143.143.93/citas_calendario');
       const data = await response.json();
       citas.value=data.data;
       
@@ -110,7 +110,7 @@ onMounted(rCitas);
 
 const rCitasBloq = async () => {
   try{
-      const response = await fetch('http://localhost/citas_calendario_cliente');
+      const response = await fetch('http://3.143.143.93/citas_calendario_cliente');
       const data = await response.json();
       citasBloq.value=data.data;
       
@@ -132,7 +132,7 @@ var servCita = ref([
 
 const rServicioCita = async () => {
   try{
-      const response = await fetch('http://localhost/servicio_citas_calendario');
+      const response = await fetch('http://3.143.143.93/servicio_citas_calendario');
       const data = await response.json();
       servCita.value=data.data;
   }catch{
@@ -151,7 +151,7 @@ var servicios = ref([  ])
 
 const rServicios = async () => {
   try{
-      const response = await fetch('http://localhost/servicios_calendario');
+      const response = await fetch('http://3.143.143.93/servicios_calendario');
       const data = await response.json();
       servicios.value=data.data;
       
@@ -164,7 +164,7 @@ var serv_bloqueos = ref([  ])
 
 const bloqueos_admin = async () => {
   try{
-      const response = await fetch('http://localhost/servicio_bloqueos_calendario');
+      const response = await fetch('http://3.143.143.93/servicio_bloqueos_calendario');
       const data = await response.json();
       serv_bloqueos.value=data.data;
       
@@ -442,7 +442,7 @@ else{
     contrasena:'',
     telefono:cliente.value.telefono
  }
- await fetch('http://localhost/registrar_usuario', {
+ await fetch('http://3.143.143.93/registrar_usuario', {
   method: 'POST',
   body: JSON.stringify(inst0),
 }).then(response => response.json())
@@ -467,7 +467,7 @@ else{
       tipo:0,
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
- await fetch('http://localhost/crear_cita_calendario', {
+ await fetch('http://3.143.143.93/crear_cita_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
@@ -490,7 +490,7 @@ for(let i=0;i<=SCita.value.length-1;i++){
   fecha_hora:SCita.value[i].fechaServicio,
   tipo:SCita.value[i].tipo
  }
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://3.143.143.93/crear_sc_calendario', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -547,7 +547,7 @@ async function enviarCita(idcliente){
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
    
- await fetch('http://localhost/crear_cita_calendario', {
+ await fetch('http://3.143.143.93/crear_cita_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
@@ -569,7 +569,7 @@ for(let i=0;i<=SCita.value.length-1;i++){
   fecha_hora:SCita.value[i].fechaServicio,
   tipo:0
  }
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://3.143.143.93/crear_sc_calendario', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())
@@ -916,7 +916,7 @@ var duracionAct=ref(0)
       id:citaBloq.id,
       fecha_hora:'00/00/00 00:00'
     }
-        await fetch('http://localhost/servicio_cita/actualizar', {
+        await fetch('http://3.143.143.93/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())
@@ -1043,7 +1043,7 @@ var duracionAct=ref(0)
         tipo:1
    }
 
-  fetch('http://localhost/crear_sc_calendario', {
+  fetch('http://3.143.143.93/crear_sc_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
