@@ -16,24 +16,24 @@ const correo = ref([
     <v-card-title>
       <v-card-title class="titulo" style="font-family: Verdana, Geneva, Tahoma, sans-serif">¡Contáctanos!</v-card-title>
     </v-card-title>
-    <v-card-text>
+    <v-card-text class='cont'>
       <v-container class="item4" align="center" justify="center">
         <v-row>
           <!-- Gmail -->
           <v-col class='d-flex align-center text md12' md="4">
-            <v-icon icon="mdi-gmail" size="samll" class='mr-2 gmail'></v-icon>
+            <v-icon icon="mdi-gmail" size="small" class='mr-2 gmail icon'></v-icon>
             <v-card-text class="text">Mine.ejemplo@gmail.com</v-card-text>
           </v-col>
 
           <!-- WhatsApp -->
-          <v-col class='d-flex align-center text md12 whats' md="4">
-            <v-icon icon="mdi-whatsapp" size='small' class='mr-2'></v-icon>
+          <v-col class='d-flex align-center text md12 whats ' md="4">
+            <v-icon icon="mdi-whatsapp" size='small' class='mr-2 icon'></v-icon>
             <v-card-text class="text">871-795-7718</v-card-text>
           </v-col>
 
           <!-- Facebook -->
           <v-col class='d-flex align-center text md12' md="4">
-            <v-icon icon="mdi-facebook" size="samll" class='mr-2'></v-icon>
+            <v-icon icon="mdi-facebook" size="small" class='mr-2 icon'></v-icon>
             <v-card-text class="text">www.facebook/SalonBeautyMM.com</v-card-text>
           </v-col>
 
@@ -86,7 +86,7 @@ const correo = ref([
     }
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1025px){
     .item4{
         display: block;
     }
@@ -118,13 +118,29 @@ const correo = ref([
 
 }
 
-@media screen and (min-width: 769px){
+@media screen and (max-width: 769px){
     .item4{
-        display: flex;
+        display: block;
+    }
+    .item4{
+        width: 47rem;
+        
+    }
+  
+
+}
+@media screen and (min-width: 770px){
+    .titulo{
+        font-size: 0.9em;
+    }
+    .item4{
+        width: 59rem;
+        
     }
     .text{
-        font-size: 1.1em;
+        font-size: 0.8rem;
     }
+    
 
 }
 
@@ -139,7 +155,14 @@ const correo = ref([
 }
 @media screen and (max-width: 426px) {
     .contenedor{
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    .item4{
+        width: 27rem;
+        
     }
     .whats{
         margin-left: 0rem;
@@ -147,23 +170,19 @@ const correo = ref([
     }
 }
 @media screen and (max-width: 376px) {
-    .contenedor{
-        display: block;
+  
+    .item4{
+        width: 25rem;
+        
     }
     .whats{
-        margin-left: 0rem;
-        margin-right: 1.5rem;
-        padding-right:0rem;
-        
+    padding: 0; 
+    margin-left: 1rem;
     }
 }
 @media screen and (max-width: 320px) {
-    .contenedor{
-        display: block;
-    }
-    .whats{
-        margin-left: 0;
-        padding-right: 0;
+    .text{
+        font-size: 0.7rem;
     }
 }
 </style>

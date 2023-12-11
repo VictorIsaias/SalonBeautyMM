@@ -5,7 +5,12 @@ import { storeToRefs } from 'pinia'
 import {ref,computed} from 'vue'
 import {PaginaStore} from '@/stores/PaginaStore.js'
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
+const servs = ServiciosStore()
+const {servicios,cServicios} = storeToRefs(servs)
 
+const pagina = PaginaStore()
+
+const {estadonav} = storeToRefs(pagina)
 
 function cambiar(){
 switch(estadonav.value){
@@ -23,11 +28,8 @@ switch(estadonav.value){
 }
 
 
-const pagina = PaginaStore()
-const servs = ServiciosStore()
 
-const {estadonav} = storeToRefs(pagina)
-const {servicios,cServicios} = storeToRefs(servs)
+
 
      var menu= ref(false)
      var message= ref(false)
@@ -66,15 +68,14 @@ const {servicios,cServicios} = storeToRefs(servs)
     >
       <template v-slot:activator="{ props }">
         <div class="item2">
-        <button  v-bind='props' class="button">SERVICIOS</button>
+        <button  v-bind='props' class="button rutas">SERVICIOS</button>
       </div>
       </template>
 
       <v-card class='pa-5 d-flex flex-wrap ' style='width:80vw;min-height: 20rem;position: relative; top:3.5rem;'>
-        <v-card class='flex-grow-1 w-25 elevation-0' v-for='(cat,index) in cServicios' :key='index'
-           color='' >
+        <v-card class='flex-grow-1 w-25 elevation-0' v-for='(cat,index) in cServicios' :key='index' color='' >
            <v-card-title  style='color:#169873'>
-            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id,cat:cat.nombre}}'>{{cat.nombre}}</router-link>
+            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
             </v-card-title>
            <div class='pl-6 pr-3 pt-1' style='min-height:10rem'>
 
@@ -83,8 +84,8 @@ const {servicios,cServicios} = storeToRefs(servs)
               v-for='(serv,index) in servicios' :key='index'>
                   
                   <div class='pb-3' v-if='serv.categoria==cat.id'>
-                    <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id,serv:serv.nombre}}'>
-                       {{serv.nombre}}
+                    <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id}}'>
+                     <div>{{serv.nombre}}</div>  
                     </router-link>
                   </div>
                   
@@ -103,8 +104,8 @@ const {servicios,cServicios} = storeToRefs(servs)
         <div></div>
       <div  @click='cambiar' class="item6">
         <RouterLink  class="rutas" :to="{name:'iniciar'}">
-            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
-        </RouterLink>
+          <button variant="text"  class="button mr-1" v-bind="props"><img class="iconos " src="/img/perfil.png" alt=""></button>
+         </RouterLink>
       </div>
     </div>
     
@@ -131,7 +132,7 @@ const {servicios,cServicios} = storeToRefs(servs)
         <v-card class='flex-grow-1 w-25 elevation-0' v-for='(cat,index) in cServicios' :key='index'
            color='' >
            <v-card-title  style='color:#169873'>
-            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id,cat:cat.nombre}}'>{{cat.nombre}}</router-link>
+            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
             </v-card-title>
            <div class='pl-6 pr-3 pt-1' style='min-height:10rem'>
 
@@ -140,7 +141,7 @@ const {servicios,cServicios} = storeToRefs(servs)
               v-for='(serv,index) in servicios' :key='index'>
                   
                   <div class='pb-3' v-if='serv.categoria==cat.id'>
-                    <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id,serv:serv.nombre}}'>
+                    <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id}}'>
                        {{serv.nombre}}
                     </router-link>
                   </div>
@@ -157,20 +158,22 @@ const {servicios,cServicios} = storeToRefs(servs)
         <RouterLink class="rutas" :to="{name:'citas_cliente'}"><button class="button">VER CITAS</button></RouterLink>
       </div>
       <div class="item4">
-        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0,serv:'none'}}"><button class="button">NUEVA CITA</button></RouterLink>
+        <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0}}"><button class="button">NUEVA CITA</button></RouterLink>
         </div>
       <div class="item6 d-flex">
-        <div @click='cambiar' class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+        <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
-        <v-menu>
-          <template v-slot:activator="{ props }">
-            <buttom class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
-          </template>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <button variant="text"  class="button mr-1" v-bind="props"><img class="iconos " src="/img/perfil.png" alt=""></button>
+        </template>
           <v-list>
             <v-list-item >
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"perfil"}'>Configuracion</router-link></v-list-item-title>
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"contacto"}'>Contacto</router-link></v-list-item-title>
-             <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Cerrar sesion</v-list-item-title>
+              <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1 ' :to='{name:"perfil"}'><v-icon icon='mdi-cog' class='mr-3' ></v-icon>Configuracion</router-link></v-list-item-title>
+              <v-divider></v-divider>
+              <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
+              <v-divider></v-divider>
+              <v-list-item-title   class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion</v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>
@@ -187,27 +190,29 @@ const {servicios,cServicios} = storeToRefs(servs)
        
       <div class="item2">
             <RouterLink class="rutas" :to="{name:'Administrar'}">
-            <button class="button" >ADMINISTRAR</button></RouterLink>
+            <button class="button rutas" >ADMINISTRAR</button></RouterLink>
        
       </div>
       <div class="item3">
-        <RouterLink class="rutas" :to="{name:'citas_cliente'}"><button class="button">VER CITAS</button></RouterLink>
+        <RouterLink class="rutas" :to="{name:'citas_administrador'}"><button class="button">VER CITAS</button></RouterLink>
       </div>
-      <div class="item4"> <RouterLink class="rutas" :to="{name:'Calendario-admin',params:{idserv:0,serv:'none'}}"><button class="button">CALENDARIO</button></RouterLink>
+      <div class="item4"> <RouterLink class="rutas" :to="{name:'Calendario-admin',params:{idserv:0}}"><button class="button">CALENDARIO</button></RouterLink>
        
         </div>
       <div class="item6 d-flex">
-        <div @click='cambiar' class="item5 pr-5"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+        <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
       
-        <v-menu>
-          <template v-slot:activator="{ props }">
-            <buttom  class="button" v-bind="props"><img class="iconos" src="/img/perfil.png" alt=""></buttom>
-          </template>
-          <v-list>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <button variant="text"  class="button mr-1" v-bind="props"><img class="iconos " src="/img/perfil.png" alt=""></button>
+        </template>
+        <v-list>
             <v-list-item >
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"perfil"}'>Configuracion</router-link></v-list-item-title>
-              <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);"><router-link :to='{name:"contacto"}'>Contacto</router-link></v-list-item-title>
-             <v-list-item-title style="border-bottom: 1px solid rgb(112, 112, 112);">Cerrar sesion</v-list-item-title>
+              <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1 ' :to='{name:"perfil"}'><v-icon icon='mdi-cog' class='mr-3' ></v-icon>Configuracion</router-link></v-list-item-title>
+              <v-divider></v-divider>
+              <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
+              <v-divider></v-divider>
+              <v-list-item-title   class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion</v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>
@@ -245,22 +250,14 @@ const {servicios,cServicios} = storeToRefs(servs)
   border-bottom:5px solid pink;
   height: 50px;
 }
-.iconos{
-  height: 31px;
-  width: 31px;
-  margin-top: 15px;
+.button{
+  margin-right: 1rem;
 }
 .noti{
   margin-top:10px;
-  height: 39px;
-  width: 39px;
+
 }
-.logo{
-  margin-left: 25px;
-  height: 40px;
-  width: 50px;
-  margin-top:10px;
-}
+
 .item1{
   flex-grow: 2;
 }
@@ -275,40 +272,111 @@ const {servicios,cServicios} = storeToRefs(servs)
   flex-grow: 1;
 }
 
-@media screen and (max-width: 960px){
-  .logo{
-  margin-left: 15px;
-  height: 30px;
-  width: 40px;
-  margin-top:5px;
-}
+@media screen and (min-width: 961px){
+
 
 .iconos{
-  height: 21px;
-  width: 21px;
-  margin-top: 10px;
+  height: 2.2rem;
+  
+  margin-top:0.9rem;
+}
+
+.noti{
+  
+  margin-right: 1.6rem;
+}
+.logo{
+  
+  margin-left: 1.5rem;
+  width: 2.5rem;
 }
 
 .rutas{
   font-size: .70rem;
 }
+.barra{
+  height: 3rem;  
+}
 }
 
-@media screen and (max-width: 450px){
-  .logo{
-  margin-left: 15px;
-  height: 30px;
-  width: 40px;
-  margin-top:5px;
+@media screen and (max-width: 961px){
+  .iconos{
+  height: 2.2rem;
+  
+  margin-top:0.9rem;
 }
-.iconos{
-  height: 15px;
-  width: 15px;
-  margin-top: 13px;
+
+.noti{
+  
+  margin-right: 0.2rem;
+}
+.logo{
+  width: 2.5rem;
+  
+  margin-left: 1.5rem;
+}
+
+
+.rutas{
+  font-size: .8rem;
+}
+}
+
+@media screen and (max-width: 451px){
+  .iconos{
+  height: 2rem;
+  
+  margin-top:0.9rem;
+}
+
+.logo{
+  width: 2.3rem;
+  
+  margin-left: 0.6rem;
+}
+.button{
+  margin-right: 0;
 }
 
 .rutas{
-  font-size: .60rem;
+  font-size: .80rem;
+}
+}
+
+
+@media screen and (max-width: 376px){
+  .iconos{
+  height: 1.7rem;
+  
+  margin-top:0.9rem;
+}
+
+.logo{
+  width: 2rem;
+  
+}
+
+
+.rutas{
+  font-size: .7rem;
+}
+}
+
+@media screen and (max-width: 321px){
+  .iconos{
+  height: 1.5rem;
+  
+  margin-top:0.9rem;
+}
+
+.logo{
+  width: 1.8rem;
+  
+}
+
+
+.rutas{
+  font-size: .6rem;
 }
 }
 </style>

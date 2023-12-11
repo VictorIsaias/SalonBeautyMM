@@ -14,6 +14,51 @@ export const CalendarioStore = defineStore('cal', () => {
   var flotante = ref(false)
   var servs=ref([''])
   var contador=ref(0)
+  var diaminimo=ref(0)
+  var id_cliente=ref(0)
+  var citasBloq=ref([])
+
+  async function cancelar_cita(idact){
+      let inst = {
+      id:idact,
+      estado:'cancelado'
+    }
+    await fetch('http://localhost/registro_citas/actualizar', {
+      method: 'POST',
+      body: JSON.stringify(inst),
+  }).then(response => response.json())
+      .then(responsej => {
+          if (responsej.status != 200) {
+              return
+          }
+  
+  
+      });
+      leerCitas()
+      flotante.value = !flotante.value
+  }
+
+  async function finalizar_cita(idact){
+
+    let inst = {
+      id:idact,
+      estado:'completado'
+    }
+    await fetch('http://localhost/registro_citas/actualizar', {
+      method: 'POST',
+      body: JSON.stringify(inst),
+  }).then(response => response.json())
+      .then(responsej => {
+          if (responsej.status != 200) {
+              return
+          }
+  
+  
+      });
+
+      leerCitas()
+      flotante.value = !flotante.value
+  }
 
 // informacion de Citas que se va a leer desde backend READ
 // Consulta para saber todos los bloqueos que tienen que mostrarse. id, fecha de inicio, duracion total (citas en una semana)
@@ -37,6 +82,19 @@ var citas = ref([
 
 ])
 
+const rClientes = async () => {
+  try{
+      const response = await fetch('http://localhost/usuarios');
+      const data = await response.json();
+      clientes.value=data.data;
+      
+  }catch{
+
+  }
+}
+
+onMounted(rClientes);
+
 const rCitas = async () => {
   try{
       const response = await fetch('http://localhost/citas_calendario');
@@ -49,6 +107,20 @@ const rCitas = async () => {
 }
 
 onMounted(rCitas);
+
+const rCitasBloq = async () => {
+  try{
+      const response = await fetch('http://localhost/citas_calendario_cliente');
+      const data = await response.json();
+      citasBloq.value=data.data;
+      
+  }catch{
+
+  }
+}
+
+onMounted(rCitasBloq);
+
 
 
 // informacion de Servicio-Cita que se va a enviar a backend CREATE
@@ -63,7 +135,6 @@ const rServicioCita = async () => {
       const response = await fetch('http://localhost/servicio_citas_calendario');
       const data = await response.json();
       servCita.value=data.data;
-      
   }catch{
 
   }
@@ -110,6 +181,9 @@ function agregarBloqueo(fechaInicio,duracion){
 
   let from = new Date(fechaInicio)
   let dia = from.getDay()
+  if (dia==0){
+    dia=7
+  }
   from = from.getHours()
   let to = from+(duracion/60)
    bloqueos.value[dia].push({
@@ -123,12 +197,20 @@ function agregarBloqueo(fechaInicio,duracion){
 }
 
 async function leerBloqueos(){
-  await rCitas()
-  for(let i = 0;i<=citas.value.length-1;i++){
-  
-    agregarBloqueo(citas.value[i].fechaInicio,citas.value[i].duracionTotal)
+  await rCitasBloq()
+  await bloqueos_admin()
+  let fech=''
+  diaminimo.value=diaminimo.value+2
+  for(let i = 0;i<=citasBloq.value.length-1;i++){
+    fech=new Date(citasBloq.value[i].fechaInicio)
+    
+    if(fech.getDate()>=diaminimo.value&&fech.getDate()<diaminimo.value+7)
+    agregarBloqueo(citasBloq.value[i].fechaInicio,citasBloq.value[i].duracionTotal)
   }
- 
+  for(let i = 0;i<=serv_bloqueos.value.length-1;i++){
+  
+    agregarBloqueo(serv_bloqueos.value[i].fechaServicio,serv_bloqueos.value[i].duracion)
+  }
 }
 
 
@@ -156,7 +238,6 @@ function agregarCita(fechaInicio,duracion,tipo,servi,catalogo,idserv){
     
    
        
-      
       fechaInicio = new Date(fechaInicio)
       let fechaFin=''
 
@@ -206,11 +287,15 @@ var SCita = ref([
 
 ])
 
-async function leerCitas(){
+async function leerCitas(no){
   await rCitas()
   await rServicioCita()
   await bloqueos_admin()
   eventos.value=[]
+  if(!no){
+    
+  modocita.value='cita'
+  }
 
 
 
@@ -271,12 +356,14 @@ var cliente=ref({
   nombre:'',
   apellido_paterno:'',
   apellido_materno:'',
-  telefono:''
+  telefono:'',
+  user:''
 })
 
 var clientes=ref([])
 
 async function crearEnviarCita(){
+await rClientes()
    if(servs.value.length>1){
 
     
@@ -286,6 +373,7 @@ async function crearEnviarCita(){
   let catalogo=0
   let id=0
   for(let o = 0;o<=SCita.value.length-1;o++){
+    
     id=servCita.value.length+o
     
     for(let i = 0;i<=servicios.value.length-1;i++){
@@ -298,7 +386,7 @@ async function crearEnviarCita(){
   }
 
   
-cliente.value.id=clientes.value.length
+cliente.value.id=clientes.value.length+1
 
 
   cita.value.idCliente = cliente.value.id
@@ -306,7 +394,7 @@ cliente.value.id=clientes.value.length
 
 if(modocita.value=='editar'){
   //update de servicio cita
-  let catt=0
+ /* let catt=0
 for(let o = 0;o<=SCita.value.length-1;o++){
   for(let i=0;i<=servicios.value.length-1;i++){
     if(servicios.value[i].id==SCita.value[o].idServicio){
@@ -341,14 +429,30 @@ servCita.value.push({
       citas.value[i]=cita.value
     }}   
 
-  
+  */
 }
 else{
 
-
-
   //insert de cliente nuevo con el objeto cliente
-  clientes.value.push(cliente.value)
+  let  inst0={
+    nombre:cliente.value.nombre,
+    apellido_paterno:cliente.value.apellido_paterno,
+    apellido_materno:cliente.value.apellido_materno,
+    user:cliente.value.user,
+    contrasena:'',
+    telefono:cliente.value.telefono
+ }
+ await fetch('http://localhost/registrar_usuario', {
+  method: 'POST',
+  body: JSON.stringify(inst0),
+}).then(response => response.json())
+  .then(responsej => {
+      if (responsej.status != 200) {
+          return
+      }
+
+
+  });
      
   //insert de cita
   let fActual = new Date()
@@ -363,7 +467,6 @@ else{
       tipo:0,
       fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
    }
-   
  await fetch('http://localhost/crear_cita_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
@@ -377,6 +480,7 @@ else{
     });
 
 //insert de servicio cita 
+
 let inst={}
 for(let i=0;i<=SCita.value.length-1;i++){
  inst={
@@ -412,8 +516,6 @@ for(let i=0;i<=SCita.value.length-1;i++){
   cancelar('cerrar')
 
   modocita.value='cita'
-  console.log(servCita.value)
-  console.log(eventos.value)
 }
 else{
  alert('Selecciona al menos un servicio')
@@ -421,12 +523,68 @@ else{
 }
 
 
-function enviarCita(idcliente){
+async function enviarCita(idcliente){
   if(servs.value.length>1){
     cita.value.idCliente = idcliente
     cita.value.tipo = 'cita'
-    
     crearSC(servs.value)
+
+    SCita.value=[]
+  agregarSCita()
+
+
+
+    let fActual = new Date()
+
+    let  inst1={
+      cliente:id_cliente.value,
+      costo:cita.value.costo,
+      fecha_hora_inicio:cita.value.fechaInicio,
+      fecha_hora_fin:cita.value.fechaFin,
+      duracion_total:cita.value.duracionTotal,
+      estado:'sin_confirmar',
+      tipo:0,
+      fecha_cita:fActual.format('YYYY-MM-DD HH:mm')
+   }
+   
+ await fetch('http://localhost/crear_cita_calendario', {
+    method: 'POST',
+    body: JSON.stringify(inst1),
+}).then(response => response.json())
+    .then(responsej => {
+        if (responsej.status != 200) {
+            return
+        }
+
+
+    });
+
+//insert de servicio cita 
+let inst={}
+for(let i=0;i<=SCita.value.length-1;i++){
+ inst={
+  id_servicio:SCita.value[i].idServicio,
+  precio:SCita.value[i].precio,
+  duracion_min:SCita.value[i].duracion,
+  fecha_hora:SCita.value[i].fechaServicio,
+  tipo:0
+ }
+  fetch('http://localhost/crear_sc_calendario', {
+      method: 'POST',
+      body: JSON.stringify(inst),
+  }).then(response => response.json())
+      .then(responsej => {
+          if (responsej.status != 200) {
+              return
+          }
+ 
+
+      });
+    }
+
+
+
+
     alert('Su cita ha sido creada')
     cancelar('cerrar')
     router.replace({ name: 'citas_cliente' })
@@ -473,20 +631,26 @@ var largo=0
 var espac=0
 var duracionAct=ref(0)
 
+
+
   var espacio = ref(computed(()=>{
     
-    if(bloque.value!='a'&&largo<servs.value.length){
-      for(let o = 0;o<servicios.value.length;o++){
   
+    if(bloque.value!='a'&&largo<servs.value.length){
 
-          if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
-          
-            bloque.value = bloque.value.addMinutes(servicios.value[o].duracion)
-            largo=servs.value.length
+      //Añade a bloque la duracion de todos los elementos en serv
+
+        for(let o = 0;o<servicios.value.length;o++){
+    
+  
+            if(servicios.value[o].id==servs.value[(servs.value.length-1)]){
+             
+              bloque.value = bloque.value.addMinutes(servicios.value[o].duracion)
+              largo=servs.value.length
             
-       }
-      
-      }
+         }
+        
+        }
 
     let dia = computed(()=>{if(bloque.value.getDay()==0){
       return 7
@@ -514,7 +678,10 @@ var duracionAct=ref(0)
       }
      menor=Math.min(...save)
     }
-    if(menor==0){
+
+    if(menor==0&&bloqueos.value[dia.value].length==1){
+      
+    
       espac=0
       for(let o =actual;o<1200;o+=30)    {
         espac+=30
@@ -525,6 +692,7 @@ var duracionAct=ref(0)
 
       menor+=actual
     }
+
     
     if(menor>1200){
       
@@ -548,6 +716,7 @@ var duracionAct=ref(0)
    
     }
     else{
+      
       largo=servs.value.length
       espac=espac+duracionAct.value
         return espac
@@ -634,23 +803,6 @@ var duracionAct=ref(0)
        menor=Math.min(...save)
       }
       menor+=actual
-
-      
-    
-  /*    for(let i=1;i<locEventos.length;i++){
-        start=new Date(locEventos[i].start)
-        start=(start.getHours()*60)+(start.getMinutes())
-        if(start>=actual){
-          save.push(start-actual)
-  
-  
-        }
-        
-       menor=Math.min(...save)
-      }
-      menor+=actual
-
-*/
     
     
     if(menor>1200){
@@ -695,14 +847,19 @@ var duracionAct=ref(0)
   ))
 
 
-  function editarCita(citaBloq){
+  async function editarCita(citaBloq){
+
+    await rClientes()
+    await rCitas()
     bloque.value=citaBloq
     modocita.value='editar'
     
     flotante.value = !flotante.value
 
+    cliente.value=[]
+    servs.value=[]
     cita.value.fechaInicio=citaBloq.format('YYYY-MM-DD HH:mm')
-  
+     
     let dia = computed(()=>{if(citaBloq.getDay()==0){
       return 7
     }else {return citaBloq.getDay()}})
@@ -712,9 +869,11 @@ var duracionAct=ref(0)
     
 
     for(let i=0;i<=citas.value.length-1;i++){
-    
-      if(citas.value[i].fechaInicio==citaBloq.format('YYYY-MM-DD HH:mm')){
-        clienteid=citas.value[i].idCliente
+      
+    if(citas.value[i].fechaInicio==(citaBloq.format('YYYY-MM-DD HH:mm')+':00')){
+      
+        clienteid=citas.value[i].clienteId
+        cita.value.id=citas.value[i].id
         cita.value.fechaFin=citaBloq.addMinutes(citas.value[i].duracionTotal)
 
       for(let o=0;o<=servCita.value.length-1;o++){
@@ -725,6 +884,7 @@ var duracionAct=ref(0)
         
       }
     }
+    
     for(let i=0;i<=clientes.value.length-1;i++){
       if(clientes.value[i].id==clienteid){
         cliente.value={
@@ -732,7 +892,8 @@ var duracionAct=ref(0)
           nombre:clientes.value[i].nombre,
           apellido_paterno:clientes.value[i].apellido_paterno,
           apellido_materno:clientes.value[i].apellido_materno,
-          telefono:clientes.value[i].telefono
+          telefono:clientes.value[i].telefono,
+          user:clientes.value[i].user
         }
       }
     }
@@ -741,17 +902,21 @@ var duracionAct=ref(0)
 
     //update de cita instantaneamente
 
-
+   
 
   }
 
 
-  function desactivarBloqueo(citaBloq){
+ async function desactivarBloqueo(citaBloq){
     for(let i=0;i<=eventos.value.length-1;i++){
       if(eventos.value[i].id==citaBloq.id){
-      //////////////////////////////////////////////////////777
-        eventos.value.splice(i,1)
-        fetch('http://localhost/crear_sc_calendario', {
+     eventos.value.splice(i,1)
+        
+     let inst = {
+      id:citaBloq.id,
+      fecha_hora:'00/00/00 00:00'
+    }
+        await fetch('http://localhost/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())
@@ -759,8 +924,8 @@ var duracionAct=ref(0)
               if (responsej.status != 200) {
                   return
               }
-     
-    
+      
+      
           });
 
 
@@ -878,7 +1043,7 @@ var duracionAct=ref(0)
         tipo:1
    }
 
-  fetch('http://18.218.1.15:81/crear_sc_calendario', {
+  fetch('http://localhost/crear_sc_calendario', {
     method: 'POST',
     body: JSON.stringify(inst1),
 }).then(response => response.json())
@@ -892,7 +1057,7 @@ var duracionAct=ref(0)
 
 
 
-
+leerCitas('no')
    }
 
 // else si no es ninguna (para cliente)
@@ -900,6 +1065,8 @@ var duracionAct=ref(0)
 
    else
   {
+    
+    modocita.value='cliente'
     if(bloqueos.value[dia.value].from<=actual&&bloqueos.value[dia.value].to>actual){
 
       return
@@ -922,7 +1089,6 @@ var duracionAct=ref(0)
 
   servs.value =['']
 
-      modocita.value='cliente'
   flotante.value = !flotante.value
   cita.value={
     costo: 0,
@@ -970,7 +1136,10 @@ var duracionAct=ref(0)
   function cancelar(cerrar){
     if(cerrar=='cerrar'){
       flotante.value = !flotante.value
+      if(
+        modocita.value!='cliente'){
       modocita.value='cita'
+        }
     }
 
     activo.value=['']
@@ -1022,5 +1191,5 @@ var duracionAct=ref(0)
   }
 
 
-  return {cliente,duracionAct,bloque,contador,agregarSCita,crearEnviarCita,espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
+  return {cancelar_cita,finalizar_cita,id_cliente,diaminimo,cliente,duracionAct,bloque,contador,agregarSCita,crearEnviarCita,espacio2,desactivarBloqueo,editarCita,leerCitas,eventos,modocita,preService,minimo,maximo,citas,activo,cancelar,espacio, leerBloqueos,bloqueos,actualizarCita,servs,crearSC,abrirCrearcita,enviarCita,modo, flotante ,cita,servCita,servicios}
 })

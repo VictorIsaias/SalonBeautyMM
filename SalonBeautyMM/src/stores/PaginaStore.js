@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const PaginaStore = defineStore('pagina', () => {
   
   var estadonav = ref(1) //0 es sin sesion, 1 es cliente y 2 es admin
-  var id = ref('')
+  var ID = ref(1)
 
 
  var usuarioLocal=ref({
@@ -54,7 +54,7 @@ export const PaginaStore = defineStore('pagina', () => {
 ])
 
 
-  return {setUser,id,usuarios,estadonav,usuarioLocal}
+  return {setUser,ID,usuarios,estadonav,usuarioLocal}
 }
 //,{persist:true}
 )

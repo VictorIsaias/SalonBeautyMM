@@ -4,7 +4,7 @@
       <div  v-for='(servicio,index) in catalogo' :key='index'>
 
       
-        <div v-if='idcatalogo==servicio.catalogo'>
+        <div v-if='idcatalogo==servicio.categoria'>
             <v-card :text="servicio.nombre" class='d-flex justify-space-between color ma-2'>
             <boton @click='editar(servicio.id,"servicio")' class=' ma-2'  texto='Editar'></boton>
         </v-card>

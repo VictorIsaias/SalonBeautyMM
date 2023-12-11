@@ -13,7 +13,7 @@ import calendarioclienteview from '../views/ClienteCitas/CalendarioClienteView.v
 import calendarioadminview from '../views/AdminControl/CalendarioAdminView.vue'
 import infocontactoview from '../views/ClientePrincipal/InformacionContactoView.vue'
 import editarperfilview from '../views/ClientePrincipal/EditarPerfilView.vue'
-
+import citasadminview from '../views/AdminControl/CitasAdminView.vue'
 import {PaginaStore} from '../stores/PaginaStore.js'
 
 const router = createRouter({
@@ -53,9 +53,16 @@ const router = createRouter({
         requiresAuth:true
       }
     },
-   
     {
-      path: '/create_appmnt/:idserv/:serv',
+      path: '/dates_admin',
+      name: 'citas_administrador',
+      component: citasadminview,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path: '/create_appmnt/:idserv',
       name: 'crear_cita',
       component: calendarioclienteview
     },
@@ -70,12 +77,12 @@ const router = createRouter({
           component: vercatalogoview,
         },
             {
-              path: 'sub-services/:idcat/:cat',
+              path: 'sub-services/:idcat',
               name: 'sub-servicios',
               component: verserviciosview,
             },
                 {
-                  path: 'detail/:idserv/:serv',
+                  path: 'detail/:idserv',
                   name: 'detalles',
                   component: detalleview,
                 }

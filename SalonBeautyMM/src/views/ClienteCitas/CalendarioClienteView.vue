@@ -1,6 +1,5 @@
 <template>
-  <div >
-    <div >
+  <div style="height: 100%;">
       <v-container >
           
           
@@ -53,7 +52,6 @@
     </div>
         
 
-  </div>
 
 
   
@@ -69,10 +67,16 @@ import boton from '@/components/BotonPagina.vue'
 import ventana from '@/components/FlotanteCalendario.vue'
 import {CalendarioStore} from '@/stores/CalendariosStore'
 import { storeToRefs } from 'pinia'
+import {PaginaStore} from '@/stores/PaginaStore.js'
+
+
+const pagina = PaginaStore()
+
+const {ID} = storeToRefs(pagina)
 
 const cal = CalendarioStore()
 
-const {modocita,preService,minimo,maximo,bloqueos,modo, servs,flotante ,cita,servCita,servicios,citas} = storeToRefs(cal)
+const {id_cliente,diaminimo,modocita,preService,minimo,maximo,bloqueos,modo, servs,flotante ,cita,servCita,servicios,citas} = storeToRefs(cal)
 const {actualizarCita,leerBloqueos,abrirCrearcita,enviarCita}= cal
 
 import {useRoute} from 'vue-router'
@@ -95,6 +99,9 @@ var tiempoTranscurrido = Date.now();
 var hoy = new Date(tiempoTranscurrido);
 
 onMounted(()=>  {
+
+  id_cliente.value=ID.value
+
    bloqueos.value= {
   1: [''],
   2: [''],
@@ -175,6 +182,7 @@ const minDate = computed (() => {
   const maxDate = computed (() => {
     return new Date().subtractDays(-8)
   });
+  diaminimo.value = minDate.value.getDate()
 
   function anterior (){
     
@@ -244,9 +252,7 @@ const minDate = computed (() => {
 </script>
 
 <style scoped >
-.fondo{
-  background: linear-gradient(158deg, #ffe9eb 0%, #ffd2d6 43.38%, #e5a7ad 100%);
-}
+
 
 
  </style>
