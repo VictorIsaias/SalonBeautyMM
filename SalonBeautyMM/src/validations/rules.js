@@ -1,5 +1,7 @@
 
 const rules = {
+  max: (v) => v.length <= a || `Maximo de ${a} caracteres`,
+  max30: (v) => v.length <= 30 || `Maximo de 30 caracteres`,
     treinta: value => value%30==0 || 'Valor invalido',
     numero: value => value>0 || 'Valor invalido',
     requerido: value => !!value || 'Campo requerido',

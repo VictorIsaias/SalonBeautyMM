@@ -22,10 +22,27 @@
             </div>
         </v-card>
 
+        <v-card class='w-100 h-100  pa-0'  v-if='tipo=="info2"' elevation='4'   width='45%'  >
+      
+
+          
+                        
+        <div class="  interior h-100 pa-0 ma-0">
+            <div >
+                <slot name='info' ></slot>
+            </div>
+            
+           <v-container class="pa-0 pb-4">
+                
+                        <slot></slot>
+    
+            </v-container>
+            </div>
+        </v-card>
 
 
 
-    <v-card class='w-100 h-100 contenedor' v-show='tipo!="info"'  elevation='4'   width='45%'  align='center'>
+    <v-card class='w-100 h-100 contenedor' v-show='tipo!="info"&&tipo!="info2"'  elevation='4'   width='45%'  align='center'>
         <v-card-title>{{titulo}}
             <v-dialog width="700" v-if='basura=="true"'> 
                 <template v-slot:activator="{ props }">

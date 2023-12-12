@@ -40,6 +40,12 @@ const correo = ref([
           <!-- Divider -->
           <v-divider class="border-opacity-50"></v-divider>
         </v-row>
+        <v-row>
+            <v-col>
+                <v-card-text class="text">Matamoros. Dirección, 70 Campañas Rojas</v-card-text>
+        
+            </v-col>
+        </v-row>
       </v-container>
     </v-card-text>
   </v-card>

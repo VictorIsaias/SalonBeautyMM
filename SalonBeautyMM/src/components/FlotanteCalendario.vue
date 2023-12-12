@@ -6,14 +6,15 @@
     v-model="flotante"
     scroll-strategy="none"
     persistent
-          class="align-center justify-center h-100 "
-        >
-        <formulario style='overflow-y: auto; max-height: 90vh;' tipo='info' class='w-100 h-100' v-if='modo==1'>
+          class="align-center justify-center "
+        >  
+        <formulario style='overflow-y: auto; max-height: 90vh;' tipo='info' class='w-100 h-100 ' v-if='modo==1'>
          
-          <v-container class='pa-0 flotante1'>
+          <v-container class='pa-0  flotante1 '>
           <v-row>
             <v-col>
-              <formulario class='h-100 w-100 flotante' titulo='Crear cita' tipo='sinboton'>
+              
+              <formulario class=' w-100 flotante' titulo='Crear cita' tipo='sinboton'>
                 <v-dialog width="550" persistent>
                   <template v-slot:activator="{ props }">
                     
@@ -28,8 +29,7 @@
                   <template v-slot:default="{ isActive }">
                     
                     <v-card title="Servicios" >
-                    
-                      <v-card-text  v-for='serv in servicios' :key='serv.id'>
+                    <div style="overflow-y:scroll">                    <v-card-text  v-for='serv in servicios' :key='serv.id'>
                         <div v-if='espacio>=serv.duracion&&contador<=3&&activo[serv.id]&&serv.id!=preService'>
                         <div  class='d-flex justify-space-between align-center'>
                           {{serv.nombre}}
@@ -68,6 +68,8 @@
                         
                         
                       </v-card-text>
+                    </div>
+  
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -80,6 +82,7 @@
                           @click="isActive.value = false" @botonClick='actualizarCita'
                         ></boton>
                       </v-card-actions>
+                      
                     </v-card>
                   </template>
                 </v-dialog>
@@ -95,23 +98,24 @@
           <v-row class='cuads' >
             <v-col class='d-flex flex-wrap justify-end subcuads' >
               
-                <formulario  tipo='info'  class='mb-7 w-100 h-100' titulo='Servicios:'>
+                <formulario  tipo='info'   class='mb-7 w-100 h-100' titulo='Servicios:'>
                   <template v-slot:info >
+                   
                   <ul v-for='serv in servicios' :key='serv.id'>
                     <div v-for='(s,index) in servs' :key='index'>
-                      <p v-if='serv.id == servs[index]' class='text-body-2 mb-1'>
+                      <p v-if='serv.id == servs[index]' class='text-body-2  servicios'>
                         {{serv.nombre}} (${{serv.precio}}.00)
                       </p>
                     </div>
                   
                   </ul>
+                    
                   </template>
                 </formulario>
-                <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
             </v-col>
-            <v-col  class="subcuads">
+            <v-col  class="subcuads det">
                
-                <formulario tipo='info' class='mb-7 w-100 h-100 ' titulo='Detalle:'>
+                <formulario tipo='info' class='mb-7 w-100 h-100 detalle' titulo='Detalle:'>
                   <template v-slot:info>
                    <strong> Duracion aprox.: </strong>{{cita.duracionTotal}} min.<br>
                    <strong> Costo aprox.:</strong> ${{cita.costo}}<br>
@@ -121,13 +125,22 @@
                 </formulario>
                 
                 
-                  <boton @click="enviarCita" texto='Listo' class='w-75 btn1'></boton>
-                
+               
                 
             </v-col>
             
           </v-row>
-          <v-row>
+        <v-row >
+          <v-col cols='6' class='d-flex justify-end'>
+            <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
+           
+          </v-col>
+          <v-col cols='6'>
+            <boton @click="enviarCita" texto='Listo' class='w-75 btn1'></boton>
+                
+          </v-col>
+        </v-row>
+        <v-row class='ma-0 '>
             
             <boton @click="cancelar('cerrar')" texto='Cancelar' class=' btn'></boton>
               
@@ -136,43 +149,50 @@
           </v-row>
          
         </v-container>
-        </formulario>  
+       
+        </formulario> 
+     
         </v-overlay>
 
 
+
+
+        
         <v-overlay 
     v-if='modocita=="cita"'
     v-model="flotante" 
     scroll-strategy="none"
-    persistent
-          class="align-center justify-center h-100"
+    persistent 
+          class="align-center justify-center "
         >
-        <formulario style='overflow-y: auto; max-height: 90vh;'  tipo='info' class='w-100 h-100' v-if='modo==1'>
-  
-          <v-container class='pa-0 flotante2'>
-          <v-row>
-            <v-col>
+        <formulario tipo='info2' class=' ' v-if='modo==1'>
+
+        <formulario style='overflow-y: auto; max-height: 80vh;'  tipo='info' class='w-100 ' >
+
+          <v-container  class='pa-0 flotante2'>
+          <v-row class="mb-0 ">
+            <v-col class="mb-0 ">
               <formulario class='h-100 w-100 flotante' titulo='Crear cita' tipo='sinboton'>
                 <v-dialog width="550" persistent>
                   <template v-slot:activator="{ props }">
                     
  <v-form ref="form">
-      <v-text-field  :rules="[rules.requerido]" v-model="cliente.nombre" label="Nombre del cliente*" variant="underlined"></v-text-field>
+      <v-text-field  :rules="[rules.requerido,rules.max30]" v-model="cliente.nombre" label="Nombre del cliente*" variant="underlined"></v-text-field>
 
    
   <v-row>
     <v-col>
-      <v-text-field :rules="[rules.requerido]" v-model="cliente.apellido_paterno" label="Apellido Paterno*" variant="underlined"></v-text-field>
+      <v-text-field :rules="[rules.requerido,rules.max30]" v-model="cliente.apellido_paterno" label="Apellido Paterno*" variant="underlined"></v-text-field>
      
     </v-col>
     <v-col>
-      <v-text-field :rules="[rules.requerido]" v-model="cliente.apellido_materno" label="Apellido Materno*" variant="underlined"></v-text-field>
+      <v-text-field :rules="[rules.requerido,rules.max30]" v-model="cliente.apellido_materno" label="Apellido Materno*" variant="underlined"></v-text-field>
      
     </v-col>
   </v-row>
  
-  <v-text-field v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-  <v-text-field v-model="cliente.user" label="Correo electronico" variant="underlined"></v-text-field>
+  <v-text-field v-mask-phone.br v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-model="cliente.user" :rules='[rules.correo,rules.max30]' label="Correo electronico" variant="underlined"></v-text-field>
      
 
   </v-form>
@@ -187,6 +207,7 @@
                   <template v-slot:default="{ isActive }">
                   
                   <v-card title="Servicios" >
+                    <div style="overflow-y:scroll">  
                     <v-card-text  v-for='serv in servicios' :key='serv.id'>
                       <div v-if='espacio2>=serv.duracion&&contador<=3&&activo[serv.id]'>
                       <div  class='d-flex justify-space-between align-center'>
@@ -226,7 +247,7 @@
                       
                       
                     </v-card-text>
-
+                    </div>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <boton
@@ -250,26 +271,27 @@
           </v-row>
            
          
-          <v-row class="cuads">
-            <v-col class='d-flex flex-wrap justify-end subcuads4' >
+          <v-row class="cuads " >
+            <v-col class='d-flex flex-wrap justify-end subcuads' >
               
-                <formulario  tipo='info'  class=' mb-7 w-100' titulo='Servicios:'>
+                <formulario tipo='info'  class=' mb-7 w-100 cuadr' titulo='Servicios:'>
                   <template v-slot:info >
+                  
                   <ul v-for='serv in servicios' :key='serv.id'>
                     <div v-for='(s,index) in servs' :key='index'>
-                      <p v-if='serv.id == servs[index]' class='text-body-2 mb-1'>
+                      <p v-if='serv.id == servs[index]' class='text-body-2 mb-1 servicios'>
                         {{serv.nombre}} (${{serv.precio}})
                       </p>
                     </div>
                   
                   </ul>
+                  
                   </template>
                 </formulario>
-                <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
-            </v-col>
-            <v-col class="subcuads2">
+           </v-col>
+            <v-col class="subcuads det">
                
-                <formulario  tipo='info' class='mb-7 w-100 '  titulo='Detalle:'>
+                <formulario  tipo='info' class='mb-7 w-100 cuadr detalle'  titulo='Detalle:'>
                   <template v-slot:info>
                    <strong> Duracion aprox. </strong>{{cita.duracionTotal}} min.<br>
                    <strong> Costo aprox.</strong> ${{cita.costo}}<br>
@@ -278,35 +300,40 @@
           
                 </formulario>
                 
-                <boton @click="verificar" texto='Listo' class='w-75 btn1'></boton>
-              
+                
               
                 
             </v-col>
+
           </v-row>
-          <v-row>
+         
+         
+
+         
+        </v-container>
+      
+      
+        </formulario>  
+        <v-row class='mt-1'> 
+            <v-col cols='6' class='d-flex justify-end'>
+              <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
+           
+            </v-col>
+            <v-col cols='6'>
+              <boton @click="verificar" texto='Listo' class='w-75 btn1'></boton>
+              
+            </v-col>
+          </v-row>
+          <v-row class='ma-0 '>
             <boton @click="cancelar('cerrar')" texto='Cancelar' class='btn'></boton>
             
             <boton @click="verificar" texto='Listo' class='btn'></boton>
               
                
           </v-row>
+   
 
-         
-        </v-container>
-        
-        </formulario>  
-        
-
-
-
-
-
-
-
-
-
-        
+        </formulario> 
         </v-overlay>
 
 
@@ -319,8 +346,10 @@
     v-model="flotante"
           class="align-center justify-center "
         >
-        <formulario style='overflow-y: auto; max-height: 90vh;'  tipo='info' class='w-100 h-100' v-if='modo==1'>
-  
+        <formulario tipo='info2' class=' ' v-if='modo==1'>
+
+<formulario style='overflow-y: auto; max-height: 80vh;'  tipo='info' class='w-100 ' >
+
   <v-container class='pa-0 flotante3'>
   <v-row>
            <v-col>
@@ -344,8 +373,8 @@
     </v-col>
   </v-row>
  
-  <v-text-field readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-  <v-text-field readonly v-model="cliente.user" label="Correo electronico" variant="underlined"></v-text-field>
+  <v-text-field v-mask-phone.br readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field readonly v-model="cliente.user"  label="Correo electronico" variant="underlined"></v-text-field>
     
 
   </v-form>              <!--@click='cancelar("editar")'-->
@@ -372,13 +401,13 @@
           
         
          <v-row class="cuads">
-           <v-col class='d-flex flex-wrap justify-end subcuads1' >
+           <v-col class='d-flex flex-wrap justify-end subcuads' >
             
-               <formulario  tipo='info'  class='mb-7 w-100 ' titulo='Servicios:'>
+               <formulario  tipo='info'  class='mb-7 w-100 cuadr' titulo='Servicios:'>
                  <template v-slot:info >
                  <ul v-for='serv in servicios' :key='serv.id'>
                    <div v-for='(s,index) in servs' :key='index'>
-                     <p v-if='serv.id == servs[index]' class='text-body-2 mb-1'>
+                     <p v-if='serv.id == servs[index]' class='text-body-2 mb-1 servicios'>
                        {{serv.nombre}} (${{serv.precio}})
                      </p>
                    </div>
@@ -386,11 +415,10 @@
                  </ul>
                  </template>
                </formulario>
-               <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
            </v-col>
-           <v-col class="subcuads2">
+           <v-col class="subcuads">
               
-            <formulario  tipo='info' class='mb-7 w-100 '  titulo='Detalle:'>
+            <formulario  tipo='info' class='mb-7 w-100 detalle cuadr'  titulo='Detalle:'>
                   <template v-slot:info>
                    <strong> Duracion aprox. </strong>{{cita.duracionTotal}} min.<br>
                    <strong> Costo aprox.</strong> ${{cita.costo}}.00<br>
@@ -401,24 +429,34 @@
                 
                
                
-                 <boton @click="crearEnviarCita" texto='Listo' class='w-75 btn1'></boton>
                
                
            </v-col>
          </v-row>
-         <v-row>
-          <boton @click="cancelar('cerrar')" texto='Cancelar' class='btn'></boton>
+      
+        
+       </v-container>
+       </formulario>  
+       <v-row class='mt-1'> 
+            <v-col cols='6' class='d-flex justify-end'>
+              <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
+          
+            </v-col>
+            <v-col cols='6'>
+              <boton @click="crearEnviarCita" texto='Listo' class='w-75 btn1'></boton>
+               
+            </v-col>
+          </v-row>
+          <v-row class='ma-0 '>
+            <boton @click="cancelar('cerrar')" texto='Cancelar' class='btn'></boton>
           
                
           <boton @click="crearEnviarCita" texto='Listo' class='btn'></boton>
                
                
-
-
-         </v-row>
-        
-       </v-container>
-       </formulario>  
+               
+          </v-row>
+        </formulario>
         </v-overlay>
         
   </div>
@@ -478,13 +516,17 @@ var show2 = ref('')
 <style scoped>
 @media screen and (min-width: 427px){
 .flotante1{
-  height:95vh; width:33rem
+  height:80vh; width:33rem
 }
 .flotante2{
-  height:113vh; width:33rem
+  height:111vh; width:33rem
 }
 .flotante3{
-  height:109vh; width:33rem
+  height:100vh; width:33rem
+}
+
+.cuadr{
+  height: 14rem;
 }
 .subcuads2{
  
@@ -501,20 +543,31 @@ var show2 = ref('')
 .cuads{
   height: 100%;
 }
+.ser{
+  margin-bottom: 1px;
+  font-size: 0.9rem;
+}
 }
 @media screen and (max-width: 426px){
   .flotante1{
-  height:93vh; width:90vw
+  height:80vh; width:90vw
 }
 .flotante2{
-  height:122vh; width:90vw
+  height:111vh; width:90vw
 }
 .subcuads4{
  
  height: 30.4rem;
 }
+.detalle,.servicios{
+  margin-bottom: 1px;
+  font-size: 0.9rem;
+}
+.cuadr{
+  height: 14rem;
+}
 .flotante3{
-  height:123vh; width:90vw
+  height:103vh; width:90vw
 }
 .subcuads2{
  
@@ -523,10 +576,12 @@ var show2 = ref('')
 }
 @media screen and (min-width: 377px){
 .subcuads{
-  max-height: 100%;
+  max-height: 50;
   
 }
-
+.detalle,.servicios{
+  margin-bottom: 7px;
+}
 .cuads{
   height: 56%;
 }
@@ -537,17 +592,30 @@ var show2 = ref('')
 }
 @media screen and (max-width: 376px){
   .flotante1{
-  height:110vh; width:99vw
+  height:80vh; width:99vw
 }
 .flotante2{
-  height:155vh; width:100vw
+  height:123vh; width:100vw
+}
+.det{
+  margin-top: 1rem;
 }
 .subcuads1{
  max-height: 10rem;
 }
 .flotante3{
-  height:136vh; width:100vw;
+  height:115vh; width:100vw;
 }
+.cuadr{
+  height: 9rem;
+}
+.float{
+  height: 100vh;
+}
+.flotante{
+  height: 8.5rem;
+}
+
 .btn{
   display: visible;
   width: 43%;
@@ -559,26 +627,29 @@ var show2 = ref('')
  .cuads{
   display: flex;
   flex-direction: column;
-  height:25rem;
+  height:20rem;
  }
  .subcuads{
-  height: 11rem;
+  height: 9rem;
+  padding: 0;
+  margin-bottom: 0.5rem;
  }
+
 }
 @media screen and (max-width: 321px){
   .subcuads1{
  max-height: 11rem;
 }
 .flotante2{
-  height:160vh; width:100vw
+  height:123vh; width:100vw
 }
 .flotante3{
-  height:140vh; width:115vw;
+  height:115vh; width:100vw;
 }
 .cuads{
   display: flex;
   flex-direction: column;
-  height:27rem;
+  height:20rem;
  }
 }
 </style>

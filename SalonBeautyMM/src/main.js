@@ -9,6 +9,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import VueMask from '@devindex/vue-mask';
 
 const vuetify = createVuetify({
   components,
@@ -25,6 +26,7 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(createPinia())
 app.use(router)
+app.use(VueMask);
 app.use(vuetify)
 
 app.mount('#app')

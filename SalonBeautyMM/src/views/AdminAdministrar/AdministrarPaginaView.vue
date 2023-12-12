@@ -27,7 +27,7 @@
                 
                             </v-card>
                             
-                            <v-file-input v-model='editarimg' :rules="[rules.requerido]" label="Cambiar imagen" variant="underlined" accept="image/*"></v-file-input>
+                            <v-file-input v-model='editarimg'  label="Cambiar imagen" variant="underlined" accept="image/*"></v-file-input>
                             <v-row>
                                 <v-col>
                                     <v-text-field  prefix="$" :rules="[rules.requerido,rules.numero]" label="Precio" v-model="servicio.precio"  variant="underlined"></v-text-field>
@@ -81,7 +81,7 @@
                 
                             </v-card>
                             
-                            <v-file-input v-model='editarimg' :rules="[rules.requerido]" label="Cambiar imagen" variant="underlined" accept="image/*"></v-file-input>
+                            <v-file-input v-model='editarimg'  label="Cambiar imagen" variant="underlined" accept="image/*"></v-file-input>
                            
                             <v-checkbox v-model="servicio.activo"  label="Activo en la pagina" color="#169873" hide-details></v-checkbox>            
                             </v-form>
@@ -99,6 +99,7 @@
                 <v-expansion-panel value='1' class='barra'>
                     <v-expansion-panel-title>Contacto</v-expansion-panel-title>
                     <v-expansion-panel-text>
+                      
                       <formulario  @boton='guardar5()' @boton2='cancelar'  boton='dual' posicion='end' enviar='Guardar' class='w-100' titulo='Editar tipos de contacto'>
                             <v-form style='max-height:25rem' @submit.prevent ref='form'>
                            <v-row class='d-flex align-center'>

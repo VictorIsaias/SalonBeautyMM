@@ -5,28 +5,28 @@
 <FormularioPrincipal  tamañobtn='large' pie='Ya tengo cuenta' link='iniciar' :param='correo' @datos='submit' titulo='Registro para clientes' enviar='Registrar'>
 
  <v-form ref="form">
-      <v-text-field :rules="[rules.requerido]" v-model="usuario.nombre" label="Nombre/s*" variant="underlined"></v-text-field>
+      <v-text-field :rules="[rules.requerido,rules.max(usuario.nombre,30)]" v-model="usuario.nombre" label="Nombre/s*" variant="underlined"></v-text-field>
 
    
       <v-row>
     <v-col>
-      <v-text-field  v-model="usuario.apellido_paterno" label="Apellido Paterno" variant="underlined" class="text"></v-text-field>
-      <v-text-field  v-model="usuario.apellido_paterno" label="Apellido P." variant="underlined" class="text2"></v-text-field>
+      <v-text-field  v-model="usuario.apellido_paterno" :rules='[rules.max(usuario.apellido_paterno,15)]' label="Apellido Paterno" variant="underlined" class="text"></v-text-field>
+      <v-text-field  v-model="usuario.apellido_paterno" :rules='[rules.max(usuario.apellido_paterno,15)]' label="Apellido P." variant="underlined" class="text2"></v-text-field>
      
     </v-col>
     <v-col>
-      <v-text-field v-model="usuario.apellido_materno" label="Apellido Materno" variant="underlined" class="text"></v-text-field>
-      <v-text-field v-model="usuario.apellido_materno" label="Apellido M." variant="underlined" class="text2"></v-text-field>
+      <v-text-field v-model="usuario.apellido_materno" :rules='[rules.max(usuario.apellido_materno,15)]' label="Apellido Materno" variant="underlined" class="text"></v-text-field>
+      <v-text-field v-model="usuario.apellido_materno" :rules='[rules.max(usuario.apellido_materno,15)]' label="Apellido M." variant="underlined" class="text2"></v-text-field>
      
     </v-col>
   </v-row>
  
-  <v-text-field v-model="usuario.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-mask-phone.br v-model="usuario.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
       
-  <v-text-field :rules="[rules.correo,rules.correoval(usuario.user,usuarios)]" v-model="usuario.user" label="Correo electronico*" variant="underlined"></v-text-field>
+  <v-text-field :rules="[rules.correo,rules.correoval(usuario.user,usuarios),rules.max(usuario.user,25)]" v-model="usuario.user" label="Correo electronico*" variant="underlined"></v-text-field>
      
-    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="usuario.contrasena" label="Contraseña*" variant="underlined"></v-text-field>
-    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="confirmar" label="Confirmar contraseña*" variant="underlined"></v-text-field>
+    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min,rules.max(usuario.contrasena,25)]"   v-model="usuario.contrasena" label="Contraseña*" variant="underlined"></v-text-field>
+    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min,rules.max(confirmar,25)]"   v-model="confirmar" label="Confirmar contraseña*" variant="underlined"></v-text-field>
 
   </v-form>
   <v-alert

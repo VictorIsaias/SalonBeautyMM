@@ -8,9 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@devindex/vue-mask": "^2.0.3",
     "axios": "^1.6.2",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "v-mask": "^2.3.0",
     "vue": "^3.3.4",
     "vue-cal": "^4.8.1",
     "vue-router": "^4.2.5",

@@ -10,7 +10,7 @@ const {servicios,cServicios} = storeToRefs(servs)
 
 const pagina = useUsuarioStore()
 
-const {estadonav} = storeToRefs(pagina)
+const {estadonav,closeSession} = storeToRefs(pagina)
 
 function cambiar(){
 switch(estadonav.value){
@@ -175,7 +175,7 @@ switch(estadonav.value){
               <v-divider></v-divider>
               <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
               <v-divider></v-divider>
-              <router-link :to="{name:'iniciar'}"><v-list-item-title class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Iniciar sesion</v-list-item-title></router-link>
+             <v-list-item-title @click='closeSession' class='text-body-1 mb-1  mt-1'> <router-link style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>
@@ -209,7 +209,7 @@ switch(estadonav.value){
               <v-divider></v-divider>
               <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
               <v-divider></v-divider>
-              <v-list-item-title   class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion</v-list-item-title>
+              <v-list-item-title @click='closeSession' class='text-body-1 mb-1  mt-1'> <router-link style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>
