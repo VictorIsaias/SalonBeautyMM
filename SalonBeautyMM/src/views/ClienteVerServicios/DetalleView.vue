@@ -21,7 +21,7 @@ import {useRoute} from 'vue-router'
   var servicios = ref([])
   const response = async ()=>{
     try{
-        const respuesta = await fetch('http://localhost/servicios_activos');
+        const respuesta = await fetch('http://3.143.143.93/servicios_activos');
         const data = await respuesta.json();
         servicios.value=data.data;
     }catch{
@@ -56,9 +56,13 @@ const items = ref([
 </script>
 
 <template>
-  <div style='height: 100vh;'>
+  <div class='fondu'>
     <v-container  class="bg-red-lighten-4 elevation-5 contenedor">
-    <v-row >
+    <div >
+      <div >
+
+
+      <v-row class="desaparce">
       <v-col cols="6" class='carrusel'>
         <v-img :src="servicio.img" cover class='h-100' width="100%" height='100%' :aspect-ratio="1"></v-img>
                 
@@ -66,7 +70,7 @@ const items = ref([
 
       <v-col cols="6" >
         <v-container class='d-flex  h-100 w-100 flex-column' >
-          <v-card-title class="font-weight-black" style="font-family: Britannic ; font-size:1.5rem">{{servicio.nombre}}</v-card-title>
+          <v-card-title class="font-weight-black text-wrap" style="font-family: Britannic ; font-size:1.5rem;">{{servicio.nombre}}</v-card-title>
         
           <v-card-text style="font-family: Oswald;">{{servicio.descripcion}}</v-card-text>
           <v-row class="h-100  d-flex justify-center align-end ">
@@ -85,12 +89,53 @@ const items = ref([
             </v-col>
         </v-row>
         
+
+
+
         </v-container>
         
       </v-col>
       
     </v-row>
     
+   
+    <div align="center" justify="center">
+            <v-row class="desaparce2">
+              <v-col cols="12" class='carrusel'>
+                <v-img :src="servicio.img" cover class='h-100' width="100%" height='100%' :aspect-ratio="1"></v-img>
+                        
+              </v-col>
+              <v-col cols="12">
+                <v-card-title class="font-weight-black text-wrap titulo" style="font-family: Britannic Bold;">{{servicio.nombre}}</v-card-title>
+              <v-card-text style="font-family: Oswald; height: 5rem;">{{servicio.descripcion}}</v-card-text>
+              <v-divider></v-divider>
+              <v-row align="center" justify="center">
+                <v-col cols='4'>
+                  <v-card-subtitle class="font-weight-black">${{servicio.precio}}</v-card-subtitle>
+                 
+                </v-col>
+                <v-col cols="3">
+                  <v-card-text class="font-weight-bold">{{servicio.duracion_min}} min.</v-card-text>
+                
+                </v-col>
+              
+                <v-col cols="5">
+                  
+                  <v-row justify="end">
+                <v-card-actions>
+                  <router-link :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
+            </v-card-actions>
+              </v-row>
+              </v-col>
+              </v-row>
+              </v-col>
+            </v-row>
+          </div>
+       
+  </div>
+</div>
+
+
   </v-container>
   <div class="text-caption font-italic mt-1 ml-1">Todos los precios y duraciones son aproximaciones y podrian no ser exactos</div> 
        
@@ -99,6 +144,7 @@ const items = ref([
 </template>
 
 <style scoped>
+
 .contenedor{
   background: linear-gradient(153deg, #ffd3c6 0%, #ffc0ab 30.2%, #fcb5b5 100%);
   background-blend-mode: normal;
@@ -113,5 +159,63 @@ const items = ref([
   background-blend-mode: normal;
   backdrop-filter: blur(50px);
   box-shadow: 0px 1px 1px 1px rgba(100,100,100,0.3);
+}
+@media screen and (min-width: 686px) {
+  .desaparce2{
+    display: none;
+  }
+  .fondu{
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 686px) {
+  .desaparce{
+    display: none;
+  }
+  
+  .contenedor{
+    width: 350px;
+  }
+
+  .titulo{
+    font-size: 2em;
+  }
+  .fondu{
+    height: 100%;
+    
+  }
+}
+
+@media screen and (max-width: 634px) {
+  .titulo{
+    font-size: 1.8em;
+  }
+}
+@media screen and (max-width: 585px) {
+  .titulo{
+    font-size: 1.6em;
+  }
+}
+@media screen and (max-width: 780px) {
+  .botoncito{
+    margin-bottom: 40px;
+  }
+}
+@media screen and (max-width: 752px) {
+  .botoncito{
+    margin-bottom: 50px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .titulo{
+    font-size: 1.3em;
+  }
+  .contenedor{
+    width: 100vw;
+  }
+  .desaparce{
+    width: 100vw;
+  }
 }
 </style>

@@ -375,7 +375,7 @@ onMounted(()=>  {
           duracion_min:starti,
           fecha_hora:fechilla
         }
-        await fetch('http://localhost/servicio_cita/actualizar', {
+        await fetch('http://3.143.143.93/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())
@@ -405,7 +405,7 @@ onMounted(()=>  {
           duracion_min:starti,
           fecha_hora:fechilla
         }
-        await fetch('http://localhost/servicio_cita/actualizar', {
+        await fetch('http://3.143.143.93/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())

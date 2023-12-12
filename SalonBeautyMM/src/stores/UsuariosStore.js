@@ -2,21 +2,28 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 
 export const useUsuarioStore = defineStore('UsuarioStore', () => {
-    const usuario = ref({ correo: null, contrasena: null, _token: null });
+    const usuario = ref({usuario: {correo: null}, _token: null})
+
+    var estadonav = ref(0)
+    var ID =ref(0)
+
+    if(usuario.value._token){
+        estadonav.value=1
+    }
 
     function closeSession() {
         window.localStorage.clear();
-        usuario.value = { correo: null, contrasena: null, _token: null };
+        usuario.value = {usuario: {correo: null}, _token: null}
     }
 
     function setUser(user) {
         window.localStorage.clear();
-        usuario.value = {
-            user: user,
-            contrasena: contrasena, 
-            _token: token
-        };
+        let u = {...usuario.value, ...user}
+        usuario.value = u;
+        ID.value=usuario.value.usuario.id
+        
+        estadonav.value=1
     }
-    return {usuario, closeSession, setUser}
+    return {ID,usuario, closeSession, setUser,estadonav}
 }, 
 {persist: true})

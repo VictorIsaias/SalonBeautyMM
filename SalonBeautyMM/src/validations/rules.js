@@ -10,7 +10,7 @@ const rules = {
     correoval: (v,usuarios) => {
       for(let i = 0;i<usuarios.length;i++){
   
-      if (v==usuarios[i].correo){
+      if (v==usuarios[i].user){
         
         return 'Correo ya registrado'
       }

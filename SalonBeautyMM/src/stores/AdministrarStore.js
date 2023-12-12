@@ -50,7 +50,7 @@ var direccion = ref({
   const cServicios = ref([])
   const respuesta = async () => {
       try{
-          const respuesta = await fetch('http://localhost/categorias');
+          const respuesta = await fetch('http://3.143.143.93/categorias');
           const data = await respuesta.json();
           cServicios.value=data.data;
       }catch{
@@ -71,7 +71,7 @@ var servicios = ref([])
 
 const response = async ()=>{
   try{
-      const respuesta = await fetch('http://localhost/servicios');
+      const respuesta = await fetch('http://3.143.143.93/servicios');
       const data = await respuesta.json();
       servicios.value=data.data;
     
@@ -146,13 +146,13 @@ const añadir = async (param) =>{
         formData.append('img', imagen);
    
    
-    await fetch('http://localhost:3000/servicios', {
+    await fetch('http://18.221.199.123:3000/servicios', {
         method: 'POST',
         body: formData,
       }).then(response => response.text())
       .then(data => {
    
-        url='http://localhost:3000/public/'+data
+        url='http://18.221.199.123:3000/public/'+data
       })
 
     if (param){
@@ -167,7 +167,7 @@ const añadir = async (param) =>{
                  img:url,
             activo:activ
         }
-        await fetch('http://localhost/crear_categoria', {
+        await fetch('http://3.143.143.93/crear_categoria', {
   method: 'POST',
   body: JSON.stringify(inst),
 }).then(response => response.json())
@@ -194,7 +194,7 @@ const añadir = async (param) =>{
             img:url,
             activo:activ
         }
-        await fetch('http://localhost/crear_servicio', {
+        await fetch('http://3.143.143.93/crear_servicio', {
   method: 'POST',
   body: JSON.stringify(inst),
 }).then(response => response.json())
@@ -228,13 +228,13 @@ const actualizar = async (idd,param)=>{
             formData.append('img', imagen);
     
     
-        await fetch('http://localhost:3000/servicios', {
+        await fetch('http://18.221.199.123:3000/servicios', {
             method: 'POST',
             body: formData,
         }).then(response => response.text())
         .then(data => {
     
-            servicio.value.img='http://localhost:3000/public/'+data
+            servicio.value.img='http://18.221.199.123:3000/public/'+data
         })
     }
 
@@ -246,7 +246,7 @@ const actualizar = async (idd,param)=>{
             img:servicio.value.img,
             activo:activ
           }
-          await fetch('http://localhost/categoria/actualizar', {
+          await fetch('http://3.143.143.93/categoria/actualizar', {
             method: 'POST',
             body: JSON.stringify(inst),
         }).then(response => response.json())
@@ -273,7 +273,7 @@ const actualizar = async (idd,param)=>{
              img:servicio.value.img,
             duracion_min:servicio.value.duracion_min
           }
-          await fetch('http://localhost/servicio/actualizar', {
+          await fetch('http://3.143.143.93/servicio/actualizar', {
             method: 'POST',
             body: JSON.stringify(inst),
         }).then(response => response.json())

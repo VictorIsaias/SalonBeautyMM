@@ -3,12 +3,12 @@
 
 import { storeToRefs } from 'pinia'
 import {ref,computed} from 'vue'
-import {PaginaStore} from '@/stores/PaginaStore.js'
+import {useUsuarioStore} from '@/stores/UsuariosStore.js'
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
 const servs = ServiciosStore()
 const {servicios,cServicios} = storeToRefs(servs)
 
-const pagina = PaginaStore()
+const pagina = useUsuarioStore()
 
 const {estadonav} = storeToRefs(pagina)
 
@@ -32,6 +32,7 @@ switch(estadonav.value){
 
 
      var menu= ref(false)
+     var menu2= ref(false)
      var message= ref(false)
      var hints= ref(true)
 
@@ -55,7 +56,7 @@ switch(estadonav.value){
 </script>
 
 <template>
-  <div class='w-100'>
+  <div class='w-100 fin'>
     
 
     <div class="barra pb-1 pl-2 pr-2 elevation-3 text-button" v-show='estadonav==0'>
@@ -63,21 +64,22 @@ switch(estadonav.value){
         <div></div>
         <div class="item2 ">
         <v-menu 
+        v-model="menu"
       :close-on-content-click="false"
       location="center"
     >
       <template v-slot:activator="{ props }">
         <div class="item2">
-        <button  v-bind='props' class="button rutas">SERVICIOS</button>
+        <button  v-bind='props' @click="menu=true" class="button rutas">SERVICIOS</button>
       </div>
       </template>
 
-      <v-card class='pa-5 d-flex flex-wrap ' style='width:80vw;min-height: 20rem;position: relative; top:3.5rem;'>
-        <v-card class='flex-grow-1 w-25 elevation-0' v-for='(cat,index) in cServicios' :key='index' color='' >
+      <v-card class='pa-5 d-flex  servicios text-wrap' style='position: relative; top:2.3rem;'>
+        <v-card class='flex-grow-1 subi elevation-0' v-for='(cat,index) in cServicios' :key='index' color='' >
            <v-card-title  style='color:#169873'>
-            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
+            <router-link class='cat' @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
             </v-card-title>
-           <div class='pl-6 pr-3 pt-1' style='min-height:10rem'>
+           <div class='pl-6 pr-3 pt-1 cacu' >
 
             
               <div class='ma-0 ' 
@@ -85,7 +87,7 @@ switch(estadonav.value){
                   
                   <div class='pb-3' v-if='serv.categoria==cat.id'>
                     <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id}}'>
-                     <div>{{serv.nombre}}</div>  
+                     <div class='serv'>{{serv.nombre}}</div>  
                     </router-link>
                   </div>
                   
@@ -113,26 +115,26 @@ switch(estadonav.value){
 
 
 
-    <div class=" barra pb-1 pl-2 pr-2 elevation-3 text-button" v-show='estadonav==1'>
+    <div class=" barra  pb-1 pl-2 pr-2 elevation-3 text-button" v-show='estadonav==1'>
        <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
        
       <div class="item2 ">
         <v-menu 
-      v-model="menu"
+      v-model="menu2"
       :close-on-content-click="false"
       location="center"
     >
       <template v-slot:activator="{ props }">
         <div class="item2">
-        <button  v-bind='props' class="button rutas">SERVICIOS</button>
+        <button @click="menu2=true" v-bind='props' class="button rutas">SERVICIOS</button>
       </div>
       </template>
 
-      <v-card class='pa-5 d-flex flex-wrap ' style='width:80vw;min-height: 20rem;position: relative; top:3.5rem;'>
-        <v-card class='flex-grow-1 w-25 elevation-0' v-for='(cat,index) in cServicios' :key='index'
+      <v-card class='pa-5 d-flex flex-wrap servicios ' style='position: relative; top:3.5rem;'>
+        <v-card class='flex-grow-1 subi elevation-0' v-for='(cat,index) in cServicios' :key='index'
            color='' >
            <v-card-title  style='color:#169873'>
-            <router-link @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
+            <router-link class='cat' @click='menu2=false' style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:cat.id}}'>{{cat.nombre}}</router-link>
             </v-card-title>
            <div class='pl-6 pr-3 pt-1' style='min-height:10rem'>
 
@@ -141,7 +143,7 @@ switch(estadonav.value){
               v-for='(serv,index) in servicios' :key='index'>
                   
                   <div class='pb-3' v-if='serv.categoria==cat.id'>
-                    <router-link  @click='menu=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id}}'>
+                    <router-link class='serv' @click='menu2=false' style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:serv.id}}'>
                        {{serv.nombre}}
                     </router-link>
                   </div>
@@ -224,6 +226,10 @@ switch(estadonav.value){
   text-decoration:none;
 }
 
+.fin{
+  width: 100vw;
+}
+
 .flex-barra{
   height: 60px;
   width: 100%;
@@ -235,7 +241,7 @@ switch(estadonav.value){
   display:flex;
   align-items:center;
   justify-content:space-between;
-   
+  width: 100vw;
 }
 .button{
   border:none;
@@ -267,8 +273,46 @@ switch(estadonav.value){
   flex-grow: 1;
 }
 
-@media screen and (min-width: 961px){
+@media screen and (min-width: 535px){
+.servicios{
+  flex-wrap: wrap;
+}
+.subi{
+  width: 25%;
+}
+.cacu{
+  min-height:10rem
+}
+}
 
+@media screen and (max-width: 534px){
+  .servicios{
+  
+  flex-wrap: wrap;
+  
+  
+}
+.cat{
+  font-size: 1.1rem;
+}
+.cacu{
+  min-height:5.5rem
+}
+
+.serv{
+  width: 50rem;
+  
+}
+.cat{
+  width: 50rem;
+}
+}
+@media screen and (min-width: 961px){
+.servicios{
+  width:80vw;
+  min-height: 20rem;
+  
+}
 
 .iconos{
   height: 2.2rem;
@@ -293,8 +337,25 @@ switch(estadonav.value){
   height: 3rem;  
 }
 }
+@media screen and (max-width: 1024px){
+  .servicios{
+  width:90vw;
+  min-height: 20rem;
+}
+}
 
 @media screen and (max-width: 961px){
+  .servicios{
+  width:95vw;
+  min-height: 20rem;
+}
+.cat{
+  font-size: 1rem;
+}
+.serv{
+  font-size: 0.9rem;
+}
+
   .iconos{
   height: 2.2rem;
   
@@ -323,6 +384,7 @@ switch(estadonav.value){
   
   margin-top:0.9rem;
 }
+
 
 .logo{
   width: 2.3rem;

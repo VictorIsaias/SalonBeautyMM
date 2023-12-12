@@ -26,6 +26,7 @@
   <v-text-field :rules="[rules.correo,rules.correoval(usuario.user,usuarios)]" v-model="usuario.user" label="Correo electronico*" variant="underlined"></v-text-field>
      
     <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="usuario.contrasena" label="Contraseña*" variant="underlined"></v-text-field>
+    <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"   v-model="confirmar" label="Confirmar contraseña*" variant="underlined"></v-text-field>
 
   </v-form>
   <v-alert
@@ -43,20 +44,36 @@
 </template>
 
 <script setup>
-import {ref,computed} from 'vue'
+import {ref,computed,onMounted} from 'vue'
 import FormularioPrincipal from '@/components/FormularioLayout.vue'
 import router from '@/router/index'
-import {PaginaStore} from '@/stores/PaginaStore.js'
+import {useUsuarioStore} from '@/stores/UsuariosStore.js'
 import { storeToRefs } from 'pinia'
 import rules from '@/validations/rules.js'
 
-const pagina = PaginaStore()
-const {usuarios,id} = storeToRefs(pagina)
+const pagina = useUsuarioStore()
+
+const usuarios=ref([])
+
+const response = async ()=>{
+    try{
+        const respuesta = await fetch('http://3.143.143.93/usuarios');
+        const data = await respuesta.json();
+        usuarios.value=data.data;
+    }catch{
+
+    }
+  }  
+
+
+  onMounted(response);
+
 
 var error=ref(false)
-
+var confirmar=ref('')
 const form = ref()
 var show1 = ref('')
+var show2 = ref('')
 // consulta GET para mostrar usuarios
 const usuario=ref({
   nombre:'',
@@ -64,17 +81,30 @@ const usuario=ref({
   apellido_materno:'',
   user:'',
   contrasena:'',
-  contrasena:'',
   telefono:'',
   id_rol:'1'
 })
 
 const submit = async () =>{
-  await fetch('http://localhost/registrar_usuario',{
+  const { valid } = await form.value.validate()
+  
+  if (valid){
+    
+    
+
+if (usuario.value.contrasena!=confirmar.value){
+  error.value=true
+    return
+  }
+
+
+  await fetch('http://3.143.143.93/registrar_usuario',{
     method:'POST',
     headers:{'Content-type': 'application/json'},
     body:JSON.stringify(usuario.value)
   });
+  router.replace({ name: 'iniciar'})
+  }
 }
 </script>
 

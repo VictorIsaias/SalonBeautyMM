@@ -2,9 +2,9 @@
 
 import { storeToRefs } from 'pinia'
 import barra from '@/components/BarraNav.vue'
-import {PaginaStore} from '@/stores/PaginaStore.js'
+import {useUsuarioStore} from '@/stores/UsuariosStore.js'
 
-const pagina = PaginaStore()
+const pagina = useUsuarioStore()
 
 const {estadonav} = storeToRefs(pagina)
 

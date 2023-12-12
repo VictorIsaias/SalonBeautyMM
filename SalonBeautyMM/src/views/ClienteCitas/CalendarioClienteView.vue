@@ -67,13 +67,12 @@ import boton from '@/components/BotonPagina.vue'
 import ventana from '@/components/FlotanteCalendario.vue'
 import {CalendarioStore} from '@/stores/CalendariosStore'
 import { storeToRefs } from 'pinia'
-import {PaginaStore} from '@/stores/PaginaStore.js'
+import {useUsuarioStore} from '@/stores/UsuariosStore.js'
 
 
-const pagina = PaginaStore()
+const pagina = useUsuarioStore()
 
 const {ID} = storeToRefs(pagina)
-
 const cal = CalendarioStore()
 
 const {id_cliente,diaminimo,modocita,preService,minimo,maximo,bloqueos,modo, servs,flotante ,cita,servCita,servicios,citas} = storeToRefs(cal)

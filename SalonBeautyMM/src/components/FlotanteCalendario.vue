@@ -30,7 +30,7 @@
                     <v-card title="Servicios" >
                     
                       <v-card-text  v-for='serv in servicios' :key='serv.id'>
-                        <div v-if='espacio>=serv.duracion&&contador<=3&&activo[serv.id]'>
+                        <div v-if='espacio>=serv.duracion&&contador<=3&&activo[serv.id]&&serv.id!=preService'>
                         <div  class='d-flex justify-space-between align-center'>
                           {{serv.nombre}}
                           <div class='text-medium-emphasis d-flex align-center '>
@@ -54,7 +54,7 @@
                         </div>
                         
 
-                        <div v-else-if='espacio<=serv.duracion||contador>3'>
+                        <div v-else-if='espacio<=serv.duracion||contador>3||serv.id==preService'>
                         <div  class='text-disabled d-flex justify-space-between align-center'>
                           {{serv.nombre}}
                           <div class='text-disabled d-flex align-center '>
@@ -440,7 +440,7 @@ import formulario from './FormularioLayout.vue'
 
 const cal = CalendarioStore()
 
-const {cliente,duracionAct,bloque,contador,espacio2,activo,espacio,servs, flotante,modo,servicios,cita,servCita} = storeToRefs(cal)
+const {preService,cliente,duracionAct,bloque,contador,espacio2,activo,espacio,servs, flotante,modo,servicios,cita,servCita} = storeToRefs(cal)
 const {cancelar_cita,finalizar_cita,crearEnviarCita,cancelar,actualizarCita,crearSC,enviarCita} = cal
 
 const props=defineProps({

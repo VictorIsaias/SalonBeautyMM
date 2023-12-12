@@ -7,8 +7,8 @@
           <v-text-field :rules="[rules.correo, rules.requerido]" v-model="user" label="Correo electronico"
             variant="underlined"></v-text-field>
           <v-text-field @keypress.enter="login" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            hint="Ingresa al menos 8 caracteres" counter @click:append="show1 = !show1"
-            :type="show1 ? 'text' : 'password'" :rules="[rules.requerido, rules.min]" v-model="contrasena"
+              @click:append="show1 = !show1"
+            :type="show1 ? 'text' : 'password'" :rules="[rules.requerido]" v-model="contrasena"
             label="Contraseña" variant="underlined"></v-text-field>
         </v-form>
         <v-alert type="error" variant='tonal' text="Correo electronico o contraseña no validos" v-model='error'></v-alert>
@@ -24,36 +24,33 @@ import router from '@/router/index'
 import {useRouter} from 'vue-router'
 import { storeToRefs } from 'pinia'
 import rules from '@/validations/rules.js'
-import {PaginaStore} from '@/stores/PaginaStore.js'
-import { useUsuarioStore } from "@/stores/UsuariosStore";
+import {useUsuarioStore} from '@/stores/UsuariosStore.js'
 
 let usuarioStore = useUsuarioStore();
-const pagina = PaginaStore()
 
-const {usuarioLocal,usuarios,estadonav} = storeToRefs(pagina)
-const {setUser}=pagina
+
+const {setUser}=usuarioStore
 
 const user = ref('')
 const contrasena = ref('')
 
-let valid = ref(true)
 var error=ref(false)
 
 
 const form = ref()
-function login() {
-  if(!valid.value){
+async function login() {
+  const { valid } = await form.value.validate()
+  if(!valid){
     return
   }
-
-  let usuarios = ref ({
+  let usuarios ={
     user: user.value,
     contrasena: contrasena.value
-  });
+  }
 
-  fetch('http://localhost/auth',{
+ await fetch('http://3.143.143.93/auth',{
     method:'POST',
-    body:JSON.stringify(usuarios.value),
+    body:JSON.stringify(usuarios),
   }).then(response=>response.json())
   .then(data=>{
     if(data.status!=200){
@@ -63,10 +60,14 @@ function login() {
       },3000)
       return 
     }
+    setUser(data.data)
+  router.push({name: 'inicio'})
 
   });
+
 }
 var show1 = ref('')
+var show2 = ref('')
 </script>
 
 <style scoped>
