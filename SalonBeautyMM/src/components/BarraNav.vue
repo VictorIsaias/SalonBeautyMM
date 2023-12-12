@@ -173,18 +173,13 @@ switch(estadonav.value){
               <v-divider></v-divider>
               <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
               <v-divider></v-divider>
-              <v-list-item-title   class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion</v-list-item-title>
+              <router-link :to="{name:'iniciar'}"><v-list-item-title class='text-body-1 mb-1  mt-1'><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Iniciar sesion</v-list-item-title></router-link>
              </v-list-item>
           </v-list>
         </v-menu>
       </div>
     </div>
     
-
-
-
-
-
     <div class=" barra pb-1 pl-2 pr-2 elevation-3 text-button" v-show='estadonav==2'>
        <div class="item1"><RouterLink :to="{name:'inicio'}"><img class="iconos logo" src="/img/logo.png" alt=""></RouterLink></div>
        

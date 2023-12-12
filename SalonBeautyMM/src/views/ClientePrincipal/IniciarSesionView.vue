@@ -1,27 +1,19 @@
 <template>
   <div class="fondo" style='height: 100vh;' align='center'>
     <v-container class="item">
-
-<FormularioPrincipal  tamañobtn='large' link='registrar' pie='Registrarse' @datos='login' titulo='Acceso para cliente' enviar='Iniciar'>
-  <v-form @submit.prevent ref='form'>
-
-    <v-text-field  :rules="[rules.correo,rules.requerido]" v-model="usuario.input1" label="Correo electronico" variant="underlined"></v-text-field>
-    <v-text-field @keypress.enter="verificar" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" hint="Ingresa al menos 8 caracteres" counter  @click:append="show1 = !show1" :type="show1 ? 'text' : 'password'" :rules="[rules.requerido,rules.min]"  v-model="usuario.input2" label="Contraseña" variant="underlined"></v-text-field>
-
-  </v-form>
-
-
-
-  <v-alert
-    type="error"
-    variant='tonal'
-    text="Correo electronico o contraseña no validos"
-    v-model='error'
-  ></v-alert>
-
-</FormularioPrincipal>
-
-</v-container>  
+      <FormularioPrincipal tamañobtn='large' link='registrar' pie='Registrarse' @datos='login'
+        titulo='Acceso para cliente' enviar='Iniciar'>
+        <v-form @submit.prevent ref='form'>
+          <v-text-field :rules="[rules.correo, rules.requerido]" v-model="user" label="Correo electronico"
+            variant="underlined"></v-text-field>
+          <v-text-field @keypress.enter="login" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            hint="Ingresa al menos 8 caracteres" counter @click:append="show1 = !show1"
+            :type="show1 ? 'text' : 'password'" :rules="[rules.requerido, rules.min]" v-model="contrasena"
+            label="Contraseña" variant="underlined"></v-text-field>
+        </v-form>
+        <v-alert type="error" variant='tonal' text="Correo electronico o contraseña no validos" v-model='error'></v-alert>
+      </FormularioPrincipal>
+    </v-container>
   </div>
 </template>
 
@@ -32,88 +24,49 @@ import router from '@/router/index'
 import {useRouter} from 'vue-router'
 import { storeToRefs } from 'pinia'
 import rules from '@/validations/rules.js'
-
 import {PaginaStore} from '@/stores/PaginaStore.js'
+import { useUsuarioStore } from "@/stores/UsuariosStore";
 
+let usuarioStore = useUsuarioStore();
 const pagina = PaginaStore()
 
 const {usuarioLocal,usuarios,estadonav} = storeToRefs(pagina)
 const {setUser}=pagina
 
+const user = ref('')
+const contrasena = ref('')
 
-
+let valid = ref(true)
 var error=ref(false)
 
 
 const form = ref()
-async function login(){
-  
-  const { valid } = await form.value.validate()
-  
-  if(!valid){
+function login() {
+  if(!valid.value){
     return
   }
 
+  let usuarios = ref ({
+    user: user.value,
+    contrasena: contrasena.value
+  });
 
-  fetch("http://localhost/user",{
+  fetch('http://localhost/auth',{
     method:'POST',
-    body:JSON.stringify(usuario.value)
-  }).then(response=>response.json()).then(data=>{
-    //window.clearLocalStorage()
+    body:JSON.stringify(usuarios.value),
+  }).then(response=>response.json())
+  .then(data=>{
     if(data.status!=200){
-      alert(data.message)
-
-      return
+      error.value=true;
+      setTimeout(()=>{
+        error.value=true;
+      },3000)
+      return 
     }
-    usuarioLocal.setUser(data).date
-  //  router.push({name:'citas_cliente'})
 
-  })
-
-
-
-
-
+  });
 }
-
-
-
-
-
-
-async function verificar(){
-  
-  if (valid){
-    
-    let val = true
-    for(let i = 0;i<usuarios.value.length;i++){
-      if (usuario.value.input1==usuarios.value[i].correo&&usuario.value.input2==usuarios.value[i].contrasena){
-        
-        val=false
-        i=usuarios.value.length
-      }
-    }
-     if(val){
-      error.value=true
-      return
-     }
-     
-
-
-estadonav.value=1
-router.replace({ name: 'inicio' })
-  }
-  
-}
-
-
-var usuario=ref({
-input1 :'',
-input2 :''
-})
 var show1 = ref('')
-var show2 = ref('')
-
 </script>
 
 <style scoped>
