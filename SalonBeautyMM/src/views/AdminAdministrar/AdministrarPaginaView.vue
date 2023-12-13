@@ -3,13 +3,15 @@
    
 
    
-    <vue-row class="d-flex h-100">
-        <vue-col style='width:22rem'>
-            <barralateral  :tipo='pestaña' titulo='CATALOGOS' >
-
-            </barralateral>
+    <v-row class="d-flex h-100">
+        <vue-col class="Bar1" style='width:20rem'>
+            <barralateral  :tipo='pestaña' titulo='CATALOGOS' ></barralateral>
         </vue-col>
-        <vue-col class="w-75 pa-6 ">
+
+        <v-col cols="12" class="Bar2" style='width:20rem'>
+            <barralateral  :tipo='pestaña' titulo='CATALOGOS' ></barralateral>
+        </v-col>
+        <v-col class="w-75 pa-6 ">
             <v-expansion-panels v-model='pestaña' variant="popout" multiple>
                 <v-expansion-panel value='0' class='barra' >
                     <v-expansion-panel-title>Servicios</v-expansion-panel-title>
@@ -37,12 +39,23 @@
                             <v-textarea :rules="[rules.requerido]" variant="underlined" label="Descripcion" auto-grow v-model='servicio.descripcion'></v-textarea>
                             <v-file-input :rules="[rules.requerido]" label="Imagen" variant="underlined" accept="image/*"></v-file-input>
                             <v-row>
-                                <v-col>
+                               
+                                <v-col cols="6" class="columnas1">
                                     <v-text-field  prefix="$" :rules="[rules.requerido]" label="Precio" v-model="servicio.precio"  variant="underlined"></v-text-field>
                                 </v-col>
-                                <v-col>
+                                <v-col cols="6" class="columnas1">
                                     <v-combobox label="Duracion" variant="underlined" :items="['30min', '1hr', '1hr 30min', '2hr', '2hr 30min', '3hr','3hr 30min','4hr','4hr 30min','5hr']"></v-combobox>
                                 </v-col>
+                               
+
+                               
+                                <v-col cols="12" class="columnas2">
+                                    <v-text-field  prefix="$" :rules="[rules.requerido]" label="Precio" v-model="servicio.precio"  variant="underlined"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" class="columnas2">
+                                    <v-combobox label="Duracion" variant="underlined" :items="['30min', '1hr', '1hr 30min', '2hr', '2hr 30min', '3hr','3hr 30min','4hr','4hr 30min','5hr']"></v-combobox>
+                                </v-col>
+                               
                             </v-row>
                             <v-checkbox v-model="servicio.activo"  label="Activo en la pagina" color="#169873" hide-details></v-checkbox>            
                         </formulario>
@@ -94,8 +107,8 @@
                 
 
             </v-expansion-panels>
-        </vue-col>
-    </vue-row>
+        </v-col>
+    </v-row>
 
   </div>
 </template>
@@ -142,4 +155,25 @@ const rules = {
  
 }
   
+@media screen and (max-width: 770px) {
+    .Bar1{
+        display: none;
+    }
+}
+@media screen and (min-width: 770px) {
+    .Bar2{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 430px){
+    .columnas1{
+        display: none;
+    }
+}
+@media screen and (min-width: 430px) {
+    .columnas2{
+        display: none;
+    }
+}
 </style>
