@@ -52,7 +52,7 @@ const servicios=ref([
       </div>
     </v-card>
       <br>
-      <div class="item3 d-flex align-center flex-column" >
+      <div class="item3 " >
 <v-card-title class="serv">SERVICIOS</v-card-title><br>
 <v-card-text  class="textS">REVISA NUESTRO CATÁLOGO DE SERVICIOS</v-card-text><br>
 <div class=" servicios ">
@@ -151,6 +151,9 @@ background-repeat: no-repeat;
 height: 100vh;
 position: relative;
 text-align: center;
+display: flex;
+align-items: center;
+flex-direction: column;
 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 .servicios{
@@ -217,7 +220,7 @@ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans
 
 .serv{
 border-bottom: 2px solid black;
-width: 50rem;
+width: 40rem;
 font-family: 'Britannic', Times, serif;
 }
 

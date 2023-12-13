@@ -3,6 +3,10 @@ import boton from '@/components/BotonPagina.vue'
 import { ref,onMounted} from 'vue';
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
 import { storeToRefs } from 'pinia'
+import {useUsuarioStore} from '@/stores/UsuariosStore'
+const pagina = useUsuarioStore()
+
+const {estadonav} = storeToRefs(pagina)
 
 const serv = ServiciosStore()
 
@@ -31,8 +35,8 @@ const {servicios} = storeToRefs(serv)
      
                   <p class="text--primary pt-3" style="font-family: Oswald;">{{ service.descripcion }}</p>
                   <v-row class=" d-flex align-end justify-end botones" style="height: 67%;">
-                    <v-col cols="6"><router-link  :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
-                    <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
+                    <v-col cols="6"><router-link style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
+                    <v-col  cols="6"><router-link v-if='estadonav!=0' style="text-decoration: none; color: inherit;" :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
                   </v-row>
                 </v-col>
               </v-row>
@@ -47,12 +51,12 @@ const {servicios} = storeToRefs(serv)
                     <v-card-subtitle style="font-family: Oswald;font-size: 1rem;">${{ service.precio }}.00  -  {{ service.duracion_min }}min.</v-card-subtitle>
             <p class="text--primary pt-3" style="font-family: Oswald;">{{ service.descripcion }}</p>
                   <v-row class="botones item1">
-                    <v-col cols="6"><router-link  :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
-            <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
+                    <v-col  cols="6"><router-link style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
+            <v-col v-if='estadonav!=0' cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
           </v-row>
                   <v-row class="botones item2">
-                    <v-col cols="6"><router-link  :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
-            <v-col cols="6"><router-link :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
+                    <v-col  cols="6"><router-link style="text-decoration: none; color: inherit;" :to='{name:"detalles",params:{idserv:service.id}}'><boton texto="Mas informacion"></boton></router-link></v-col>
+            <v-col v-if='estadonav!=0' cols="6"><router-link  :to='{name:"crear_cita",params:{idserv:service.id}}'><boton texto="Crear cita"></boton></router-link></v-col>
           </v-row>
                   </v-col>
                 </v-row>
@@ -63,8 +67,14 @@ const {servicios} = storeToRefs(serv)
         </div>
         </v-col>
       </v-row>
+      <v-row>
+        <div class="text-caption font-italic mt-1 ml-1">Todos los precios y duraciones son aproximaciones y podrian no ser exactos</div> 
+      
+      </v-row>
     </v-container>
+    
   </div>
+  
 </template>
 <style scoped>
 .fondo {

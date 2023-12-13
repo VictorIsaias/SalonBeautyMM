@@ -7,13 +7,60 @@ export const AdministrarStore = defineStore('admin', () => {
     var modo = ref(1)
     var id = ref(1)
     var idcat = ref(0)
+    var idadmin=0
 
+    var modoadmin=ref(1)
 
 
     var idContacto=ref()
     var contactoTemp=ref({
         nombre:'',
         valor:''
+    })
+
+    var usuarios=ref([])
+
+    const rUser = async ()=>{
+        try{
+            const respuesta = await fetch('http://18.116.31.102/usuarios');
+            const data = await respuesta.json();
+            usuarios.value=data.data;
+        }catch{
+    
+        }
+      }  
+    
+      
+const submit = async () =>{
+    
+      
+      
+  
+  
+  
+  
+    await fetch('http://18.116.31.102/registrar_usuario',{
+      method:'POST',
+      headers:{'Content-type': 'application/json'},
+      body:JSON.stringify(usuario.value)
+    });
+  
+    
+    modoadmin.value=1
+    respuesta()
+    response()
+    rUser()
+  }
+    
+      onMounted(rUser);
+    var usuario=ref({
+      nombre:'',
+      apellido_paterno:'',
+      apellido_materno:'',
+      user:'',
+      contrasena:'',
+      telefono:'',
+      id_rol:'2'
     })
 
  //Array de contactos especificos consultado
@@ -50,7 +97,7 @@ var direccion = ref({
   const cServicios = ref([])
   const respuesta = async () => {
       try{
-          const respuesta = await fetch('http://3.143.143.93/categorias');
+          const respuesta = await fetch('http://18.116.31.102/categorias');
           const data = await respuesta.json();
           cServicios.value=data.data;
       }catch{
@@ -71,7 +118,7 @@ var servicios = ref([])
 
 const response = async ()=>{
   try{
-      const respuesta = await fetch('http://3.143.143.93/servicios');
+      const respuesta = await fetch('http://18.116.31.102/servicios');
       const data = await respuesta.json();
       servicios.value=data.data;
     
@@ -104,6 +151,18 @@ const abrirAñadir = (param)=>{
             img:''
             }  
             modo.value=3
+    }
+    else if(param=='admin'){
+        usuario.value = {
+            nombre:'',
+            apellido_paterno:'',
+            apellido_materno:'',
+            user:'',
+            contrasena:'',
+            telefono:'',
+            id_rol:'2'
+            }  
+            modoadmin.value=2
     }
     else{
    
@@ -167,7 +226,7 @@ const añadir = async (param) =>{
                  img:url,
             activo:activ
         }
-        await fetch('http://3.143.143.93/crear_categoria', {
+        await fetch('http://18.116.31.102/crear_categoria', {
   method: 'POST',
   body: JSON.stringify(inst),
 }).then(response => response.json())
@@ -194,7 +253,7 @@ const añadir = async (param) =>{
             img:url,
             activo:activ
         }
-        await fetch('http://3.143.143.93/crear_servicio', {
+        await fetch('http://18.116.31.102/crear_servicio', {
   method: 'POST',
   body: JSON.stringify(inst),
 }).then(response => response.json())
@@ -211,7 +270,9 @@ const añadir = async (param) =>{
 }
 var editarimg=ref()
 
-const cancelar = ()=> modo.value=1
+const cancelar = ()=> {
+    modoadmin.value=1
+    modo.value=1}
 const actualizar = async (idd,param)=>{
     let activ
     if(servicio.value.activo==true){
@@ -246,7 +307,7 @@ const actualizar = async (idd,param)=>{
             img:servicio.value.img,
             activo:activ
           }
-          await fetch('http://3.143.143.93/categoria/actualizar', {
+          await fetch('http://18.116.31.102/categoria/actualizar', {
             method: 'POST',
             body: JSON.stringify(inst),
         }).then(response => response.json())
@@ -258,6 +319,26 @@ const actualizar = async (idd,param)=>{
         
             });
        
+       
+       
+    }
+    else if(param=='admin'){
+   
+          await fetch('http://18.116.31.102/usuario/actualizar', {
+            method: 'POST',
+            body: JSON.stringify(usuario.value),
+        }).then(response => response.json())
+            .then(responsej => {
+                if (responsej.status != 200) {
+                    return
+                }
+        
+        
+            });
+            modoadmin.value=1
+            respuesta()
+            response()
+            rUser()
        
        
     }
@@ -273,7 +354,7 @@ const actualizar = async (idd,param)=>{
              img:servicio.value.img,
             duracion_min:servicio.value.duracion_min
           }
-          await fetch('http://3.143.143.93/servicio/actualizar', {
+          await fetch('http://18.116.31.102/servicio/actualizar', {
             method: 'POST',
             body: JSON.stringify(inst),
         }).then(response => response.json())
@@ -299,6 +380,12 @@ const editar = (idd,param) => {
         modo.value = 2
         servicio.value = servicios.value[idd]
     }
+    else if(param=='admin'){
+        idd -= 1
+        modoadmin.value = 3
+        usuario.value = usuarios.value[idd]
+        idadmin=idd
+    }
     else{
         
         idcat.value = idd-1
@@ -312,5 +399,5 @@ const recibirid = (idc) => {id.value=idc}
 
 
 
-  return {editarimg,contactoTemp,idContacto,contacto,direccion,servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
+  return {submit,usuarios,usuario,modoadmin,editarimg,contactoTemp,idContacto,contacto,direccion,servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
 })

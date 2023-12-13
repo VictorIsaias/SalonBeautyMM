@@ -10,7 +10,7 @@ const {ID} = storeToRefs(pagina)
 const servicio_nomb = ref([])
   const servs_nom = async () => {
       try{
-          const respuesta = await fetch('http://3.143.143.93/servicios_nombre');
+          const respuesta = await fetch('http://18.116.31.102/servicios_nombre');
           const data = await respuesta.json();
           servicio_nomb.value=data.data;
       }catch{
@@ -38,7 +38,7 @@ const citas_cliente =ref();
 const respuesta = async () =>{
 
   try{
-    const response = await fetch('http://3.143.143.93/registro_citas');
+    const response = await fetch('http://18.116.31.102/registro_citas');
     const data = await response.json();
     citas_cliente.value=''
   citas_admin.value=[]
@@ -64,7 +64,7 @@ let inst ={}
       id:idact,
       estado:'cancelado'
     }
-    await fetch('http://3.143.143.93/registro_citas/actualizar', {
+    await fetch('http://18.116.31.102/registro_citas/actualizar', {
       method: 'POST',
       body: JSON.stringify(inst),
   }).then(response => response.json())

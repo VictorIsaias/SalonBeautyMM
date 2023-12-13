@@ -10,22 +10,8 @@ const {servicios,cServicios} = storeToRefs(servs)
 
 const pagina = useUsuarioStore()
 
-const {estadonav,closeSession} = storeToRefs(pagina)
-
-function cambiar(){
-switch(estadonav.value){
-  case 0:
-    estadonav.value=1
-    break
-    case 1:
-    estadonav.value=2
-    break
-    case 2:
-    estadonav.value=0
-    break
-}
-
-}
+const {estadonav} = storeToRefs(pagina)
+const {closeSession}=pagina
 
 
 
@@ -37,22 +23,8 @@ switch(estadonav.value){
      var hints= ref(true)
 
 
-  const Administrar =[
-  {title: 'Catalogo' },
-  {title: 'Direccion'},
-  {title: 'Contacto'}]
 
-  const perfil = [
-    {title: 'Configurar perfil'},
-    {title: 'Contacto'},
-    {title: 'Cerrar sesion'}]
-
-    function handelservicios (){
-      alert('funciona')
-    }
-    function handelperfil() {
-      alert('tambien funciona')
-    }
+ 
 </script>
 
 <template>
@@ -163,8 +135,8 @@ switch(estadonav.value){
         <RouterLink class="rutas" :to="{name:'crear_cita',params:{idserv:0}}"><button class="button">NUEVA CITA</button></RouterLink>
         </div>
       <div class="item6 d-flex">
-        <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
-      
+       <!--   <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+      -->
       <v-menu>
         <template v-slot:activator="{ props }">
           <button variant="text"  class="button mr-1" v-bind="props"><img class="iconos " src="/img/perfil.png" alt=""></button>
@@ -175,7 +147,7 @@ switch(estadonav.value){
               <v-divider></v-divider>
               <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
               <v-divider></v-divider>
-             <v-list-item-title @click='closeSession' class='text-body-1 mb-1  mt-1'> <router-link style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
+             <v-list-item-title  class='text-body-1 mb-1  mt-1'> <router-link @click='closeSession' style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>
@@ -197,8 +169,8 @@ switch(estadonav.value){
        
         </div>
       <div class="item6 d-flex">
-        <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
-      
+       <!--   <div @click='cambiar' class="item5 mr-3"><img class="iconos noti" src="/img/noti.png" alt=""></div>
+       -->
       <v-menu>
         <template v-slot:activator="{ props }">
           <button variant="text"  class="button mr-1" v-bind="props"><img class="iconos " src="/img/perfil.png" alt=""></button>
@@ -209,7 +181,7 @@ switch(estadonav.value){
               <v-divider></v-divider>
               <v-list-item-title class='mb-2 mt-1' ><router-link style="text-decoration: none; color: inherit;" class='text-body-1' :to='{name:"contacto"}'><v-icon icon='mdi-contacts' class='mr-3' ></v-icon>Contacto</router-link></v-list-item-title>
               <v-divider></v-divider>
-              <v-list-item-title @click='closeSession' class='text-body-1 mb-1  mt-1'> <router-link style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
+              <v-list-item-title class='text-body-1 mb-1  mt-1'> <router-link  @click='closeSession' style="text-decoration: none; color: inherit;" class='text-body-1'  :to="{name:'iniciar'}"><v-icon icon='mdi-logout-variant' class='mr-3' ></v-icon>Cerrar sesion </router-link></v-list-item-title>
              </v-list-item>
           </v-list>
         </v-menu>

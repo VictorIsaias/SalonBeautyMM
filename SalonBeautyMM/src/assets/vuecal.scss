@@ -12,109 +12,129 @@
   
 
 
+    @media screen and (max-width: 450px){
+      .bloqueado{
+        font-size: 90%;
+      }
 
-  .citat {
-  color:invert($color: #000000);
-  background-color: rgba($color: #000000, $alpha: 0);
- }
+    }
+    @media screen and (max-width: 378px){
+      .bloqueado{
+        font-size: 80%;
+      }
+    }   
+     @media screen and (max-width: 321px){
+      .bloqueado{
+        font-size: 70%;
+      }
+    }
+    
   
-  .bloqueado {
-    background: linear-gradient(180deg, #fd9b90 0%, #e54f3e 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
-  }
-  .bloqueado2{
-    background: linear-gradient(180deg,#e54f3e  0%, #fd9b90 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
-  
-  }
-  .cita1{
-    background: linear-gradient(180deg, #f2d09c 0%, #f3b962 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita2{
-    background: linear-gradient(180deg, #ffcdb9 0%, #faa381 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita3{
-    background: linear-gradient(180deg, #f8ffa6 0%, #e5ee7b 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita4{
-    background: linear-gradient(180deg, #5ecbda 0%, #028192 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita5{
-    background: linear-gradient(180deg, #c07cd2 0%, #7e3f8f 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita6{
-    background: linear-gradient(180deg, #4cd6ab 0%, #0c7c59 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita7{
-    background: linear-gradient(180deg, #df728c 0%, #92374d 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita8{
-    background: linear-gradient(180deg, #ffcab9 0%, #fa8f81 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita9{
-    background: linear-gradient(180deg, #ddf29c 0%, #cff362 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita10{
-    background: linear-gradient(180deg, #b9c9ff 0%, #8185fa 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita11{
-    background: linear-gradient(180deg, #9cebf2 0%, #62ecf3 100%);
-    color: #f9e6e6;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
-  .cita12{
-    background: linear-gradient(180deg, #ffb9b9 0%, #fa8181 100%);
-    color: #636363;
-    font-family: Oswald;
-    border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
- 
-  }
 
-  
+    .citat {
+      color:invert($color: #000000);
+      
+      background-color: rgba($color: #000000, $alpha: 0);
+     }
+      
+      .bloqueado {
+        background: linear-gradient(180deg, #fd9b90 0%, #e54f3e 100%);
+        color: #f9e6e6;
+        
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+      }
+      .bloqueado2{
+        background: linear-gradient(180deg,#e54f3e  0%, #fd9b90 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+      
+      }
+      .cita1{
+        background: linear-gradient(180deg, #f2d09c 0%, #f3b962 100%);
+        color: #636363;
+        font-family: Oswald;
+        
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita2{
+        background: linear-gradient(180deg, #ffcdb9 0%, #faa381 100%);
+        color: #636363;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita3{
+        background: linear-gradient(180deg, #f8ffa6 0%, #e5ee7b 100%);
+        color: #636363;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita4{
+        background: linear-gradient(180deg, #5ecbda 0%, #028192 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita5{
+        background: linear-gradient(180deg, #c07cd2 0%, #7e3f8f 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita6{
+        background: linear-gradient(180deg, #4cd6ab 0%, #0c7c59 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita7{
+        background: linear-gradient(180deg, #df728c 0%, #92374d 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita8{
+        background: linear-gradient(180deg, #ffcab9 0%, #fa8f81 100%);
+        color: #636363;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita9{
+        background: linear-gradient(180deg, #ddf29c 0%, #cff362 100%);
+        color: #636363;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita10{
+        background: linear-gradient(180deg, #b9c9ff 0%, #8185fa 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita11{
+        background: linear-gradient(180deg, #9cebf2 0%, #62ecf3 100%);
+        color: #f9e6e6;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+      .cita12{
+        background: linear-gradient(180deg, #ffb9b9 0%, #fa8181 100%);
+        color: #636363;
+        font-family: Oswald;
+        border: solid rgba($color: #f9e6e6, $alpha: 0.6) 1px;
+     
+      }
+    
   

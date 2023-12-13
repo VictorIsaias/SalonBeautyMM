@@ -3,9 +3,11 @@ import boton from '@/components/BotonPagina.vue';
 import { ref,onMounted,onActivated, onUpdated } from 'vue';
 import {ServiciosStore} from '@/stores/ServiciosStore.js'
 import { storeToRefs } from 'pinia'
-
+import {useUsuarioStore} from '@/stores/UsuariosStore'
 const serv = ServiciosStore()
+const pagina = useUsuarioStore()
 
+const {estadonav} = storeToRefs(pagina)
 
 
 const servicio = ref({
@@ -21,7 +23,7 @@ import {useRoute} from 'vue-router'
   var servicios = ref([])
   const response = async ()=>{
     try{
-        const respuesta = await fetch('http://3.143.143.93/servicios_activos');
+        const respuesta = await fetch('http://18.116.31.102/servicios_activos');
         const data = await respuesta.json();
         servicios.value=data.data;
     }catch{
@@ -48,11 +50,6 @@ import {useRoute} from 'vue-router'
 
 
 
-const items = ref([
-  { src: 'https://trozmer.edu.mx/wp-content/uploads/2020/08/corte_dama.jpg' },
-  { src: 'https://www.peluqueriacristinacisneros.es/wp-content/uploads/2023/03/cortes-pelo-mujer.png' },
-  { src: 'https://prixz.com/salud/wp-content/uploads/2021/05/Los-mejores-cortes-de-cabello-para-mujeres-en-2021-.jpg' }
-]);
 </script>
 
 <template>
@@ -85,8 +82,9 @@ const items = ref([
               <div class="font-weight-bold">{{servicio.duracion_min}} minutos</div>
             </v-col>
             <v-col cols="9">
-              <router-link :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
-            </v-col>
+              <router-link v-if='estadonav==0' :to='{name:"iniciar"}'><boton tipo='pedir' clase='btncita' texto="INICIA SESION" ></boton></router-link>
+                 <router-link v-else :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
+                  </v-col>
         </v-row>
         
 
@@ -123,8 +121,10 @@ const items = ref([
                   
                   <v-row justify="end">
                 <v-card-actions>
-                  <router-link :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
-            </v-card-actions>
+                 <router-link v-if='estadonav==0' :to='{name:"iniciar"}'><boton tipo='pedir' clase='btncita' texto="INICIA SESION" ></boton></router-link>
+                 <router-link v-else :to='{name:"crear_cita",params:{idserv:servicio.id}}'><boton tipo='pedir' clase='btncita' texto="PEDIR CITA" ></boton></router-link>
+                  
+                </v-card-actions>
               </v-row>
               </v-col>
               </v-row>

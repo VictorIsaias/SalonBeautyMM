@@ -11,11 +11,11 @@
                 <v-col cols="9">
                   <v-card-title class="font-weight-black" style="font-family: Britannic; font-size: 1.5rem">{{ item.nombre }}</v-card-title>
                   <v-card-text style="font-family: Oswald;">{{ item.descripcion }}</v-card-text>
-                  <v-row class="fill-height d-flex align-center">
+                  <v-row class="h-75 d-flex align-end">
                     <v-card-actions>
-                      <router-link :to='{name:"sub-servicios",params:{idcat:item.id}}'>
+                      <router-link style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:item.id}}'>
                    
-                        <boton class="botoncito mb-4 ml-5" elevation="8" size="x-large" texto="Ver servicios"></boton>
+                        <boton class="botoncito  ml-5" elevation="8" size="x-large" texto="Ver servicios"></boton>
                       
                     </router-link>
                     </v-card-actions>
@@ -33,7 +33,7 @@
                   <v-card-text style="font-family: Oswald;">{{ item.descripcion }}</v-card-text>
                   <v-row class="fill-height d-flex align-center" justify="center">
                     <v-card-actions>
-                    <router-link :to='{name:"sub-servicios",params:{idcat:item.id}}'>
+                    <router-link style="text-decoration: none; color: inherit;" :to='{name:"sub-servicios",params:{idcat:item.id}}'>
                     
                         <boton class="botoncito" elevation="8" tamaño='large' texto="Ver servicios"></boton>
                       

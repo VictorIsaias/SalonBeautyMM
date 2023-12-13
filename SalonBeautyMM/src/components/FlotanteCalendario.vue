@@ -175,7 +175,7 @@
               <formulario class='h-100 w-100 flotante' titulo='Crear cita' tipo='sinboton'>
                 <v-dialog width="550" persistent>
                   <template v-slot:activator="{ props }">
-                    
+             
  <v-form ref="form">
       <v-text-field  :rules="[rules.requerido,rules.max30]" v-model="cliente.nombre" label="Nombre del cliente*" variant="underlined"></v-text-field>
 
@@ -191,8 +191,8 @@
     </v-col>
   </v-row>
  
-  <v-text-field v-mask-phone.br v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-  <v-text-field v-model="cliente.user" :rules='[rules.correo,rules.max30]' label="Correo electronico" variant="underlined"></v-text-field>
+  <v-text-field v-mask="'(00) 0000-000-000'" v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-model="cliente.user" :rules='[rules.max30]' label="Correo electronico" variant="underlined"></v-text-field>
      
 
   </v-form>
@@ -373,7 +373,7 @@
     </v-col>
   </v-row>
  
-  <v-text-field v-mask-phone.br readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field  readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
   <v-text-field readonly v-model="cliente.user"  label="Correo electronico" variant="underlined"></v-text-field>
     
 
@@ -437,23 +437,17 @@
         
        </v-container>
        </formulario>  
-       <v-row class='mt-1'> 
-            <v-col cols='6' class='d-flex justify-end'>
+       <v-row class='mt-1 ml-9 d-flex justify-center'> 
+            <v-col cols='6' class=''>
               <boton @click="cancelar('cerrar')" texto='Cancelar' class='w-75 btn1'></boton>
           
             </v-col>
-            <v-col cols='6'>
-              <boton @click="crearEnviarCita" texto='Listo' class='w-75 btn1'></boton>
-               
-            </v-col>
+       
           </v-row>
           <v-row class='ma-0 '>
             <boton @click="cancelar('cerrar')" texto='Cancelar' class='btn'></boton>
           
-               
-          <boton @click="crearEnviarCita" texto='Listo' class='btn'></boton>
-               
-               
+       
                
           </v-row>
         </formulario>
@@ -463,11 +457,6 @@
 </template>
 
 <script setup>
-import {PaginaStore} from '@/stores/PaginaStore.js'
-
-const pagina = PaginaStore()
-
-const {correo,usuarios,estadonav} = storeToRefs(pagina)
 
 import rules from '@/validations/rules.js'
 import {ref,computed} from 'vue'

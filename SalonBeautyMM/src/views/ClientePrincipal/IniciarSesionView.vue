@@ -48,7 +48,7 @@ async function login() {
     contrasena: contrasena.value
   }
 
- await fetch('http://3.143.143.93/auth',{
+ await fetch('http://18.116.31.102/auth',{
     method:'POST',
     body:JSON.stringify(usuarios),
   }).then(response=>response.json())

@@ -2,7 +2,28 @@
   <div style="height: 100%;">
       <v-container >
           
-          
+        <v-dialog v-model='error' persistent width="500">
+
+     
+  <template v-slot:default="{ isActive }">
+    <v-card title="Limite de citas activas">
+      <v-card-text>
+        Solo puedes tener dos citas activas
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <router-link   style="text-decoration: none; color: inherit;" :to='{name:"inicio"}'>
+                     
+        <v-btn
+          text="Aceptar"
+          @click="isActive.value = false"
+        ></v-btn></router-link>
+      </v-card-actions>
+    </v-card>
+  </template>
+</v-dialog>
+
           <vue-cal  
           style="height: 90vh"
           :special-hours="bloqueos"
@@ -84,11 +105,20 @@ import {useRoute} from 'vue-router'
  
 
  var preServicio =0
- 
+ var error =ref(true)
 
+onMounted(async()=>{
+ var asd = await fetch(`http://18.116.31.102/verificar_cita/${ID.value}`)
 
+ const data = await asd.json();
+          asd=data.data;
+          asd=asd[0].resultado
 
-
+          if(asd=='no'){
+            error.value=true
+          }
+        
+        })
 
 
 
@@ -98,6 +128,9 @@ var tiempoTranscurrido = Date.now();
 var hoy = new Date(tiempoTranscurrido);
 
 onMounted(()=>  {
+
+  
+
 
   id_cliente.value=ID.value
 

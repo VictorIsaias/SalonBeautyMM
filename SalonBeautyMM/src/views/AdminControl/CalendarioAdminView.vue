@@ -55,7 +55,7 @@
          
               <v-row  v-if='event.class!="citat"' >
               
-                          <v-col  cols='9' >
+                          <v-col  cols='9' class='txt'>
                 
               {{event.title}} 
                                
@@ -89,7 +89,7 @@
            
            </div>
            
-           <div v-if='event.class!="citat"'>
+           <div v-if='event.class!="citat"' class='txt2'>
 
            
                {{event.start.format('HH:mm')}} - {{event.end.format('HH:mm')}}
@@ -375,7 +375,7 @@ onMounted(()=>  {
           duracion_min:starti,
           fecha_hora:fechilla
         }
-        await fetch('http://3.143.143.93/servicio_cita/actualizar', {
+        await fetch('http://18.116.31.102/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())
@@ -405,7 +405,7 @@ onMounted(()=>  {
           duracion_min:starti,
           fecha_hora:fechilla
         }
-        await fetch('http://3.143.143.93/servicio_cita/actualizar', {
+        await fetch('http://18.116.31.102/servicio_cita/actualizar', {
           method: 'POST',
           body: JSON.stringify(inst),
       }).then(response => response.json())
@@ -617,6 +617,35 @@ const minDate = computed (() => {
 }
 .titulo{
   width: 50rem;
+}
+@media screen and (max-width: 1024px){
+
+  .txt{
+    font-size: 0.7rem;
+  }
+  .txt2{
+    font-size: 0.7rem;
+  }
+
+
+}
+@media screen and (max-width: 426px){
+
+.txt{
+  font-size: 0.6rem;
+}
+
+
+
+}
+@media screen and (max-width: 376px){
+
+.txt{
+  font-size: 0.7rem;
+}
+
+
+
 }
 
 

@@ -21,7 +21,7 @@
     </v-col>
   </v-row>
  
-  <v-text-field v-mask-phone.br v-model="usuario.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-mask="'(00) 0000-000-000'" v-model="usuario.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
       
   <v-text-field :rules="[rules.correo,rules.correoval(usuario.user,usuarios),rules.max(usuario.user,25)]" v-model="usuario.user" label="Correo electronico*" variant="underlined"></v-text-field>
      
@@ -57,7 +57,7 @@ const usuarios=ref([])
 
 const response = async ()=>{
     try{
-        const respuesta = await fetch('http://3.143.143.93/usuarios');
+        const respuesta = await fetch('http://18.116.31.102/usuarios');
         const data = await respuesta.json();
         usuarios.value=data.data;
     }catch{
@@ -98,7 +98,7 @@ if (usuario.value.contrasena!=confirmar.value){
   }
 
 
-  await fetch('http://3.143.143.93/registrar_usuario',{
+  await fetch('http://18.116.31.102/registrar_usuario',{
     method:'POST',
     headers:{'Content-type': 'application/json'},
     body:JSON.stringify(usuario.value)

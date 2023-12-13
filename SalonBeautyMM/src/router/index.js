@@ -14,7 +14,7 @@ import calendarioadminview from '../views/AdminControl/CalendarioAdminView.vue'
 import infocontactoview from '../views/ClientePrincipal/InformacionContactoView.vue'
 import editarperfilview from '../views/ClientePrincipal/EditarPerfilView.vue'
 import citasadminview from '../views/AdminControl/CitasAdminView.vue'
-import {PaginaStore} from '../stores/PaginaStore.js'
+import {useUsuarioStore} from '../stores/UsuariosStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +30,7 @@ const router = createRouter({
       component: userview,
       children: [
         {
-          path: 'log-in',
+          path: 'login',
           name: 'iniciar',
           component: iniciarview
         },
@@ -41,30 +41,6 @@ const router = createRouter({
           },
           
       ]
-    },
-    
-    
-   
-    {
-      path: '/dates',
-      name: 'citas_cliente',
-      component: citasclienteview,
-      meta:{
-        requiresAuth:true
-      }
-    },
-    {
-      path: '/dates_admin',
-      name: 'citas_administrador',
-      component: citasadminview,
-      meta:{
-        requiresAuth:true
-      }
-    },
-    {
-      path: '/create_appmnt/:idserv',
-      name: 'crear_cita',
-      component: calendarioclienteview
     },
     {
       path: '/services',
@@ -89,28 +65,116 @@ const router = createRouter({
 
       ]
     },
+
+
+
+
+    
+   
+    {
+      path: '/dates',
+      name: 'citas_cliente',
+      component: citasclienteview,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path: '/create_appmnt/:idserv',
+      name: 'crear_cita',
+      component: calendarioclienteview,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    
     {
       path: '/contact',
       name: 'contacto',
-      component: infocontactoview
+      component: infocontactoview,
+      meta:{
+        requiresAuth:true
+      }
     },
     {
       path: '/profile',
       name: 'perfil',
-      component: editarperfilview
+      component: editarperfilview,
+      meta:{
+        requiresAuth:true
+      }
     },
+
+
+
+
     // Administrador
     {
       path: '/administrar',
       name: 'Administrar',
-      component: administrarview
+      component: administrarview,
+      meta:{
+        requiresAuth:true,
+        role: 2
+      }
     },
     {
       path: '/calendar',
       name: 'Calendario-admin',
-      component: calendarioadminview
+      component: calendarioadminview,
+      meta:{
+        requiresAuth:true,
+        role: 2
+      }
+    },
+    {
+      path: '/dates_admin',
+      name: 'citas_administrador',
+      component: citasadminview,
+      meta:{
+        requiresAuth:true,
+        role: 2
+      }
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  const authToken = useUsuarioStore().usuario._token;
+  if (to.name === 'usuario' && authToken) {
+      next('/');
+  } 
+  else
+    {
+      next();
+  }
+});
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((route) => route.meta.requiresAuth)) {
+      const authToken = useUsuarioStore().usuario._token;
+
+      if (authToken) {
+          next();
+      } else {
+          next('/user/login');
+      }
+  } else {
+      next();
+  }
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((route) => route.meta.role)) {
+      const role = useUsuarioStore().usuario.usuario.id_rol;
+     
+      if (role==2) {
+          next();
+      } else {
+          next('/');
+      }
+  } else {
+      next();
+  }
+});
 
 export default router   
