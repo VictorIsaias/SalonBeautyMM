@@ -77,6 +77,18 @@
                             <v-checkbox v-model="servicio.activo"  label="Activo en la pagina" color="#169873" hide-details></v-checkbox>            
                         </formulario>                                                
 
+
+
+
+                        <formulario @boton="actualizar(0, 'param')" @boton2="cancelar" v-if="modo === 2" boton="dual" posicion="end" enviar="Actualizar" class="w-100" titulo="Editar usuario">
+                         <v-text-field :rules="[rules.requerido]" v-model="servicio.nombre" label="Nombre" variant="underlined"></v-text-field>
+                         <v-textarea :rules="[rules.requerido]" variant="underlined" label="Descripción" auto-grow v-model="servicio.descripcion"></v-textarea>
+                          <v-checkbox v-model="servicio.activo" label="Activo en la página" color="#169873" hide-details></v-checkbox>
+                        </formulario>
+
+                        
+
+
                         <contServicios  v-if='modo==1' :idcatalogo='id' :catalogo='servicios'></contServicios>
                     </v-expansion-panel-text>
                 </v-expansion-panel>

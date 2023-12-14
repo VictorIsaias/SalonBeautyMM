@@ -214,24 +214,6 @@ const eliminar = ()=>{
     modo.value=1
 }
 
-const añadir = (param) =>{
-    if (param){
-        servicio.value.catalogo = id.value
-        servicio.value.id = cServicios.value.length+1
-        
-        cServicios.value.push(servicio.value)
-    }
-    else{
-        servicio.value.catalogo = id.value
-        servicio.value.id = servicios.value.length+1
-        
-        servicios.value.push(servicio.value)
-        
-    }
-    
-    modo.value=1
-   
-}
 
 
 const cancelar = ()=> modo.value=1
@@ -266,9 +248,47 @@ const editar = (idd,param) => {
     }
 }
 
+
+
+
+
+
+
+
+const añadir = async (param) => {
+    try {
+        if (param) {
+            servicio.value.catalogo = id.value;
+            servicio.value.id = cServicios.value.length + 1;
+            await servicios.crear_servicio(servicio.value);
+        } else {
+            servicio.value.catalogo = id.value;
+            servicio.value.id = servicios.value.length + 1;
+            await servicios.crear_servicio(servicio.value);
+        }
+
+        servicios();
+        modo.value = 1;
+    } catch (error) {
+        console.error("Error al agregar el servicio:", error);
+    }
+};
+
+const editarU = (idd, param) => {
+    if (param === 'usuario') {
+        idd -= 1
+        modo.value = 2
+        servicio.value = { ...servicios.value[idd] }
+    } else {
+        idcat.value = idd - 1
+        modo.value = 5
+        servicio.value = { ...cServicios.value[idcat.value] }
+    }
+}
+
 const recibirid = (idc) => {id.value=idc}
 
 
 
-  return {servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
+  return {servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir,editarU}
 })
