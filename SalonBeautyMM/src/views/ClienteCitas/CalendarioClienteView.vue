@@ -105,7 +105,7 @@ import {useRoute} from 'vue-router'
  
 
  var preServicio =0
- var error =ref(true)
+ var error =ref(false)
 
 onMounted(async()=>{
  var asd = await fetch(`http://18.116.31.102/verificar_cita/${ID.value}`)

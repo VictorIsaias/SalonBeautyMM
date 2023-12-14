@@ -2,10 +2,10 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 
 export const useUsuarioStore = defineStore('UsuarioStore', () => {
-    const usuario = ref({usuario: {user: null,id_rol: null}, _token: null})
+        const usuario = ref({usuario: {user: null,id:null,id_rol: null}, _token: null})
 
     var estadonav = ref(0)
-    var ID =ref(1)
+    var ID =ref(usuario.value.usuario.id)
 
     usuario.value._token = localStorage.getItem('_token');
     usuario.value.usuario.nombre = localStorage.getItem('nombre');
@@ -15,6 +15,7 @@ export const useUsuarioStore = defineStore('UsuarioStore', () => {
     usuario.value.usuario.user = localStorage.getItem('user');
     usuario.value.usuario.contrasena = localStorage.getItem('contrasena');
     usuario.value.usuario.id_rol = localStorage.getItem('id_rol');
+    usuario.value.usuario.id = localStorage.getItem('id');
 
     if(usuario.value._token){
         estadonav.value=1
@@ -39,7 +40,7 @@ export const useUsuarioStore = defineStore('UsuarioStore', () => {
         localStorage.setItem('user',user.usuario.user);
         localStorage.setItem('contrasena',user.usuario.contrasena);
         localStorage.setItem('id_rol',user.usuario.id_rol);
-        
+        localStorage.setItem('id',user.usuario.id);        
         let u = {...usuario.value, ...user}
         usuario.value = u;
         ID.value=usuario.value.usuario.id

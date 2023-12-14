@@ -123,7 +123,7 @@
                             </v-form>
                        </formulario>
                     </v-expansion-panel-text>
-                </v-expansion-panel>-->
+                </v-expansion-panel>
                 <v-expansion-panel value='2' class='barra'>
                     <v-expansion-panel-title>Direccion</v-expansion-panel-title>
                     <v-expansion-panel-text>
@@ -144,7 +144,7 @@
                             </v-form>
                        </formulario>
                     </v-expansion-panel-text>
-                </v-expansion-panel>
+                </v-expansion-panel>-->
                 <v-expansion-panel  value='3' class='barra '>
                     <v-expansion-panel-title>Añadir administrador</v-expansion-panel-title>
                     <v-expansion-panel-text class="pa-0">
