@@ -36,13 +36,14 @@
            :time-from="minimo * 60"
            :time-to="maximo * 60"
            v-model:selected-date="semanaact"
-          :hide-weekdays='array'
-          :time-step="30"  locale="es"  
-          id="calendario" 
-          :time-cell-height="50"
-          active-view='week'
-          :disable-views="['years', 'year', 'month','day']"
-          :week-start='1'
+           :hide-weekdays='array'
+           :time-step="30"  locale="es"  
+           id="calendario" 
+           :time-cell-height="50"
+           active-view='week'
+           :disable-views="['years', 'year', 'month','day']"
+           :week-start='1'
+           required
           >
           <template v-slot:no-event>{{}}</template>
           <template v-slot:arrow-prev>   <boton hidden id='previo' tipo='solo' @botonClick='anterior' texto='aNTERIOR'>

@@ -208,7 +208,7 @@
                       <formulario tipo='sinboton' titulo='Editar administrador' :param='correo'  >
                         <div style='height: 22rem;'>
                         <v-form ref="form6">
-                            <v-text-field :rules="[rules.requerido,rules.max(usuario.nombre,30)]" v-model="usuario.nombre" label="Nombre/s*" variant="underlined"></v-text-field>
+                            <v-text-field :rules='[rules.requerido,rules.max(usuario.nombre,30)]' v-model="usuario.nombre" label="Nombre/s*" variant="underlined"></v-text-field>
 
                           
                             <v-row >
@@ -274,6 +274,16 @@ import {AdministrarStore} from '@/stores/AdministrarStore.js'
 import { storeToRefs } from 'pinia'
 import rules from '@/validations/rules.js'
 const admins = AdministrarStore()
+let showalert = ref (false);
+let alertmsg=ref('');
+let alertcolor=ref('');
+
+const showalertMessage = (message, color) => {
+  alertmsg.value = message;
+  alertcolor.value = color;
+  showalert.value = true;
+}
+
 
 const {usuarios,usuario,modoadmin,editarimg,contactoTemp,contacto,servicio,id,modo,cServicios,servicios} = storeToRefs(admins)
 const {submit, abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir} = admins
@@ -422,6 +432,7 @@ async function guardar7(){
     submit()
   }
 }
+
 
 </script>
 

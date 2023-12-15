@@ -149,7 +149,12 @@
           </v-row>
          
         </v-container>
-       
+        <v-snackbar v-model="snackbar">
+      {{ v.store.state.snackbar.text }}
+      <v-btn text @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </v-snackbar>
         </formulario> 
      
         </v-overlay>
@@ -191,12 +196,12 @@
     </v-col>
   </v-row>
  
-  <v-text-field v-mask="'(00) 0000-000-000'" v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-  <v-text-field v-model="cliente.user" :rules='[rules.max30]' label="Correo electronico" variant="underlined"></v-text-field>
+  <v-text-field  v-mask="'(00) 0000-000-000'" v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
+  <v-text-field v-model="cliente.user" :rules="[rules.requerido,rules.max30]" label="Correo electronico*" variant="underlined"></v-text-field>
      
 
   </v-form>
-                    <v-text-field readonly @click='cancelar' v-bind="props" class='text-body-2 '  variant="underlined">
+                    <v-text-field :rules="[rules.requerido,rules.max30]" readonly @click='cancelar' v-bind="props" class='text-body-2 '  variant="underlined">
                     <div class='d-flex justify-space-between w-100 h-0'>
                       Añadir servicios ({{(servs.length-1)}})* <v-icon icon="mdi-plus" color='#169873'></v-icon>
                     </div>
@@ -331,7 +336,12 @@
               
                
           </v-row>
-   
+          <v-snackbar v-model="snackbar">
+      {{ v.store.state.snackbar.text }}
+      <v-btn text @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </v-snackbar>
 
         </formulario> 
         </v-overlay>
@@ -359,22 +369,22 @@
                  <template v-slot:activator="{  }">
                  
                   <v-form ref="form">
-      <v-text-field readonly  v-model="cliente.nombre" label="Nombre del cliente" variant="underlined"></v-text-field>
+      <v-text-field readonly  v-model="cliente.nombre" required label="Nombre del cliente" variant="underlined"></v-text-field>
 
    
   <v-row>
     <v-col>
-      <v-text-field readonly v-model="cliente.apellido_paterno" label="Apellido Paterno" variant="underlined"></v-text-field>
+      <v-text-field readonly required v-model="cliente.apellido_paterno" label="Apellido Paterno" variant="underlined"></v-text-field>
      
     </v-col>
     <v-col>
-      <v-text-field  readonly v-model="cliente.apellido_materno" label="Apellido Materno" variant="underlined"></v-text-field>
+      <v-text-field  required readonly v-model="cliente.apellido_materno" label="Apellido Materno" variant="underlined"></v-text-field>
      
     </v-col>
   </v-row>
  
-  <v-text-field  readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined"></v-text-field>
-  <v-text-field readonly v-model="cliente.user"  label="Correo electronico" variant="underlined"></v-text-field>
+  <v-text-field  readonly v-model="cliente.telefono" label="Numero de telefono" variant="underlined" required></v-text-field>
+  <v-text-field readonly v-model="cliente.user"  label="Correo electronico" variant="underlined" required></v-text-field>
     
 
   </v-form>              <!--@click='cancelar("editar")'-->
@@ -450,6 +460,12 @@
        
                
           </v-row>
+          <v-snackbar v-model="snackbar">
+      {{ v.store.state.snackbar.text }}
+      <v-btn text @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </v-snackbar>
         </formulario>
         </v-overlay>
         
@@ -464,6 +480,8 @@ import {CalendarioStore} from '@/stores/CalendariosStore.js'
 import { storeToRefs } from 'pinia'
 import boton from './BotonPagina.vue'
 import formulario from './FormularioLayout.vue'
+const snackbar = ref(false)
+
 
 const cal = CalendarioStore()
 
@@ -477,7 +495,14 @@ const props=defineProps({
 
 var error=ref(false)
 
-
+function mostrarAlerta(mensaje, tipo) {
+  snackbar.value = true
+  v.$store.commit('snackbar/SET_SNACKBAR', {
+    text: mensaje,
+    color: tipo,
+    timeout: 3000 
+  })
+}
 
 const form = ref()
 async function verificar(){
@@ -485,10 +510,14 @@ async function verificar(){
   
   if (valid){
     
-    
+  
 
 
 crearEnviarCita()
+mostrarAlerta('Cita creada correctamente', 'success')
+
+  } else {
+    mostrarAlerta('Faltan campos obligatorios', 'error')
   }
   
 }

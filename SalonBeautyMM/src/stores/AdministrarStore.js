@@ -374,12 +374,14 @@ const actualizar = async (idd,param)=>{
 }
 
 const editar = (idd,param) => {
+    console.log('Modo antes de editar:', modo.value);
     editarimg.value=''
     if(param=='servicio'){
         idd -= 1
         modo.value = 2
         servicio.value = servicios.value[idd]
     }
+    
     else if(param=='admin'){
         idd -= 1
         modoadmin.value = 3
@@ -397,6 +399,7 @@ const editar = (idd,param) => {
 
 const recibirid = (idc) => {id.value=idc}
 
+console.log('Modo despues de editar:', modo.value);
 
 
   return {submit,usuarios,usuario,modoadmin,editarimg,contactoTemp,idContacto,contacto,direccion,servicio,cServicios,servicios,id,modo,abrirAñadir,cancelar,actualizar,editar,recibirid,eliminar,añadir}
